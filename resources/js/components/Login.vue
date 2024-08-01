@@ -47,6 +47,7 @@
 <script>
 import axios from 'axios';
 import LoginLayout from '../layouts/LoginLayout.vue';
+import toastr from 'toastr';
 
 export default {
     components: {
@@ -77,7 +78,11 @@ export default {
             this.$router.push('/dashboard');
 
         } catch (error) {
-            this.error = error.response.data.message || 'An error occurred';
+            console.log(error)
+            let res = error.response;
+            let data = res.data;
+            let msg = data.message;
+            toastr.error(msg)
         }
         }
     }

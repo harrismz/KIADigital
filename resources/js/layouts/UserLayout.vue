@@ -7,11 +7,12 @@
                     <!-- <router-link to="/dashboard" class="mr-4">Dashboard</router-link> -->
                     <div v-if="userState != null">
                         <p>Name: {{ userState.name }}</p>
-                        <p>Age: {{ userState.age }}</p>
                     </div>
-                    <router-link to="/" class="mr-4">Profile</router-link>
-                    <div class="relative" @click="toggleDropdown">
-                        <img v-if="userState != null" :src="userState.avatar" alt="Profile Picture"
+
+                    <router-link v-if="userState == null" to="/login" class="mr-4">Login</router-link>
+
+                    <div v-if="userState != null" class="relative" @click="toggleDropdown">
+                        <img  :src="'storage/'+userState.avatar" alt="Profile Picture"
                             class="rounded-full w-10 h-10 cursor-pointer">
                         <ul v-if="dropdownOpen"
                             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg">
@@ -20,12 +21,8 @@
                         </ul>
                     </div>
 
-                    <button class="btn btn-success" @click="logout">
-                        logout {{ userState }}
-                    </button>
+                    
 
-                    <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" @click="logout">
-                        Logout</li>
                 </nav>
             </div>
         </header>
@@ -61,14 +58,18 @@ export default {
     // },
     mounted() {
         console.log('mounting userlayout')
-        // this.fetchAuthUser()
+        this.fetchAuthUser()
         console.log('userlayout is mounted')
     },
     methods: {
         fetchAuthUser() {
             console.log('fetchAuthUser')
             
-            axios.get('api/user')
+            axios.get('api/user', {
+                headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+            })
                 .then(response => response.data)
                 .then(user => {
                     console.log({ user })
