@@ -1,9 +1,9 @@
 <template>
     <div class="min-h-screen flex items-center justify-center bg-gray-100">
         <div class="flex w-full max-w-4xl shadow-md rounded-lg overflow-hidden">
-            <div class="w-1/2 bg-gray-200 flex items-center justify-center">
+            <div class="w-1/2 bg-gray-200 flex">
                 <div>
-                    <img :src="'/storage/images/ibu.jpg'" alt="Image" class="w-full h-full object-cover">
+                    <img :src="'/storage/images/ibu.jpg'" alt="Image" class="h-full">
                 </div>
             </div>
             <div class="w-1/2 p-8 bg-white">
@@ -135,7 +135,7 @@
 <script setup>
 import { reactive, computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import toastr from 'toastr';
 
 toastr.options = {
@@ -157,15 +157,15 @@ toastr.options = {
 };
 
 const store = useStore();
-const route = useRoute();
+const router = useRouter();
 
 const imgLogo = computed(() => store.getters.imgLogo);
 const baseUrl = computed(() => store.getters.baseUrl);
 
-const user_id = computed(() => route.params.id);
-const nik = computed(() => route.params.nik);
-const name = computed(() => route.params.name);
-const email = computed(() => route.params.email);
+const user_id = computed(() => router.params.id);
+const nik = computed(() => router.params.nik);
+const name = computed(() => router.params.name);
+const email = computed(() => router.params.email);
 
 const bloodTypeList = ref([]);
 const kelurahanList = ref([]);
@@ -205,7 +205,7 @@ const submitIdentitasIbu = async () => {
         router.push({
             name: 'identitas-ayah',
             params: {}
-        })
+        });
         // Handle the next step or redirect
     } catch (error) {
         console.error(error);
@@ -215,7 +215,7 @@ const submitIdentitasIbu = async () => {
 
 const fetchKelurahan = async () => {
 
-    console.log(route.params);
+    console.log(router.params);
     try {
         const response = await axios.get(`${baseUrl.value}/api/kelurahan`);
         kelurahanList.value = response.data;
