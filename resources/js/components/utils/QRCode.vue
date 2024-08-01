@@ -1,13 +1,15 @@
 <template>
     <div class="p-8 bg-gray-100 font-sans flex flex-col items-center">
         <div class="flex items-center mb-8 w-full">
-            <img src="@/assets/logo.png" alt="Logo" class="w-16 h-16 mr-4">
+            <!-- <img src="@/assets/logo.png" alt="Logo" class="w-16 h-16 mr-4"> -->
         </div>
         <div class="bg-white p-8 rounded-lg shadow-md text-center w-full md:w-2/3 lg:w-1/2">
             <h1 class="text-xl font-bold mb-4">ID: {{ userId }}</h1>
             <canvas ref="qrcodeCanvas" class="mx-auto"></canvas>
             <p>Scan QR / Informasikan ID Pada Dokter untuk Menampilkan Dairy Ibu serta Catatan Kesehatan Ibu Terakhir
             </p>
+
+            <router-link to="/" class="text-blue-500">Kembali</router-link>
         </div>
     </div>
 </template>
@@ -19,12 +21,19 @@ export default {
     name: "QRCode",
     data() {
         return {
-            userId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
+            // userId: 'XXXXXXXXXXXXXXXXXXXXXXXX',
         };
     },
     mounted() {
         this.generateQRCode();
     },
+
+    computed: {
+        userId(){
+            return this.$route.params.id;
+        }
+    },
+
     methods: {
         generateQRCode() {
             const canvasEl = this.$refs.qrcodeCanvas;

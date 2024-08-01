@@ -5,11 +5,12 @@
                 <h1 class="text-xl font-bold">Logo</h1>
                 <nav class="flex items-center">
                     <!-- <router-link to="/dashboard" class="mr-4">Dashboard</router-link> -->
-                    <div v-if="userState != null">
-                        <p>Name: {{ userState.name }}</p>
-                    </div>
+                    
 
                     <router-link v-if="userState == null" to="/login" class="mr-4">Login</router-link>
+                    <router-link v-if="userState !== null" :to="{ name: 'QRCode', params: { id: userState.id } }" class="mr-4">
+                        <img src="/storage/images/qr-icon.png" class="w-5 h-5" alt="">
+                    </router-link>
 
                     <div v-if="userState != null" class="relative" @click="toggleDropdown">
                         <img  :src="'storage/'+userState.avatar" alt="Profile Picture"
