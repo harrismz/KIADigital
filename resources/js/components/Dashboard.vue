@@ -1,5 +1,6 @@
 <template>
 <div class="flex flex-col h-screen bg-gray-100 p-6">
+    <user-card />
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
     <!-- Profile Card -->
     <ProfileCard
@@ -27,12 +28,14 @@ import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale } from 'chart.js';
 import ProfileCard from './utils/ProfileCard.vue';
 import toastr from 'toastr';
+import UserCard from './UserCard.vue';
 ChartJS.register(LineElement, CategoryScale, LinearScale);
 
 export default {
 components: {
     ProfileCard,
-    LineChart: Line
+    LineChart: Line,
+    UserCard
 },
 data() {
     return {

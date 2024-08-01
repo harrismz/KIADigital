@@ -10,4 +10,8 @@ class Mother extends Model
     use HasFactory;
     
     protected $table = "mother";
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
