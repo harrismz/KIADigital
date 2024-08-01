@@ -57,7 +57,7 @@
                             <option value="" disabled>Pilih Golongan Darah</option>
                             <option v-for="bloodType in bloodTypeList" :key="bloodType.id"
                                 :value="bloodType.blood_type_name">
-                                {{ bloodType.blood_type_name }} ( {{ bloodType.rhesus }} )
+                                {{ bloodType.blood_type_name }} ( {{ bloodType.reshus }} )
                             </option>
                         </select>
                     </div>
