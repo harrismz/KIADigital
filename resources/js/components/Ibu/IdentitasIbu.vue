@@ -6,11 +6,6 @@
                     <img :src="imgLogo.value" alt="Image" class="w-full h-full object-cover">
                 </div>
             </div>
-            <h1>Identitas Ibu</h1>
-            <p>NIK: {{ nik }}</p>
-            <p>name: {{ name }}</p>
-            <p>email: {{ email }}</p>
-            <p>id: {{ user_id }}</p>
             <div class="w-1/2 p-8 bg-white">
                 <h2 class="text-2xl font-bold mb-6 text-center">IDENTITAS IBU</h2>
                 <form @submit.prevent="submitIdentitasIbu">
@@ -62,7 +57,7 @@
                             <option value="" disabled>Pilih Golongan Darah</option>
                             <option v-for="bloodType in bloodTypeList" :key="bloodType.id"
                                 :value="bloodType.blood_type_name">
-                                {{ bloodType.blood_type_name }}
+                                {{ bloodType.blood_type_name }} ( {{ bloodType.rhesus }} )
                             </option>
                         </select>
                     </div>
@@ -200,17 +195,17 @@ const formIdentitasIbu = reactive({
 
 const submitIdentitasIbu = async () => {
     try {
-        const response = await axios.post(`${baseUrl.value}/api/identitas-ibu`, formIdentitasIbu);
-        if (response && response.data) {
-            console.log("creating", response.data);
-            console.log("User data:", response.data.user);
-        }
+        // const response = await axios.post(`${baseUrl.value}/api/identitas-ibu`, formIdentitasIbu);
+        // if (response && response.data) {
+        //     console.log("creating", response.data);
+        //     console.log("User data:", response.data.user);
+        // }
         toastr.success('Identitas Ibu Berhasil disimpan.');
 
-
-
-
-        // router.push('/identitas-ayah', response.data);
+        router.push({
+            name: 'identitas-ayah',
+            params: {}
+        })
         // Handle the next step or redirect
     } catch (error) {
         console.error(error);
