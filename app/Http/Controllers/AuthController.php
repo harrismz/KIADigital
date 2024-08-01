@@ -13,6 +13,13 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
+
+    public function test(){
+        $user = User::find(1);
+
+        return $user->mother;
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -70,6 +77,11 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        return response()->json($request->user());
+
+        $user = $request->user()->load('mother');
+
+        return response()->json(
+            $user
+        );
     }
 }
