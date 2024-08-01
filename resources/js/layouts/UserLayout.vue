@@ -39,7 +39,8 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex';
+
+import { mapState, mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
 
 export default {
@@ -50,41 +51,41 @@ export default {
             userState: null
         };
     },
-    // computed: {
-    //     // ...mapState(['user']),
-    //     userInfo() {
-    //         console.log(this.user); // Debugging untuk melihat data user
-    //         return this.user;
-    //     },
-    // },
+    computed: {
+        ...mapState(['user']),
+        ...mapGetters([
+            'getUser'
+        ])
+    },
     mounted() {
         console.log('mounting userlayout')
         this.fetchAuthUser()
         console.log('userlayout is mounted')
     },
     methods: {
+
+        ...mapActions(['updateUser']),
+        
         fetchAuthUser() {
             console.log('fetchAuthUser')
             
             axios.get('api/user', {
                 headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                    }
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                }
             })
                 .then(response => response.data)
                 .then(user => {
                     console.log({ user })
+                    this.updateUser(user)
                     this.userState = user;
                 })
         },
+
         toggleDropdown() {
             this.dropdownOpen = !this.dropdownOpen;
         },
-        // logout() {
-        //     // Tambahkan logika logout di sini, misalnya dengan memanggil API logout
-        //     axios.post(window.routeUrl.logout);
-        //     console.log('Logout');
-        // }
+
         async logout() {
             try {
                 await axios.post('/api/logout', {}, {

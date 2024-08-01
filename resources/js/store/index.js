@@ -16,13 +16,20 @@ const store = createStore({
             return !!state.user;  // Mengembalikan true jika user tidak null
         },
         user: (state) => state.user,
+        getUser: (state) => state.user,
         baseUrl: (state) => state.config.baseUrl,
         imgLogo: (state) => state.config.imgLogo,
     },
+
     mutations: {
         SET_USER(state, user) {
             state.user = user;
         },
+
+        setUser(state, user) {
+            state.user = user;
+        },
+
         setBaseUrl(state, url) {
             state.config.baseUrl = url;
         },
@@ -42,6 +49,10 @@ const store = createStore({
         // logout({ commit }) {
         //     commit('LOGOUT');
         // },
+        updateUser({commit}, user ){
+            commit('setUser', user );
+        },
+
         async fetchUser({ commit }) {
             try {
                 console.log('Fetching user...');  // Debugging
