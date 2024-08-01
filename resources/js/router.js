@@ -51,11 +51,11 @@ const routes = [
         }
     },
     {
-        path: '/qr-code',
+        path: '/qr-code/:id',
         name: 'QRCode',
         component: QRCode,
         meta: {
-            layout: 'LoginLayout'
+            layout: 'UserLayout'
         }
     },
 
