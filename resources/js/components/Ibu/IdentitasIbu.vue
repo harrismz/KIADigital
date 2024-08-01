@@ -258,7 +258,7 @@ const fetchJobs = async () => {
 const fetchReligion = async () => {
     try {
         const religionResponse = await axios.get(`${baseUrl.value}/api/religion`);
-        religion.value = religionResponse.data;
+        religionList.value = religionResponse.data;
         console.log({ religion });
     } catch (error) {
         console.error('Error fetching religion:', error);
