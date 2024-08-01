@@ -10,7 +10,9 @@ use App\Models\Province;
 class LocationController extends Controller
 {
     public function getKelurahan()
-    {   $kelurahan = Kelurahan::all();
+    {   
+
+        $kelurahan = Kelurahan::limit(100)->get();
 
         // Mengecek apakah user ditemukan
         if ($kelurahan) {

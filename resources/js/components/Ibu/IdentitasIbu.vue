@@ -3,7 +3,7 @@
         <div class="flex w-full max-w-4xl shadow-md rounded-lg overflow-hidden">
             <div class="w-1/2 bg-gray-200 flex items-center justify-center">
                 <div>
-                    <img :src="imgLogo.value" alt="Image" class="w-full h-full object-cover">
+                    <img :src="'/storage/images/ibu.jpg'" alt="Image" class="w-full h-full object-cover">
                 </div>
             </div>
             <div class="w-1/2 p-8 bg-white">
@@ -258,7 +258,7 @@ const fetchJobs = async () => {
 const fetchReligion = async () => {
     try {
         const religionResponse = await axios.get(`${baseUrl.value}/api/religion`);
-        religion.value = religionResponse.data;
+        religionList.value = religionResponse.data;
         console.log({ religion });
     } catch (error) {
         console.error('Error fetching religion:', error);
