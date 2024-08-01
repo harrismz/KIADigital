@@ -8,5 +8,7 @@
 !ibu.jpg
 !qr-icon.png
 !anak-icon.png
+!*.jpg
+!*.png
 !.gitignore
-
+!*/
