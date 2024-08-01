@@ -54,7 +54,7 @@ Route::get('/config', [ConfigController::class, 'getAppUrl']);
     // return;
 // }
 
-Auth::routes();
+// Auth::routes();
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
@@ -64,7 +64,6 @@ Route::group(['prefix' => 'admin'], function () {
 // Route::get('/{any}', function () {
     //     return view('voyager::index'); // Ensure this is the correct view being used
     // })->where('any', '.*')->middleware('admin.user');
-    
     Auth::routes();
     
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
