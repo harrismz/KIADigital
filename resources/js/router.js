@@ -19,6 +19,7 @@ import KalenderHpl from './components/ibu/KalenderHpl.vue';
 import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue';
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
+import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -130,6 +131,15 @@ const routes = [
         path: '/grafik-evaluasi-kehamilan',
         name: 'grafik-evaluasi-kehamilan',
         component: GrafikEvaluasiKehamilan,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/riwayat-persalinan',
+        name: 'riwayat-persalinan',
+        component: RiwayatPersalinan,
         props: true,
         meta: {
             layout: 'UserLayout'

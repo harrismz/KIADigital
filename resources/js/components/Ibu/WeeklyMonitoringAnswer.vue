@@ -3,7 +3,9 @@
         <div class="mb-6">
             <div class="grid grid-cols-2 gap-4">
                 <h1 class="text-2xl font-bold">Dairy Ibu Hamil - Week 3</h1>
-
+                <div class="flex justify-end">
+                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'"></img>
+                </div>
             </div>
         </div>
 
@@ -47,6 +49,7 @@
 <script>
 import toastr from 'toastr';
 import { useRouter } from 'vue-router';
+import { reactive } from 'vue';
 
 export default {
     setup() {
@@ -56,7 +59,7 @@ export default {
             { text: 'Demam Lebih dari Dua Hari?', type: 'choice', answer: '' },
             { text: 'Pusing/Sakit Kepala Berat?', type: 'choice', answer: '' },
             { text: 'Sulit Tidur / Cemas Berlebih?', type: 'choice', answer: '' },
-            { text: 'Keluhan/Gejala Lainnya', type: 'text', answer: '' },
+            { text: 'Keluhan/Gejala Lainnya', type: 'text', answer: '' }
         ]);
 
         const submit = () => {
@@ -69,10 +72,18 @@ export default {
             questions.push({ text: 'Pertanyaan Baru', type: 'choice', answer: '' });
         };
 
+        const gotoHome = () => {
+            router.push({
+                name: 'profile',
+                params: {}
+            });
+        };
+
         return {
             questions,
             submit,
             addQuestion,
+            gotoHome
         };
     },
 }
