@@ -1,16 +1,23 @@
-import { createStore } from 'vuex';
+// import Vue from 'vue';
+import Vuex, { createStore } from 'vuex';
 import axios from 'axios';
+
+// Vue.useAttrs(Vuex)
 
 const store = createStore({
     state: {
-        user: {
-            role: 'ibu'
-        }, // Informasi pengguna yang login
+        user: null,
+
+        auth_token: null,
+        
+        baseUrl: window.location.origin,
+
         config: {
-            baseUrl: '', // URL dasar yang mungkin diperlukan
+            baseUrl: window.location.origin, // URL dasar yang mungkin diperlukan
             imgLogo: '',
         },
     },
+
     getters: {
         isAuthenticated(state) {
             return !!state.user;  // Mengembalikan true jika user tidak null
@@ -23,11 +30,18 @@ const store = createStore({
 
     mutations: {
         SET_USER(state, user) {
+            
             state.user = user;
         },
 
         setUser(state, user) {
+            // localStorage.setItem('auth_token', user.token ); //save token to localStorage
             state.user = user;
+        },
+
+        setToken(state, token) {
+            // ini
+            state.auth_token = token;
         },
 
         setBaseUrl(state, url) {
@@ -53,12 +67,29 @@ const store = createStore({
             commit('setUser', user );
         },
 
-        async fetchUser({ commit }) {
+        async fetchUser( context ) {
             try {
-                console.log('Fetching user...');  // Debugging
-                const response = await axios.get('/user');
-                console.log('User fetched:', response.data);  // Debugging
-                commit('SET_USER', response.data);
+                let endpoint = context.getters.baseUrl + '/api/user';
+                console.log(endpoint)
+                axios.get( endpoint , {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                })
+                    .then(response => response.data)
+                    .then(user => {
+                        console.log({ user })
+                        context.commit('setUser', user);
+                    })
+                    .catch(err => {
+                        // do something like remove the localStorage
+
+                        // localStorage.removeItem('auth_token');
+                        // this
+                        // this.updateUser(null)
+                        context.commit('setUser', null);
+
+                    })
             } catch (error) {
                 console.error('Error fetching user:', error);
             }

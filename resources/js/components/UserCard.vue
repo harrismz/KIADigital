@@ -3,7 +3,7 @@
         <div class="col-span-1 bg-white p-4 ">
             <span class="font-bold">Ibu</span>
             <div class="mt-2">
-                <span>Nama: {{ user.name }}</span>
+                <span v-if="user">Nama: {{ user.name }}</span>
             </div>
             <div>
                 HPL: 07-09-2025

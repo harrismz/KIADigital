@@ -20,20 +20,19 @@ import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue'
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 
 const resolveComponentBasedOnRole = async () => {
-    const userRole = store.state.user.role; // Assuming the user's role is stored in the Vuex store
+    const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
 
     switch (userRole) {
+        case null:
+            return Dashboard;
         case 'ibu':
-            const { default: MenuIbu } = await import('./components/ibu/menu.vue');
             return MenuIbu;
         case 'ayah':
-            const { default: IdentitasAyah } = await import('./components/Ayah/IdentitasAyah.vue');
             return IdentitasAyah;
         default:
-            const { default: Checkup } = await import('./components/medis/checkup.vue');
             return Checkup;
     }
-}
+};
 
 const routes = [
     {
@@ -60,8 +59,6 @@ const routes = [
             layout: 'UserLayout'
         }
     },
-
-    // IBU
     {
         path: '/identitas-ibu',
         name: 'identitas-ibu',
@@ -116,30 +113,19 @@ const routes = [
             layout: 'UserLayout'
         }
     },
-    // router teguh
     {
         path: '/admin',
-        name: 'Profile',
+        name: 'Admin',
         component: resolveComponentBasedOnRole,
         meta: {
             layout: 'UserLayout',
             requiresAuth: true
         }
     },
-
     {
         path: '/',
-        name: 'Home',
+        name: 'home',
         component: Dashboard,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: false
-        }
-    },
-    {
-        path: '/profile',
-        name: 'Profile',
-        component: Profile,
         meta: {
             layout: 'UserLayout',
             requiresAuth: false
@@ -147,17 +133,34 @@ const routes = [
     },
     {
         path: '/dashboard',
-        name: 'Dashboard',
+        name: 'dashboard',
         component: Dashboard,
         meta: {
             layout: 'UserLayout',
             requiresAuth: false
         }
     },
-
+    {
+        path: '/checkup-anak',
+        name: 'checkup-anak',
+        component: Checkup,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/profile',
+        name: 'user-profile',
+        component: Profile,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
     {
         path: '/admin/checkup',
-        name: 'checkup',
+        name: 'admin-checkup',
         component: Checkup,
         meta: {
             layout: 'UserLayout',
@@ -166,52 +169,41 @@ const routes = [
     },
     {
         path: '/admin/checkup/show',
-        name: 'checkup-show',
+        name: 'admin-checkup-show',
         component: CheckupShow,
         meta: {
             layout: 'UserLayout',
             requiresAuth: true
         }
     },
-    // end router teguh
-
     {
         path: '/health-record-ibu',
-        name: 'HealthRecordIbu',
+        name: 'health-record-ibu',
         component: HealthRecordIbu,
         meta: {
             layout: 'UserLayout',
             requiresAuth: true
         }
-    },
-
-    // AYAH
-    // ANAK
-    // Anda bisa menambahkan rute lain di sini
+    }
 ];
 
 const router = createRouter({
     history: createWebHistory(),
-    routes,
+    routes
 });
 
-// router.beforeEach((to, from, next) => {
-//     // Periksa apakah rute memerlukan autentikasi
-//     if (to.meta.requiresAuth) {
-//         // Cek status autentikasi (misalnya, dari Vuex store)
-//         const isAuthenticated = store.getters.isAuthenticated;  // Ganti sesuai dengan implementasi autentikasi Anda
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth) {
+        const isAuthenticated = store.getters.isAuthenticated;
 
-//         if (!isAuthenticated) {
-//             // Jika tidak autentikasi, arahkan ke halaman login
-//             window.location.href = '/admin/login';
-//         } else {
-//             // Jika sudah autentikasi, lanjutkan ke rute yang diinginkan
-//             next();
-//         }
-//     } else {
-//         // Jika tidak memerlukan autentikasi, lanjutkan ke rute yang diinginkan
-//         next();
-//     }
-// });
+        if (!isAuthenticated) {
+            next({ name: 'login' });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
 
 export default router;
