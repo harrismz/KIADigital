@@ -75,7 +75,7 @@ export default {
 
             localStorage.setItem('auth_token', data.access_token);
 
-            this.$router.push('/dashboard');
+            this.$router.push('/profile');
 
         } catch (error) {
             console.log(error)

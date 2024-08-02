@@ -12,12 +12,12 @@ import LoginLayout from './layouts/LoginLayout.vue';
 import MenuMedis from './components/medis/menu.vue';
 import Checkup from './components/medis/checkup.vue';
 import CheckupShow from './components/medis/checkupShow.vue';
-import MenuIbu from './components/ibu/menu.vue';
+import MenuIbu from './components/Ibu/menu.vue';
 import Dashboard from './components/Dashboard.vue';
-import StatusKehamilan from './components/ibu/StatusKehamilan.vue';
+import StatusKehamilan from './components/Ibu/StatusKehamilan.vue';
 import KalenderHpl from './components/ibu/KalenderHpl.vue';
-import WeeklyMonitoringAnswer from './components/ibu/WeeklyMonitoringAnswer.vue';
-import WeeklyMonitoringResult from './components/ibu/WeeklyMonitoringResult.vue';
+import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue';
+import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user.role; // Assuming the user's role is stored in the Vuex store
