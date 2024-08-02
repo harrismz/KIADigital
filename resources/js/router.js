@@ -170,26 +170,26 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: false
         }
     },
 
     {
-        path: '/admin/checkup',
+        path: '/checkup',
         name: 'admin-checkup',
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: false
         }
     },
     {
-        path: '/admin/checkup/show',
+        path: '/checkup/show',
         name: 'admin-checkup-show',
         component: CheckupShow,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: false
         }
     },
     {
