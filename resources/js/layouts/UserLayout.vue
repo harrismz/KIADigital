@@ -19,6 +19,10 @@
                             class="rounded-full w-10 h-10 cursor-pointer">
                         <ul v-if="dropdownOpen"
                             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg">
+
+
+                            <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
+                                {{ user.name }} - {{ user.role.display_name }}</li>
                             <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" @click="logout">
                                 Logout</li>
                         </ul>
