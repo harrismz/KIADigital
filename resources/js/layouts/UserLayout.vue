@@ -3,7 +3,7 @@
         <header class="bg-gray-800 text-white p-4">
             <div class="container mx-auto flex justify-between items-center">
                 <!-- <h1 class="text-xl font-bold">{{Logo}}</h1> -->
-                <img :src="'storage/images/avatar.png'" alt="" srcset="" class="w-10 h-10">
+                <img :src="baseUrl +  '/storage/images/avatar.png'" alt="" srcset="" class="w-10 h-10">
                 <nav class="flex items-center">
                     <!-- <router-link to="/dashboard" class="mr-4">Dashboard</router-link> -->
 
@@ -11,11 +11,11 @@
 
                     <router-link v-if="user !== null" :to="{ name: 'QRCode', params: { id: user.id } }"
                         class="mr-4">
-                        <img src="/storage/images/qr-icon.png" class="w-5 h-5" alt="">
+                        <img :src=" baseUrl + '/storage/images/qr-icon.png'" class="w-5 h-5" alt="">
                     </router-link>
 
                     <div v-if="user != null" class="relative" @click="toggleDropdown">
-                        <img :src="'storage/' + user.avatar" alt="Profile Picture"
+                        <img :src=" baseUrl +'/storage/' + user.avatar" alt="Profile Picture"
                             class="rounded-full w-10 h-10 cursor-pointer">
                         <ul v-if="dropdownOpen"
                             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg">
@@ -55,8 +55,9 @@ export default {
     },
     computed: {
         ...mapState(['user']),
+
         ...mapGetters([
-            'getUser'
+            'getUser', 'baseUrl'
         ]),
 
         user() {
