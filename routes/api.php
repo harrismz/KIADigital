@@ -46,3 +46,8 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api')
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
 Route::get('test', [AuthController::class, 'test']);
 
+
+
+Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
+Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
+

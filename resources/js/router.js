@@ -210,7 +210,17 @@ const routes = [
             layout: 'UserLayout',
             requiresAuth: true
         }
+    },
+    {
+        path: '/pregnancy_history',
+        name: 'pregnancy_history',
+        component: PregnancyHistory,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
     }
+
 ];
 
 const router = createRouter({
