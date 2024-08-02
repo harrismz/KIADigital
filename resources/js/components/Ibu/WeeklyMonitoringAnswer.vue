@@ -45,25 +45,35 @@
 </template>
 
 <script>
+import toastr from 'toastr';
+import { useRouter } from 'vue-router';
+
 export default {
-    data() {
+    setup() {
+        const router = useRouter();
+
+        const questions = reactive([
+            { text: 'Demam Lebih dari Dua Hari?', type: 'choice', answer: '' },
+            { text: 'Pusing/Sakit Kepala Berat?', type: 'choice', answer: '' },
+            { text: 'Sulit Tidur / Cemas Berlebih?', type: 'choice', answer: '' },
+            { text: 'Keluhan/Gejala Lainnya', type: 'text', answer: '' },
+        ]);
+
+        const submit = () => {
+            console.log(questions);
+            toastr.success('Data Berhasil disimpan');
+            router.push('/weekly-monitoring-result');
+        };
+
+        const addQuestion = () => {
+            questions.push({ text: 'Pertanyaan Baru', type: 'choice', answer: '' });
+        };
+
         return {
-            questions: [
-                { text: 'Demam Lebih dari Dua Hari?', type: 'choice', answer: '' }, //sepertinya perlu nambahin type answer untuk question
-                { text: 'Pusing/Sakit Kepala Berat?', type: 'choice', answer: '' },
-                { text: 'Sulit Tidur / Cemas Berlebih?', type: 'choice', answer: '' },
-                { text: 'Keluhan/Gejala Lainnya', type: 'text', answer: '' },
-            ]
-        }
+            questions,
+            submit,
+            addQuestion,
+        };
     },
-    methods: {
-        submit() {
-            console.log(this.questions);
-            alert('Data berhasil disimpan!');
-        },
-        addQuestion() {
-            this.questions.push({ text: 'Pertanyaan Baru', type: 'choice', answer: '' });
-        }
-    }
 }
 </script>

@@ -38,59 +38,21 @@ export default {
             mother: [],
             currentWeek: 0,
             weeks: [],
-            cards: [
+            cards: [ //data card based on currentWeek ( week yg dipilih ) 
                 { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', link: '#', img: '/storage/images/janin.png' },
                 { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: 'weekly-monitoring-result', img: '/storage/images/diary.png' },
                 { title: 'Catatan Kesehatan Ibu', description: 'Hasil skrining preeklampsia dan hasil pemeriksaan kesehatan ibu, serta saran hingga tanggapan tenaga kesehatan terkait keluhan dapat dilihat dalam menu ini.', link: '#', img: '/storage/images/catatan.png' },
-                { title: 'Grafik Evaluasi Kehamilan', description: 'Grafik peningkatan berat badan dan grafik evaluasi kehamilan dapat dipantau dalam menu ini.', link: '#', img: '/storage/images/grafik.png' },
+                { title: 'Grafik Evaluasi Kehamilan', description: 'Grafik peningkatan berat badan dan grafik evaluasi kehamilan dapat dipantau dalam menu ini.', link: 'grafik-evaluasi-kehamilan', img: '/storage/images/grafik.png' },
                 { title: 'Information', description: 'Informasi seputar kehamilan, pola makan dan minum ibu, aktivitas fisik dan latihan fisik, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img: '/storage/images/informasi.png' },
                 { title: 'Riwayat Persalinan', description: 'Informasi seputar persalinan, kondisi bayi saat lahir, hingga asuhan bayi baru lahir (IMD dalam 1 jam pertama kelahiran) bisa dapat dilihat dalam menu ini.', link: '#', img: '/storage/images/riwayat.png' },
             ]
         };
     },
     methods: {
-        fetchUserAuth() {
-            axios.get('/user/')
-                .then(response => response.data)
-                .then(response => {
-                    this.user = response.user;
-                    console.log('fetching user : ', response.user);
-                })
-                .catch(error => {
-                    console.error(error);
-                    toastr.error(`fetching user ERROR : ${error}`)
-                });
-        },
-        fetchMother() {
-            const user_id = this.user.id;
-            axios.get(`/api/get_mother/${user_id}`)
-                .then(response => response.data)
-                .then(response => {
-                    console.log('fetching mother : ', response.data);
-                })
-        },
-        fetchWeekUser() {
-            const mother_id = this.mother.id
-            axios.get(`/api/get_week_user/${mother_id}`)
-                .then(response => response.data)
-                .then(response => {
 
-                    console.log('fetching week : ', response);
-                })
-                .catch(error => {
-                    console.error(error);
-                    toastr.error(`fetching week ERROR : ${error}`)
-                });
-
-        }
     },
     mounted() {
-        this.fetchUserAuth()
-            .then(() => this.fetchMother(this.user))
-            .then(() => this.fetchWeekUser(this.mother.id))
-            .catch(error => console.error('Error fetching data:', error));
-    // this.fetchWeekUser();
-    // this.fetchMother();
+
     }
 };
 </script>

@@ -18,6 +18,7 @@ import StatusKehamilan from './components/Ibu/StatusKehamilan.vue';
 import KalenderHpl from './components/ibu/KalenderHpl.vue';
 import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue';
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
+import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -44,14 +45,6 @@ const routes = [
         }
     },
     {
-        path: '/registration',
-        name: 'registration',
-        component: Registration,
-        meta: {
-            layout: 'LoginLayout'
-        }
-    },
-    {
         path: '/qr-code/:id',
         name: 'QRCode',
         component: QRCode,
@@ -59,6 +52,16 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    // Registration Process
+    {
+        path: '/registration',
+        name: 'registration',
+        component: Registration,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+
     {
         path: '/identitas-ibu',
         name: 'identitas-ibu',
@@ -96,6 +99,16 @@ const routes = [
         }
     },
     {
+        path: '/profile',
+        name: 'user-profile',
+        component: Profile,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    // Detail Halaman Profile
+    {
         path: '/weekly-monitoring-answer',
         name: 'weekly-monitoring-answer',
         component: WeeklyMonitoringAnswer,
@@ -113,6 +126,17 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    {
+        path: '/grafik-evaluasi-kehamilan',
+        name: 'grafik-evaluasi-kehamilan',
+        component: GrafikEvaluasiKehamilan,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+
+    // Halaman Admin
     {
         path: '/admin',
         name: 'Admin',
@@ -149,15 +173,7 @@ const routes = [
             requiresAuth: true
         }
     },
-    {
-        path: '/profile',
-        name: 'user-profile',
-        component: Profile,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: false
-        }
-    },
+
     {
         path: '/admin/checkup',
         name: 'admin-checkup',

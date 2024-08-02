@@ -8,7 +8,7 @@
                 <img :src="img" alt="" class="w-24 h-24">
             </div>
         </div>
-        <a href="#" @click="routerLinkTo" class="text-blue-500">Selengkapnya ></a>
+        <button @click="routerLinkTo" class="text-blue-500">Selengkapnya ></button>
     </div>
 
 </template>
