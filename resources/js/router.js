@@ -137,6 +137,15 @@ const routes = [
         }
     },
     {
+        path: '/profile',
+        name: 'Profile',
+        component: Profile,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    {
         path: '/dashboard',
         name: 'Dashboard',
         component: Dashboard,
