@@ -137,6 +137,15 @@ const routes = [
         }
     },
     {
+        path: '/checkup-anak',
+        name: 'Home',
+        component: Checkup,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
+    },
+    {
         path: '/profile',
         name: 'Profile',
         component: Profile,
