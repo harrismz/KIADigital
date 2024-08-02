@@ -16,6 +16,8 @@ import MenuIbu from './components/ibu/menu.vue';
 import Dashboard from './components/Dashboard.vue';
 import StatusKehamilan from './components/ibu/StatusKehamilan.vue';
 import KalenderHpl from './components/ibu/KalenderHpl.vue';
+import WeeklyMonitoringAnswer from './components/ibu/WeeklyMonitoringAnswer.vue';
+import WeeklyMonitoringResult from './components/ibu/WeeklyMonitoringResult.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user.role; // Assuming the user's role is stored in the Vuex store
@@ -94,6 +96,24 @@ const routes = [
         props: true,
         meta: {
             layout: 'LoginLayout'
+        }
+    },
+    {
+        path: '/weekly-monitoring-answer',
+        name: 'weekly-monitoring-answer',
+        component: WeeklyMonitoringAnswer,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/weekly-monitoring-result',
+        name: 'weekly-monitoring-result',
+        component: WeeklyMonitoringResult,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
         }
     },
     // router teguh
