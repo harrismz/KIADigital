@@ -16,6 +16,25 @@ const store = createStore({
             baseUrl: window.location.origin, // URL dasar yang mungkin diperlukan
             imgLogo: '',
         },
+
+        dashboard_menu: {
+            public:[
+                { title: 'Selamat Datang', description: 'lorem ipsum', link: '#', img:  window.location.origin+ "/storage/images/janin.png" },
+            ],
+
+            medic:[
+                { title: 'Check Up', description: 'Menu check up sebagai catatan kesehatan ibu serta pertumbuhan anak yang diintegrasikan menggunakan QR code.', link: '#', img:  window.location.origin+ "/storage/images/checkup.png" },
+                { title: 'History', description: 'History seluruh check up yang telah dilakukan baik pada ibu hamil maupun anak.', link: '#', img:  window.location.origin+ "/storage/images/history.png" },
+                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img:  window.location.origin+ "/storage/images/information.png" },
+
+            ],
+
+            ibu: [
+                { title: 'Input HPL', description: 'Menu Input HPL untuk mencatat HPL', link: '#', img:  window.location.origin+ "/storage/images/checkup.png" },
+                { title: 'Bayi Sudah Lahir', description: 'Menu Bayi', link: '#', img:  window.location.origin+ "/storage/images/checkup.png" },
+
+            ],
+        }
     },
 
     getters: {
@@ -26,6 +45,25 @@ const store = createStore({
         getUser: (state) => state.user,
         baseUrl: (state) => state.config.baseUrl,
         imgLogo: (state) => state.config.imgLogo,
+
+        getMenu: (state) => {
+            // check current role
+            let dm = state.dashboard_menu;
+            let user = state.user;
+            if(user == null) {
+                return dm.public;
+            }
+
+            if(user.role.name == 'medic') {
+                return dm.medic;
+            }
+            
+            if(user.role.name == 'ibu') {
+                return dm.ibu;
+            }
+            
+            return dm.public;
+        }
     },
 
     mutations: {

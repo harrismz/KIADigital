@@ -30,6 +30,7 @@ import ProfileCard from './utils/ProfileCard.vue';
 import toastr from 'toastr';
 import UserCard from './UserCard.vue';
 ChartJS.register(LineElement, CategoryScale, LinearScale);
+import {mapGetters} from 'vuex';
 
 export default {
 components: {
@@ -43,14 +44,11 @@ data() {
     mother: [],
     currentWeek: 0,
     weeks: [],
-    cards: [
-        { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', link: '#', img: "/storage/images/janin.png" },
-        { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: '#', img: "/storage/images/diary.png" },
-        { title: 'Catatan Kesehatan Ibu', description: 'Hasil skrining preeklampsia dan hasil pemeriksaan kesehatan ibu, serta saran hingga tanggapan tenaga kesehatan terkait keluhan dapat dilihat dalam menu ini.', link: '#', img: "/storage/images/catatan.png" },
-        { title: 'Grafik Evaluasi Kehamilan', description: 'Grafik peningkatan berat badan dan grafik evaluasi kehamilan dapat dipantau dalam menu ini.', link: '#',  img: "/storage/images/grafik.png"  },
-        { title: 'Information', description: 'Informasi seputar kehamilan, pola makan dan minum ibu, aktivitas fisik dan latihan fisik, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img: "/storage/images/information.png" },
-        { title: 'Riwayat Persalinan', description: 'Informasi seputar persalinan, kondisi bayi saat lahir, hingga asuhan bayi baru lahir (IMD dalam 1 jam pertama kelahiran) bisa dapat dilihat dalam menu ini.', link: '#', img: "/storage/images/persalinan.png" },
-    ],
+    // cards: [
+    //     { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', link: '#', img: "/storage/images/janin.png" },
+    //     { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: '#', img: "/storage/images/diary.png" },
+    //     { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: '#', img: "/storage/images/diary.png" },
+    // ],
     chartData: {
         labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
         datasets: [
@@ -105,6 +103,14 @@ methods: {
         console.error(error);
         toastr.error(`fetching week ERROR : ${error}`)
         });
+    }
+},
+
+computed:{
+    ...mapGetters(['getMenu']),
+
+    cards(){
+        return this.getMenu;
     }
 },
 mounted() {
