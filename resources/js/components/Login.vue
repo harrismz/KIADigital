@@ -49,6 +49,7 @@ import axios from 'axios';
 import LoginLayout from '../layouts/LoginLayout.vue';
 import toastr from 'toastr';
 
+
 export default {
     components: {
         LoginLayout
@@ -73,7 +74,12 @@ export default {
             
             let data = response.data;
 
+            console.log({response, data})
+
             localStorage.setItem('auth_token', data.access_token);
+            
+            // save to store
+            this.$store.commit('setToken', data.access_token );
 
             this.$router.push('/dashboard');
 

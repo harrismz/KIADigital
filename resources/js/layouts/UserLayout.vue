@@ -7,15 +7,15 @@
                 <nav class="flex items-center">
                     <!-- <router-link to="/dashboard" class="mr-4">Dashboard</router-link> -->
 
+                    <router-link v-if="user == null" to="/login" class="mr-4">Login</router-link>
 
-                    <router-link v-if="userState == null" to="/login" class="mr-4">Login</router-link>
-                    <router-link v-if="userState !== null" :to="{ name: 'QRCode', params: { id: userState.id } }"
+                    <router-link v-if="user !== null" :to="{ name: 'QRCode', params: { id: user.id } }"
                         class="mr-4">
                         <img src="/storage/images/qr-icon.png" class="w-5 h-5" alt="">
                     </router-link>
 
-                    <div v-if="userState != null" class="relative" @click="toggleDropdown">
-                        <img :src="'storage/' + userState.avatar" alt="Profile Picture"
+                    <div v-if="user != null" class="relative" @click="toggleDropdown">
+                        <img :src="'storage/' + user.avatar" alt="Profile Picture"
                             class="rounded-full w-10 h-10 cursor-pointer">
                         <ul v-if="dropdownOpen"
                             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg">
@@ -50,14 +50,18 @@ export default {
     data() {
         return {
             dropdownOpen: false,
-            userState: null
+            userState:null
         };
     },
     computed: {
         ...mapState(['user']),
         ...mapGetters([
             'getUser'
-        ])
+        ]),
+
+        user() {
+            return this.getUser;
+        }
     },
     mounted() {
         console.log('mounting userlayout')
@@ -66,22 +70,23 @@ export default {
     },
     methods: {
 
-        ...mapActions(['updateUser']),
+        ...mapActions(['updateUser', 'fetchUser']),
 
         fetchAuthUser() {
             console.log('fetchAuthUser')
-
-            axios.get('api/user', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                }
-            })
-                .then(response => response.data)
-                .then(user => {
-                    console.log({ user })
-                    this.updateUser(user)
-                    this.userState = user;
-                })
+            this.fetchUser(); //declared in store/index.js ( vuex )
+            
+            // axios.get('api/user', {
+            //     headers: {
+            //         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+            //     }
+            // })
+            //     .then(response => response.data)
+            //     .then(user => {
+            //         console.log({ user })
+            //         this.updateUser(user)
+            //         this.userState = user;
+            //     })
         },
 
         toggleDropdown() {
