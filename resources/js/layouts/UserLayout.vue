@@ -9,7 +9,7 @@
 
                     <router-link v-if="user == null" to="/login" class="mr-4">Login</router-link>
 
-                    <router-link v-if="user !== null" :to="{ name: 'QRCode', params: { id: user.id } }"
+                    <router-link v-if="user && userRole == 'ibu' " :to="{ name: 'QRCode', params: { id: user.id } }"
                         class="mr-4">
                         <img :src=" baseUrl + '/storage/images/qr-icon.png'" class="w-5 h-5" alt="">
                     </router-link>
@@ -61,10 +61,10 @@ export default {
         };
     },
     computed: {
-        ...mapState(['user']),
+        // ...mapState(['user']),
 
         ...mapGetters([
-            'getUser', 'baseUrl'
+            'getUser', 'baseUrl', 'userRole'
         ]),
 
         user() {

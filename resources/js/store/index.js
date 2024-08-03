@@ -3,6 +3,7 @@ import Vuex, { createStore } from 'vuex';
 import axios from 'axios';
 import toastr from 'toastr';
 // Vue.useAttrs(Vuex)
+const origin = window.location.origin;
 
 const store = createStore({
     state: {
@@ -10,22 +11,25 @@ const store = createStore({
 
         auth_token: null,
         
-        baseUrl: window.location.origin,
+        baseUrl: origin,
 
         config: {
-            baseUrl: window.location.origin, // URL dasar yang mungkin diperlukan
+            baseUrl: origin, // URL dasar yang mungkin diperlukan
             imgLogo: '',
         },
 
         dashboard_menu: {
             public:[
-                { title: 'Selamat Datang', description: 'lorem ipsum', link: '#', img:  window.location.origin+ "/storage/images/janin.png" },
+                { title: 'Selamat Datang', description: 'lorem ipsum', link: '#', img:  origin+ "/storage/images/janin.png" },
             ],
 
             medic:[
-                { title: 'Check Up', description: 'Menu check up sebagai catatan kesehatan ibu serta pertumbuhan anak yang diintegrasikan menggunakan QR code.', link: '#', img:  window.location.origin+ "/storage/images/checkup.png" },
-                { title: 'History', description: 'History seluruh check up yang telah dilakukan baik pada ibu hamil maupun anak.', link: '#', img:  window.location.origin+ "/storage/images/history.png" },
-                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img:  window.location.origin+ "/storage/images/information.png" },
+                { title: 'Check Up', description: 'Menu check up sebagai catatan kesehatan ibu serta pertumbuhan anak yang diintegrasikan menggunakan QR code.', 
+                    link: 'checkup', img:  origin+ "/storage/images/checkup.png" },
+                { title: 'History', description: 'History seluruh check up yang telah dilakukan baik pada ibu hamil maupun anak.', 
+                    link: 'pregnancy_history', img:  origin+ "/storage/images/history.png" },
+                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', 
+                    link: 'informasi-medis', img:  origin+ "/storage/images/information.png" },
 
             ],
 
@@ -50,7 +54,34 @@ const store = createStore({
             return true;
            // Mengembalikan true jika user tidak null
         },
+
         user: (state) => state.user,
+
+        staff_id: (state) => {
+            
+            if(state.user) {
+                let user = state.user;
+
+                if(user.staff) {
+                    return user.staff.id;
+                }
+            }
+
+            return null;
+        },
+
+        hospital_id: (state) => {
+            if(state.user) {
+                let user = state.user;
+
+                if(user.staff) {
+                    return user.staff.hospital_id;
+                }
+            }
+
+            return null;
+        },
+
         getUser: (state) => state.user,
         baseUrl: (state) => state.config.baseUrl,
         imgLogo: (state) => state.config.imgLogo,
@@ -72,6 +103,21 @@ const store = createStore({
             }
             
             return dm.public;
+        },
+
+        userRole(state) {
+            let user = state.user;
+            
+            if(user == null) {
+                return null;
+            }
+
+            if(user.role == null) {
+                return 'ibu'; // ????
+            }
+
+            return user.role.name;
+            
         }
     },
 

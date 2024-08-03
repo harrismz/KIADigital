@@ -195,6 +195,10 @@ const formIdentitasIbu = reactive({
 
 const submitIdentitasIbu = async () => {
     try {
+        // bang lanjutin save 
+        const user = store.getters.getUser;
+
+        
         // const response = await axios.post(`${baseUrl.value}/api/identitas-ibu`, formIdentitasIbu);
         // if (response && response.data) {
         //     console.log("creating", response.data);
