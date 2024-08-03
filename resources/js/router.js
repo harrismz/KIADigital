@@ -220,7 +220,7 @@ const routes = [
         component: CheckupShow,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {
@@ -266,6 +266,7 @@ router.beforeEach((to, from, next) => {
             }
         })
     } else {
+        store.dispatch('fetchUser'); //fetch juga biar sama
         next();
     }
 });

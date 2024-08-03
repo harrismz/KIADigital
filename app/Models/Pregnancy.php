@@ -10,4 +10,13 @@ class Pregnancy extends Model
     use HasFactory;
     
     protected $table = "pregnancy";
+
+    public function checkups(){
+        return $this->hasMany(PregnancyHistory::class);
+    }
+
+    public function latest_checkup(){
+        return $this->hasOne(PregnancyHistory::class)
+            ->latestOfMany();
+    }
 }

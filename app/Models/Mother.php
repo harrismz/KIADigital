@@ -17,4 +17,30 @@ class Mother extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function pregnancies() {
+        return $this->hasMany(Pregnancy::class);
+    }
+
+    public function pregnancy() {
+        return $this->hasOne(Pregnancy::class)->latestOfMany();
+    }
+
+    public function pregnancyHistories()
+    {
+        return $this->hasManyThrough(PregnancyHistory::class, Pregnancy::class);
+    }
+
+    public function latest_checkup(){
+        return $this->pregnancy()->latest_checkup();
+    }
+
+    public function checkups(){
+        // return $this->hasMany(PregnancyHistory::class);
+        $pregnancy = $this->pregnancy();
+
+        $history = $pregnancy->checkups();
+
+        return $history;
+    }
 }

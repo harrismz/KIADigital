@@ -9,5 +9,10 @@ use App\Http\Traits\IdableTrait;
 class Child extends Model
 {
     use HasFactory, IdableTrait;
+
     protected $table = "child";
+
+    public function latest_checkup(){
+        return $this->hasOne(ChildDevelopmentHistory::class)->latestOfMany();
+    }
 }
