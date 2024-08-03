@@ -86,8 +86,6 @@ export default {
     };
 
     const getImageUrl = (path) => {
-        console.log(path);
-        console.log(`${baseUrl.value}/storage/${path}`);
       return `${baseUrl.value}/storage/${path}`;
     };
 
