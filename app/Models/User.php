@@ -17,6 +17,10 @@ class User extends \TCG\Voyager\Models\User
         return $this->hasOne(Mother::class, 'user_id', 'id' );
     }
 
+    public function staff(){
+        return $this->hasOne(MedicalStaff::class, 'user_id', 'id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

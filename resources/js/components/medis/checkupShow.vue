@@ -54,6 +54,9 @@
                             </form>
 
                         </div>
+
+                        <!-- imunisasi -->
+                        <imunisasi v-if="type == 'child'" :child_id="data.id" />
                         
                     </div>
                 </div>
@@ -66,9 +69,13 @@
 import axios from 'axios';
 import {mapGetters, mapActions} from 'vuex';
 import toastr from 'toastr';
-
+import Imunisasi from './Imunisasi.vue';
 export default {
     name: "checkupShow",
+
+    components: {
+        Imunisasi
+    },
 
     data() {
         return {
@@ -151,6 +158,12 @@ export default {
             }
 
             return {}
+        },
+
+        type(){
+            if(this.data) {
+                return this.data.type;
+            }
         },
 
         name(){

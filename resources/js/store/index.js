@@ -51,6 +51,32 @@ const store = createStore({
            // Mengembalikan true jika user tidak null
         },
         user: (state) => state.user,
+
+        staff_id: (state) => {
+            
+            if(state.user) {
+                let user = state.user;
+
+                if(user.staff) {
+                    return user.staff.id;
+                }
+            }
+
+            return null;
+        },
+
+        hospital_id: (state) => {
+            if(state.user) {
+                let user = state.user;
+
+                if(user.staff) {
+                    return user.staff.hospital_id;
+                }
+            }
+
+            return null;
+        },
+
         getUser: (state) => state.user,
         baseUrl: (state) => state.config.baseUrl,
         imgLogo: (state) => state.config.imgLogo,

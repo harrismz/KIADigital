@@ -8,8 +8,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CheckupController;
+use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PregnancyHistoryController;
+use App\Http\Controllers\VaksinController;
 
 // use App\Http\Controllers\Auth\AuthController;
 
@@ -56,6 +58,8 @@ Route::get('test', [TestController::class, 'test']);
 Route::get('/checkup/{guid}', [CheckupController::class, 'get'])->name('checkup.get'); //untuk menampilan semua data checkup based on guid mother or children
 Route::post('/checkup', [CheckupController::class, 'store'])->name('checkup.store'); // save data checkup 
 
+Route::get('/vaksin/combo', [VaksinController::class, 'combo'] )->name('vaksin.combo');
+Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisasi.store');
 
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
