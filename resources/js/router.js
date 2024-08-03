@@ -20,6 +20,8 @@ import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue'
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
+import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
+import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -140,6 +142,24 @@ const routes = [
         path: '/riwayat-persalinan',
         name: 'riwayat-persalinan',
         component: RiwayatPersalinan,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/informasi-medis',
+        name: 'informasi-medis',
+        component: ListInfoMedis,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/informasi-medis/:slug',
+        name: 'informasi-medis-detail',
+        component: InfoMedis,
         props: true,
         meta: {
             layout: 'UserLayout'
