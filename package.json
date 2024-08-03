@@ -21,6 +21,7 @@
         "@inertiajs/vue3": "^1.2.0",
         "@vitejs/plugin-vue": "^4.6.2",
         "chart.js": "^4.4.3",
+        "cors": "^2.8.5",
         "daisyui": "^4.12.10",
         "qrcode": "^1.5.3",
         "toastr": "^2.1.4",
