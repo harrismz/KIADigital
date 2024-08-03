@@ -10,4 +10,6 @@ class PregnancyHistory extends Model
     use HasFactory;
     
     protected $table = "pregnancy_history";
+
+    protected $guarded = ['id'];
 }

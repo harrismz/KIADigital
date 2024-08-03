@@ -53,7 +53,8 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api')
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
 Route::get('test', [TestController::class, 'test']);
 
-Route::get('/checkup/{guid}', [CheckupController::class, 'get'])->name('checkup.get');
+Route::get('/checkup/{guid}', [CheckupController::class, 'get'])->name('checkup.get'); //untuk menampilan semua data checkup based on guid mother or children
+Route::post('/checkup', [CheckupController::class, 'store'])->name('checkup.store'); // save data checkup 
 
 
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
