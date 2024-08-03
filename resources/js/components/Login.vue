@@ -2,15 +2,12 @@
     <LoginLayout>
         <div class="min-h-screen flex items-center justify-center bg-gray-100">
             <div class="flex w-full max-w-4xl shadow-md rounded-lg overflow-hidden">
-                <div class="w-1/2 bg-gray-200 flex items-center justify-center">
+                <div class="w-1/3 bg-gray-200 flex items-center justify-center">
                     <div>
-                        <!-- <img src="http://localhost:8000/storage/users/July2024/5EBVXVtkaXZtpxHTUFxL.png" alt="Logo"
-                        class="w-32 h-32 mb-4"> -->
-                        <img src="/storage/images/buku_kia.png" alt="Image"
-                            class="w-full h-full object-cover">
+                        <img src="/storage/images/buku_kia.png" alt="Image" class="w-full h-full object-cover">
                     </div>
                 </div>
-                <div class="w-1/2 p-8 bg-white">
+                <div class="w-2/3 p-8 bg-white">
                     <h2 class="text-2xl font-bold mb-6 text-center">LOGIN</h2>
                     <p class="mb-6 text-center">Pastikan anda sudah memiliki akun.</p>
                     <form @submit.prevent="doLogin">
@@ -68,6 +65,7 @@ export default {
 
         async doLogin() {
             return this.login(this.form).then(res => {
+                console.log("redirect!!! : ", this.$route.query.redirect);
                 const redirect = this.$route.query.redirect || { name: 'home' };
                 this.$router.push(redirect);
             });

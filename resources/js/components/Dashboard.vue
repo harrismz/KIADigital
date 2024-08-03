@@ -43,12 +43,7 @@ data() {
     user: {},
     mother: [],
     currentWeek: 0,
-    weeks: [],
-    // cards: [
-    //     { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', link: '#', img: "/storage/images/janin.png" },
-    //     { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: '#', img: "/storage/images/diary.png" },
-    //     { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: '#', img: "/storage/images/diary.png" },
-    // ],
+        weeks: [],
     chartData: {
         labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
         datasets: [
@@ -114,7 +109,7 @@ computed:{
     }
 },
 mounted() {
-    
+
 }
 };
 </script>

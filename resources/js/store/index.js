@@ -10,7 +10,7 @@ const store = createStore({
         user: null,
 
         auth_token: null,
-        
+
         baseUrl: origin,
 
         config: {
@@ -24,18 +24,35 @@ const store = createStore({
             ],
 
             medic:[
-                { title: 'Check Up', description: 'Menu check up sebagai catatan kesehatan ibu serta pertumbuhan anak yang diintegrasikan menggunakan QR code.', 
+                {
+                    title: 'Check Up', description: 'Menu check up sebagai catatan kesehatan ibu serta pertumbuhan anak yang diintegrasikan menggunakan QR code.',
                     link: 'checkup', img:  origin+ "/storage/images/checkup.png" },
-                { title: 'History', description: 'History seluruh check up yang telah dilakukan baik pada ibu hamil maupun anak.', 
+                {
+                    title: 'History', description: 'History seluruh check up yang telah dilakukan baik pada ibu hamil maupun anak.',
                     link: 'pregnancy_history', img:  origin+ "/storage/images/history.png" },
-                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', 
+                {
+                    title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.',
                     link: 'informasi-medis', img:  origin+ "/storage/images/information.png" },
 
             ],
 
             ibu: [
-                { title: 'Input HPL', description: 'Menu Input HPL untuk mencatat HPL', link: '#', img:  window.location.origin+ "/storage/images/checkup.png" },
-                { title: 'Bayi Sudah Lahir', description: 'Menu Bayi', link: '#', img:  window.location.origin+ "/storage/images/checkup.png" },
+                { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', link: '#', img: '/storage/images/janin.png' },
+
+
+                { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: 'weekly-monitoring-result', img: '/storage/images/diary.png' },
+
+
+                { title: 'Catatan Kesehatan Ibu', description: 'Hasil skrining preeklampsia dan hasil pemeriksaan kesehatan ibu, serta saran hingga tanggapan tenaga kesehatan terkait keluhan dapat dilihat dalam menu ini.', link: '#', img: '/storage/images/catatan.png' },
+
+
+                { title: 'Grafik Evaluasi Kehamilan', description: 'Grafik peningkatan berat badan dan grafik evaluasi kehamilan dapat dipantau dalam menu ini.', link: 'grafik-evaluasi-kehamilan', img: '/storage/images/grafik.png' },
+
+
+                { title: 'Information', description: 'Informasi seputar kehamilan, pola makan dan minum ibu, aktivitas fisik dan latihan fisik, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'informasi-medis', img: '/storage/images/informasi.png' },
+
+
+                { title: 'Riwayat Persalinan', description: 'Informasi seputar persalinan, kondisi bayi saat lahir, hingga asuhan bayi baru lahir (IMD dalam 1 jam pertama kelahiran) bisa dapat dilihat dalam menu ini.', link: 'riwayat-persalinan', img: '/storage/images/riwayat.png' },
 
             ],
         }
@@ -46,7 +63,7 @@ const store = createStore({
             let user = state.user;
             let auth_token = state.auth_token;
             console.log({user, auth_token})
-            
+
             if(state.user == null ) {
                 return false;
             }
@@ -58,7 +75,7 @@ const store = createStore({
         user: (state) => state.user,
 
         staff_id: (state) => {
-            
+
             if(state.user) {
                 let user = state.user;
 
@@ -97,17 +114,17 @@ const store = createStore({
             if(user.role.name == 'medic') {
                 return dm.medic;
             }
-            
+
             if(user.role.name == 'ibu') {
                 return dm.ibu;
             }
-            
+
             return dm.public;
         },
 
         userRole(state) {
             let user = state.user;
-            
+
             if(user == null) {
                 return null;
             }
@@ -117,13 +134,13 @@ const store = createStore({
             }
 
             return user.role.name;
-            
+
         }
     },
 
     mutations: {
         SET_USER(state, user) {
-            
+
             state.user = user;
         },
 
@@ -163,7 +180,7 @@ const store = createStore({
         async fetchUser( context ) {
             try {
                 let endpoint = context.getters.baseUrl + '/api/user';
-                console.log(endpoint)
+                // console.log({ endpoint })
                 return axios.get( endpoint , {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -192,25 +209,25 @@ const store = createStore({
         // ini belum dipake, nanti aja
         async login(context, payload ) {
             try {
-                
+
                 const response = await axios.post('/api/login', {
                     email: payload.email,
                     password: payload.password
                 });
-                
+
                 let data = response.data;
 
                 console.log({response, data})
 
                 localStorage.setItem('auth_token', data.access_token);
-                
+
                 // save to store
                 context.commit('setToken', data.access_token );
 
                 // this.$router.push('/profile');
 
             } catch (error) {
-                console.log(error)
+                console.log({ error })
                 let res = error.response;
                 let data = res.data;
                 let msg = data.message;
@@ -221,7 +238,7 @@ const store = createStore({
         logout(context) {
             const url = context.state.baseUrl + "/api/logout";
             console.log(url)
-                        
+
             axios.post(url, {}, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -232,9 +249,9 @@ const store = createStore({
                 // Remove the token from localStorage
                 localStorage.removeItem('auth_token');
                 context.commit('setUser', null);
-                
+
             }).catch(error => {
-                console.log(error);
+                console.log({ error });
                 toastr.error(error)
             })
         },

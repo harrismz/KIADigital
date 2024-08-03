@@ -71,33 +71,14 @@ export default {
             return this.getUser;
         }
     },
-    mounted() {
-        console.log('mounting userlayout')
-        this.fetchAuthUser()
-        console.log('userlayout is mounted')
-    },
+    // mounted() {
+    //     console.log('mounting userlayout')
+    //     this.fetchAuthUser()
+    //     console.log('userlayout is mounted')
+    // },
     methods: {
 
         ...mapActions(['updateUser', 'fetchUser']),
-
-        fetchAuthUser() {
-            // fetchAUthUser pindah ke router beforeEach 
-            
-            // console.log('fetchAuthUser')
-            // this.fetchUser(); //declared in store/index.js ( vuex )
-            
-            // axios.get('api/user', {
-            //     headers: {
-            //         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-            //     }
-            // })
-            //     .then(response => response.data)
-            //     .then(user => {
-            //         console.log({ user })
-            //         this.updateUser(user)
-            //         this.userState = user;
-            //     })
-        },
 
         toggleDropdown() {
             this.dropdownOpen = !this.dropdownOpen;
@@ -106,7 +87,7 @@ export default {
         logout(){
             const url = this.baseUrl + "/api/logout";
             console.log(url)
-                        
+
             axios.post(url, {}, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -128,7 +109,7 @@ export default {
             })
         },
 
-        
+
     }
 }
 </script>
