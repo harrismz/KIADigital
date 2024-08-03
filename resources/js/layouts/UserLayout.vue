@@ -22,7 +22,9 @@
 
 
                             <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
-                                {{ user.name }} - {{ user.role.display_name }}</li>
+                                {{ user.name }} - {{ user.role.display_name }}
+                            </li>
+
                             <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" @click="logout">
                                 Logout</li>
                         </ul>
@@ -48,6 +50,7 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
+import toastr from 'toastr';
 
 export default {
     name: 'UserLayout',
@@ -78,8 +81,10 @@ export default {
         ...mapActions(['updateUser', 'fetchUser']),
 
         fetchAuthUser() {
-            console.log('fetchAuthUser')
-            this.fetchUser(); //declared in store/index.js ( vuex )
+            // fetchAUthUser pindah ke router beforeEach 
+            
+            // console.log('fetchAuthUser')
+            // this.fetchUser(); //declared in store/index.js ( vuex )
             
             // axios.get('api/user', {
             //     headers: {
@@ -98,23 +103,32 @@ export default {
             this.dropdownOpen = !this.dropdownOpen;
         },
 
-        async logout() {
-            try {
-                await axios.post('/api/logout', {}, {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
-                    }
-                });
-
+        logout(){
+            const url = this.baseUrl + "/api/logout";
+            console.log(url)
+                        
+            axios.post(url, {}, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                }
+            }).then(res => res.data)
+            .then(res => {
+                console.log(res);
                 // Remove the token from localStorage
                 localStorage.removeItem('auth_token');
+                this.$store.commit('setUser', null);
 
                 // Redirect to login page
-                this.$router.push('/login');
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
-        }
+                this.$router.push({
+                    name: 'login'
+                });
+            }).catch(error => {
+                console.log(error);
+                toastr.error(error)
+            })
+        },
+
+        
     }
 }
 </script>

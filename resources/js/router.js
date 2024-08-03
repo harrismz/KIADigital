@@ -22,6 +22,7 @@ import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vu
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
 import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
 import InfoMedis from './components/InfoMedis/InfoMedis.vue';
+import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -200,7 +201,7 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
 
@@ -210,7 +211,7 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {
@@ -230,7 +231,17 @@ const routes = [
             layout: 'UserLayout',
             requiresAuth: true
         }
+    },
+    {
+        path: '/pregnancy_history',
+        name: 'pregnancy_history',
+        component: PregnancyHistory,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
     }
+
 ];
 
 const router = createRouter({
@@ -239,14 +250,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth) {
-        const isAuthenticated = store.getters.isAuthenticated;
+    // console.log('dispatching fetch user')
 
-        if (!isAuthenticated) {
-            next({ name: 'login' });
-        } else {
-            next();
-        }
+    if (to.meta.requiresAuth) {
+        store.dispatch('fetchUser').then((res) => {
+
+            console.log('res dari dispatch', {res})
+            const isAuthenticated = store.getters.isAuthenticated;
+            console.log('im before each', {isAuthenticated})
+
+            if (!isAuthenticated) {
+                next({ name: 'login', query: { redirect: to.fullPath } });
+            } else {
+                next();
+            }
+        })
     } else {
         next();
     }

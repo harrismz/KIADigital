@@ -7,6 +7,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CheckupController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\PregnancyHistoryController;
+
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -47,5 +51,10 @@ Route::get('/post/{slug}', [PostController::class, 'show']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
-Route::get('test', [AuthController::class, 'test']);
+Route::get('test', [TestController::class, 'test']);
 
+Route::get('/checkup/{guid}', [CheckupController::class, 'get'])->name('checkup.get');
+
+
+Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
+Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID

@@ -39,7 +39,16 @@ const store = createStore({
 
     getters: {
         isAuthenticated(state) {
-            return !!state.user;  // Mengembalikan true jika user tidak null
+            let user = state.user;
+            let auth_token = state.auth_token;
+            console.log({user, auth_token})
+            
+            if(state.user == null ) {
+                return false;
+            }
+
+            return true;
+           // Mengembalikan true jika user tidak null
         },
         user: (state) => state.user,
         getUser: (state) => state.user,
@@ -109,7 +118,7 @@ const store = createStore({
             try {
                 let endpoint = context.getters.baseUrl + '/api/user';
                 console.log(endpoint)
-                axios.get( endpoint , {
+                return axios.get( endpoint , {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
                     }
@@ -125,12 +134,63 @@ const store = createStore({
                         // localStorage.removeItem('auth_token');
                         // this
                         // this.updateUser(null)
+                        console.log('catch fetch user')
                         context.commit('setUser', null);
 
                     })
             } catch (error) {
                 console.error('Error fetching user:', error);
             }
+        },
+
+        // ini belum dipake, nanti aja
+        async login(context, payload ) {
+            try {
+                
+                const response = await axios.post('/api/login', {
+                    email: payload.email,
+                    password: payload.password
+                });
+                
+                let data = response.data;
+
+                console.log({response, data})
+
+                localStorage.setItem('auth_token', data.access_token);
+                
+                // save to store
+                context.commit('setToken', data.access_token );
+
+                // this.$router.push('/profile');
+
+            } catch (error) {
+                console.log(error)
+                let res = error.response;
+                let data = res.data;
+                let msg = data.message;
+                toastr.error(msg)
+            }
+        },
+
+        logout(context) {
+            const url = context.state.baseUrl + "/api/logout";
+            console.log(url)
+                        
+            axios.post(url, {}, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                }
+            }).then(res => res.data)
+            .then(res => {
+                console.log(res);
+                // Remove the token from localStorage
+                localStorage.removeItem('auth_token');
+                context.commit('setUser', null);
+                
+            }).catch(error => {
+                console.log(error);
+                toastr.error(error)
+            })
         },
 
         async fetchBaseUrl({ commit }) {
@@ -141,6 +201,7 @@ const store = createStore({
                 console.error('Error fetching baseUrl :', error);
             }
         },
+
         async fetchLogo({ commit }) {
             try {
                 const response = await axios.get('/config');
