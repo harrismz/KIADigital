@@ -24,7 +24,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nik' => 'required|unique:users,nik',
-            'name' => 'required|unique:users,name',
+            'name' => 'required', //name ga harus unique
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6'
         ]);
@@ -40,7 +40,21 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        $token = $user->createToken('Personal Access Token');
+        $tokenResult = $token->token;
+        $tokenResult->expires_at = Carbon::now()->addWeeks(1);
+        $tokenResult->save();
+
+        return response()->json([
+            'success' => true,
+            'access_token' => $token->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse($tokenResult->expires_at)->toDateTimeString(),
+            'message' => "User Registered Successfully",
+            "user" => $user
+        ]);
+
+        // return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
     }
 
     public function login(Request $request)

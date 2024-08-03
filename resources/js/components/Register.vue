@@ -86,10 +86,19 @@ const register = async () => {
     // console.log({ baseUrl: baseUrl.value });
     try {
         const response = await axios.post(`${baseUrl.value}/api/register`, form);
+
         if (response && response.data) {
             console.log("creating", response.data);
+
+            let data = response.data;
+            // set token to localStorage
+            localStorage.setItem('auth_token', data.access_token);
+            // save to store
+            store.commit('setToken', data.access_token );
+
             console.log("User data:", response.data.user);
         }
+
         toastr.success('Akun berhasil dibuat!');
 
         router.push({
@@ -103,7 +112,7 @@ const register = async () => {
         })
 
     } catch (error) {
-        console.error({ erorr: error.response.data });
+        console.error({ erorr: error });
 
         if (error.response && error.response.data) {
             const errors = error.response.data;
