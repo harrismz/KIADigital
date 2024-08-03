@@ -207,7 +207,7 @@ const routes = [
 
     {
         path: '/checkup',
-        name: 'admin-checkup',
+        name: 'checkup',
         component: Checkup,
         meta: {
             layout: 'UserLayout',
@@ -216,7 +216,7 @@ const routes = [
     },
     {
         path: '/checkup/show',
-        name: 'admin-checkup-show',
+        name: 'checkup-show',
         component: CheckupShow,
         meta: {
             layout: 'UserLayout',
