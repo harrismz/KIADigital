@@ -1,7 +1,7 @@
 // import Vue from 'vue';
 import Vuex, { createStore } from 'vuex';
 import axios from 'axios';
-
+import toastr from 'toastr';
 // Vue.useAttrs(Vuex)
 
 const store = createStore({
