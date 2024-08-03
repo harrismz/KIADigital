@@ -180,7 +180,7 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
 
@@ -190,7 +190,7 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {
@@ -219,14 +219,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth) {
-        const isAuthenticated = store.getters.isAuthenticated;
+    // console.log('dispatching fetch user')
 
-        if (!isAuthenticated) {
-            next({ name: 'login' });
-        } else {
-            next();
-        }
+    if (to.meta.requiresAuth) {
+        store.dispatch('fetchUser').then((res) => {
+            
+            console.log('res dari dispatch', {res})
+            const isAuthenticated = store.getters.isAuthenticated;
+            console.log('im before each', {isAuthenticated})
+    
+            if (!isAuthenticated) {
+                next({ name: 'login', query: { redirect: to.fullPath } });
+            } else {
+                next();
+            }
+        })
     } else {
         next();
     }

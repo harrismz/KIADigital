@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CheckupController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\IbuController;
@@ -48,3 +49,4 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api')
 Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
 Route::get('test', [TestController::class, 'test']);
 
+Route::get('/checkup/{guid}', [ CheckupController::class, 'get' ])->name('checkup.get');
