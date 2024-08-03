@@ -8,6 +8,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\IbuController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\PregnancyHistoryController;
 
 // use App\Http\Controllers\Auth\AuthController;
 
@@ -50,3 +51,8 @@ Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
 Route::get('test', [TestController::class, 'test']);
 
 Route::get('/checkup/{guid}', [ CheckupController::class, 'get' ])->name('checkup.get');
+
+
+Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
+Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
+

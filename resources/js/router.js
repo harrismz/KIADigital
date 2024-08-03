@@ -20,6 +20,7 @@ import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue'
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
+import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -210,7 +211,17 @@ const routes = [
             layout: 'UserLayout',
             requiresAuth: true
         }
+    },
+    {
+        path: '/pregnancy_history',
+        name: 'pregnancy_history',
+        component: PregnancyHistory,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
     }
+
 ];
 
 const router = createRouter({
