@@ -13,6 +13,10 @@ class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function getTypeAttribute(){
+        
+    }
+
     public function mother(){
         return $this->hasOne(Mother::class, 'user_id', 'id' );
     }

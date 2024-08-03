@@ -50,6 +50,7 @@ const store = createStore({
             return true;
            // Mengembalikan true jika user tidak null
         },
+
         user: (state) => state.user,
 
         staff_id: (state) => {
@@ -98,6 +99,21 @@ const store = createStore({
             }
             
             return dm.public;
+        },
+
+        userRole(state) {
+            let user = state.user;
+            
+            if(user == null) {
+                return null;
+            }
+
+            if(user.role == null) {
+                return 'ibu'; // ????
+            }
+
+            return user.role.name;
+            
         }
     },
 
