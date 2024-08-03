@@ -20,6 +20,8 @@ import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue'
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
+import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
+import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 
 const resolveComponentBasedOnRole = async () => {
@@ -146,6 +148,24 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    {
+        path: '/informasi-medis',
+        name: 'informasi-medis',
+        component: ListInfoMedis,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/informasi-medis/:slug',
+        name: 'informasi-medis-detail',
+        component: InfoMedis,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
 
     // Halaman Admin
     {
@@ -234,11 +254,11 @@ router.beforeEach((to, from, next) => {
 
     if (to.meta.requiresAuth) {
         store.dispatch('fetchUser').then((res) => {
-            
+
             console.log('res dari dispatch', {res})
             const isAuthenticated = store.getters.isAuthenticated;
             console.log('im before each', {isAuthenticated})
-    
+
             if (!isAuthenticated) {
                 next({ name: 'login', query: { redirect: to.fullPath } });
             } else {
