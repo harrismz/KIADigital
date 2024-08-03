@@ -12,6 +12,13 @@ class CheckupController extends Controller
     public function get(Request $request, $guid) {
         $data = $this->getByGuid($guid);
 
+        if($data) {
+            $type = $data->type;
+            if($type == 'mother') {
+                $pregnancy = $data->pregnancy->latest_checkup ?? $data->pregnancy;
+            }
+        }
+
         return [
             'success' => true,
             'type' => is_null($data) ? null:$data->type,
