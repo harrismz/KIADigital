@@ -44,7 +44,7 @@ class PostController extends Controller
     public function show($slug)
     {
         // Find the blog by slug
-        $blog = Blog::where('slug', $slug)->first();
+        $blog = Post::where('slug', $slug)->first();
 
         // Return the blog as JSON response
         return response()->json($blog);
