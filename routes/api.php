@@ -2,10 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\IbuController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\IdentityController;
+use App\Http\Controllers\LocationController;
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -40,6 +41,8 @@ Route::get('/religion', [IdentityController::class, 'getReligion']);
 Route::get('/get_mother/{user_id}', [IbuController::class, 'index']);
 Route::get('/get_week_user', [IbuController::class, 'getWeek']);
 
+Route::get('/post', [PostController::class, 'index']);
+Route::get('/post/{slug}', [PostController::class, 'show']);
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
