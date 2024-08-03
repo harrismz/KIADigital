@@ -2,7 +2,7 @@
   <div class="container mx-auto p-8 bg-white shadow-lg rounded-lg">
     <h1 class="text-3xl font-bold mb-4">{{ information.title }}</h1>
     <div v-if="information.image" class="mb-4">
-      <img :src="`storage/${information.image}`" :alt="information.title" class="w-full h-auto rounded-lg">
+      <img :src="getImageUrl(information.image)" :alt="information.title" class="w-full h-auto rounded-lg">
     </div>
     <div class="prose prose-lg">
       <div v-html="information.body"></div>
@@ -38,6 +38,9 @@ export default {
     const goBack = () => {
       router.push({ name: 'informasi-medis' });
     };
+    const getImageUrl = (path) => {
+      return `${baseUrl.value}/storage/${path}`;
+    };
 
     onMounted(() => {
       fetchInformation();
@@ -45,6 +48,7 @@ export default {
 
     return {
       information,
+        getImageUrl,
       goBack
     };
   }
