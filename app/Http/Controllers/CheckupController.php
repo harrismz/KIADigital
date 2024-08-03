@@ -17,6 +17,10 @@ class CheckupController extends Controller
             if($type == 'mother') {
                 $pregnancy = $data->pregnancy->latest_checkup ?? $data->pregnancy;
             }
+
+            if($type == 'child') {
+                $lates_checkup = $data->latest_checkup;
+            }
         }
 
         return [

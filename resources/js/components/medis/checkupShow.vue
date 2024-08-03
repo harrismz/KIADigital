@@ -77,24 +77,28 @@ export default {
                 'pregnancy_id':true,
                 'staff_id':true,
                 'hospital_id':true,
+                'created_at':true,
+                'updated_at':true,
+                'child_id': true
             },
+            
             form:{
-                complaint : null,
-                blood_pressure : null,
-                weight : null,
-                gestational_age : null,
-                fundal_height : null,
-                fetus_position : null,
-                fetal_heart_rate : null,
-                swollen_foot : null,
-                lab_result : null,
-                action : null ,
-                advice_given : null,
-                usg_image : null,
-                weight_baby : null ,
-                staff_id : null,
-                hospital_id : null,
-                next_control : null,
+                // complaint : null,
+                // blood_pressure : null,
+                // weight : null,
+                // gestational_age : null,
+                // fundal_height : null,
+                // fetus_position : null,
+                // fetal_heart_rate : null,
+                // swollen_foot : null,
+                // lab_result : null,
+                // action : null ,
+                // advice_given : null,
+                // usg_image : null,
+                // weight_baby : null ,
+                // staff_id : null,
+                // hospital_id : null,
+                // next_control : null,
             }
         };
     },
@@ -112,6 +116,10 @@ export default {
             if(this.data) {
                 if(this.data.pregnancy) {
                     return this.data.pregnancy.latest_checkup;
+                }
+
+                if(this.data.latest_checkup) {
+                    return this.data.latest_checkup
                 }
             }
 
@@ -142,6 +150,7 @@ export default {
             console.log(res);
             if(res.success) {
                 this.data = res.data;
+                this.populateForm(this.latest_checkup);
             }
         }).catch(error => {
             console.log(error);
@@ -150,10 +159,22 @@ export default {
     },
 
     methods:{
+
         submit(){
             let form = this.form;
             console.log('submit', {form})
-        }
+        },
+
+        populateForm(latestCheckup) {
+            for (const key in latestCheckup ) {
+                if (latestCheckup.hasOwnProperty(key)) {
+                    if(this.except[key]) {
+                        continue;
+                    }
+                    this.form[key] = null;
+                }
+            }
+        },
     }
 
 };
