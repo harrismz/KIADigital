@@ -25,16 +25,17 @@
         </div>
     </div>
     <!-- <div class="mb-2 grid grid-cols-3">
+    <div class="mb-2 grid grid-cols-3 me-4">
         <div class="col-span-1 bg-white p-4 ">
-            <span class="font-bold">Ibu</span>
+            <span class="font-bold">{{userRoleDisplayName}}</span>
             <div class="mt-2">
                 <span v-if="user">Nama: {{ user.name }}</span>
             </div>
-            <div>
+            <div v-if="isMom">
                 HPL: 07-09-2025
             </div>
 
-            <div class="mt-4">
+            <div class="mt-4" v-if="isMom">
                 <span class="font-bold">Anak</span>
                 <div class="flex justify-between mt-2">
                     <a href="admin/child/create" class=" flex items-center space-x-2">
@@ -77,8 +78,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["user"]),
-        ...mapGetters(["getUser", "isMom", "isMedic"]),
+        ...mapState(['user']),
+        ...mapGetters([
+            'getUser', 'isMom', 'userRole', 'userRoleDisplayName'
+        ])
+    },
+    mounted() {
+
     },
     methods: {
         ...mapActions(["updateUser"]),
