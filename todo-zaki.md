@@ -22,4 +22,7 @@
 
 # sync
     - [ ] setup ProfileCard.vue tampilan card sesuaikan dengan profile.vue
-    - [ ]  
+    - [ ] set default public dashboard when not authenticate
+    - [ ] cek saving identitas ibu dan ayah
+    - [ ] refer identitas ibu dan ayah untuk form inputan
+    - [ ] 
