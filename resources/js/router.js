@@ -3,6 +3,7 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
+import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
@@ -97,6 +98,15 @@ const routes = [
         path: '/kalender-hpl',
         name: 'kalender-hpl',
         component: KalenderHpl,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
+        path: '/child',
+        name: 'child',
+        component: IdentitasAnak,
         props: true,
         meta: {
             layout: 'LoginLayout'
