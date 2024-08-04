@@ -23,7 +23,6 @@ import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
 import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
 import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
-import StuntingChart from './components/StuntingChart.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -150,15 +149,6 @@ const routes = [
         }
     },
     {
-        path: '/pregnancy_history/:weeks',
-        name: 'pregnancy_history',
-        component: PregnancyHistory,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: true,
-        }
-    },
-    {
         path: '/informasi-medis',
         name: 'informasi-medis',
         component: ListInfoMedis,
@@ -250,17 +240,7 @@ const routes = [
             layout: 'UserLayout',
             requiresAuth: true
         }
-    },
-    //Grafik Stunting
-    {
-        path: '/stunting_chart',
-        name: 'StuntingChart',
-        component: StuntingChart,
-        props: true,
-        meta: {
-            layout: 'UserLayout'
-        }
-    },
+    }
 
 ];
 
