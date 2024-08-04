@@ -239,7 +239,7 @@ export default {
 
 };
 </script>
-<script>
+<!-- <script>
 import axios from 'axios';
 import {mapGetters} from 'vuex';
 import toastr from 'toastr';
@@ -291,7 +291,7 @@ export default {
         });
     }
 };
-</script>
+</script> -->
 
 
 
