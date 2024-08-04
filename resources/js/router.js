@@ -207,6 +207,15 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    {
+        path: '/imunisasi',
+        name: 'imunisasi',
+        component: Imunisasi,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
 
     // Halaman Admin
     {
