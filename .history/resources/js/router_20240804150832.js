@@ -3,7 +3,6 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
-import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
@@ -24,7 +23,6 @@ import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
 import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
 import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
-import StuntingChart from './components/StuntingChart.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -105,15 +103,6 @@ const routes = [
         }
     },
     {
-        path: '/child',
-        name: 'child',
-        component: IdentitasAnak,
-        props: true,
-        meta: {
-            layout: 'LoginLayout'
-        }
-    },
-    {
         path: '/dashboard-ibu',
         name: 'dashboard-ibu',
         component: DashboardIbu,
@@ -157,15 +146,6 @@ const routes = [
         props: true,
         meta: {
             layout: 'UserLayout'
-        }
-    },
-    {
-        path: '/pregnancy_history/:weeks',
-        name: 'pregnancy_history',
-        component: PregnancyHistory,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: true,
         }
     },
     {
@@ -260,17 +240,7 @@ const routes = [
             layout: 'UserLayout',
             requiresAuth: true
         }
-    },
-    //Grafik Stunting
-    {
-        path: '/stunting_chart',
-        name: 'StuntingChart',
-        component: StuntingChart,
-        props: true,
-        meta: {
-            layout: 'UserLayout'
-        }
-    },
+    }
 
 ];
 

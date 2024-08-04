@@ -1,9 +1,8 @@
 <template>
     <div class="flex flex-col h-screen bg-gray-100 p-6">
         <user-card />
+        <progress-bar></progress-bar>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-
             <!-- Profile Card -->
             <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
                 :link="card.link" :img="card.img" />
@@ -23,6 +22,7 @@
 import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, LineElement, CategoryScale, LinearScale } from 'chart.js';
 import ProfileCard from './utils/ProfileCard.vue';
+import ProgressBar from './utils/ProgressBar.vue';
 import toastr from 'toastr';
 import UserCard from './UserCard.vue';
 ChartJS.register(LineElement, CategoryScale, LinearScale);
@@ -32,7 +32,8 @@ export default {
 components: {
     ProfileCard,
     LineChart: Line,
-    UserCard
+        UserCard,
+        ProgressBar
 },
 data() {
     return {
@@ -64,7 +65,7 @@ data() {
 methods: {
     fetchUserAuth() {
 
-    axios.get('/user')
+        axios.get('/user')
         .then(response => response.data)
         .then(response => {
         this.user = response.user;
@@ -76,24 +77,24 @@ methods: {
         });
     },
     fetchMother() {
-    const user_id = this.user.id;
-    axios.get(`/api/get_mother/${user_id}`)
-        .then(response => response.data)
-        .then(response => {
-        console.log('fetching mother : ', response.data);
-        })
+        const user_id = this.user.id;
+        axios.get(`/api/get_mother/${user_id}`)
+            .then(response => response.data)
+            .then(response => {
+                console.log('fetching mother : ', response.data);
+            })
     },
     fetchWeekUser() {
-    const mother_id = this.mother.id
-    axios.get(`/api/get_week_user/${mother_id}`)
-        .then(response => response.data)
-        .then(response => {
-        console.log('fetching week : ', response);
-        })
-        .catch(error => {
-        console.error(error);
-        toastr.error(`fetching week ERROR : ${error}`)
-        });
+        const mother_id = this.mother.id
+        axios.get(`/api/get_week_user/${mother_id}`)
+            .then(response => response.data)
+            .then(response => {
+                console.log('fetching week : ', response);
+            })
+            .catch(error => {
+                console.error(error);
+                toastr.error(`fetching week ERROR : ${error}`)
+            });
     }
 },
 
