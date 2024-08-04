@@ -22,7 +22,12 @@
 
 
                             <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
-                                {{ user.name }} - {{ user.role.display_name }}
+                                <router-link :to="{name: 'identitas-ibu' }" v-if="userRoe =='ibu'">
+                                    Edit Identitas
+                                </router-link>
+                                <div v-else>
+                                    {{ user.name }} - {{ user.role.display_name }} 
+                                </div>
                             </li>
 
                             <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" @click="logout">

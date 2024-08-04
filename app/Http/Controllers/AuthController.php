@@ -33,12 +33,14 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $user = User::create([
+        $user = new User([
             'nik' => $request->nik,
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+
+        $user->save();
 
         $token = $user->createToken('Personal Access Token');
         $tokenResult = $token->token;
