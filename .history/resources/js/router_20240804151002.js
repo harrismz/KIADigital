@@ -23,7 +23,7 @@ import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
 import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
 import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
-import StuntingChart from './components/StuntingChart.vue';
+import StuntingChart from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
