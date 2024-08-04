@@ -50,4 +50,4 @@ Route::get('test', [AuthController::class, 'test']);
 
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
-
+Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class, 'showByWeek']);

@@ -146,6 +146,15 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    {
+        path: '/pregnancy_history/:weeks',
+        name: 'pregnancy_history',
+        component: PregnancyHistory,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
+    },
 
     // Halaman Admin
     {
@@ -212,15 +221,7 @@ const routes = [
             requiresAuth: true
         }
     },
-    {
-        path: '/pregnancy_history',
-        name: 'pregnancy_history',
-        component: PregnancyHistory,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: true
-        }
-    }
+   
 
 ];
 
