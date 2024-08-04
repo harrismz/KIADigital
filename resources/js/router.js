@@ -149,6 +149,15 @@ const routes = [
         }
     },
     {
+        path: '/pregnancy_history/:weeks',
+        name: 'pregnancy_history',
+        component: PregnancyHistory,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true,
+        }
+    },
+    {
         path: '/informasi-medis',
         name: 'informasi-medis',
         component: ListInfoMedis,
@@ -232,15 +241,7 @@ const routes = [
             requiresAuth: true
         }
     },
-    {
-        path: '/pregnancy_history',
-        name: 'pregnancy_history',
-        component: PregnancyHistory,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: true
-        }
-    }
+   
 
 ];
 
