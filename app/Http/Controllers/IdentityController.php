@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Education;
 use App\Models\Job;
 use App\Models\BloodType;
+use App\Models\Father;
 use App\Models\Mother;
 use App\Models\Religion;
 
@@ -85,7 +86,7 @@ class IdentityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $type = 'ibu')
     {
         //
         $rule = [
@@ -107,7 +108,11 @@ class IdentityController extends Controller
 
         $validated = $request->validate($rule);
 
-        $mother = new Mother($validated);
+        if($type == 'ibu') {
+            $mother = new Mother($validated);
+        }else{
+            $mother = new Father($validated);
+        }
 
         $mother->save();
 
@@ -116,6 +121,12 @@ class IdentityController extends Controller
             'message' => "Data saved!",
             'data' => $mother
         ];
+    }
+    
+    public function storeAyah(Request $request)
+    {
+        //
+        return $this->store($request, 'ayah');
     }
 
     /**

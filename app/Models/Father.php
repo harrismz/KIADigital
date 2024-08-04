@@ -9,4 +9,5 @@ class Father extends Model
 {
     use HasFactory;
     protected $table = "father";
+    protected $guarded = ['id'];
 }

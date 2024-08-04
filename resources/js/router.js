@@ -3,7 +3,7 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
-import IdentitasAyah from './components/Ayah/IdentitasAyah.vue';
+import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
 import QRCode from './components/utils/QRCode.vue';
