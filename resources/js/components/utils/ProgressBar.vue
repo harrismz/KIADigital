@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div class="w-full">
         <!-- Navigation (Week Selector) -->
-        <div class="grid grid-cols-6 gap-2 mb-4">
+        <!-- <div class="grid grid-cols-6 gap-2 mb-4">
             <button v-for="week in weeks" :key="week" :class="[
                 'py-2 px-4 rounded-lg text-center',
                 currentWeek === week ? 'bg-gray-400 text-white' : 'bg-gray-200'
             ]" @click="currentWeek = week">
                 Minggu ke-{{ week }}
             </button>
-        </div>
+        </div> -->
 
         <!-- Progress Bar -->
         <div class="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden mb-4">
@@ -16,11 +16,18 @@
             </div>
         </div>
 
-        <div class="flex justify-between text-xs">
+        <div class="flex justify-between text-xs mb-5">
             <div>Trimester 1</div>
             <div>Trimester 2</div>
             <div>Trimester 3</div>
         </div>
+
+        <!-- <ul class="steps">
+            <li class="step step-info">Trimester</li>
+            <li class="step step-info">Trimester</li>
+            <li class="step">Trimester</li>
+        </ul> -->
+
     </div>
 </template>
 

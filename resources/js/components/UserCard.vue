@@ -1,22 +1,27 @@
 <template>
-    <div class="collapse collapse-arrow bg-base-200">
-        <input type="radio" name="my-accordion-2" />
-        <div class="collapse-title text-xl font-medium">
-            <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                <div class="row-span-2">
-                    <img :src="baseUrl + '/storage/' + user.avatar" alt="Profile Picture"
-                        class="rounded-full w-10 h-10 cursor-pointer">
-                </div>
-                <div>
-                    <h2>{{ user.name }}</h2>
-                </div>
-                <div>
-                    <p>{{ user.hpl }}</p>
+    <div class="mb-2 grid grid-cols-3">
+        <div class="collapse collapse-arrow col-span-1 bg-pink-200 mb-2 shadow-md" :class="{ 'collapse-open': isOpen }">
+            <input type="radio" name="my-accordion-2" v-model="isOpen" class="hidden" />
+            <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
+                <h1 class="font-mono">{{ user.name }}</h1>
+                <p v-if="user.role.name == 'medic'" class="font-sans font-light">
+                    NIP : {{ userDetail.nip }}
+                </p>
+                <p v-else class="font-sans font-light">
+                    HPL : {{ userDetail.hpl }}
+                </p>
+            </div>
+            <div v-if="user.role.name == 'ibu'" class="collapse-content">
+                <span class="font-bold">Anak</span>
+                <div class="flex justify-between mt-2">
+                    <a href="admin/child/create" class=" flex items-center space-x-2">
+                        <img src="storage/images/anak-icon.png" alt="" class="h-5 w-5">
+                        <span>
+                            tambah identitas anak
+                        </span>
+                    </a>
                 </div>
             </div>
-        </div>
-        <div class="collapse-content">
-            <p>hello</p>
         </div>
     </div>
     <!-- <div class="mb-2 grid grid-cols-3">
@@ -50,28 +55,40 @@
 
 import { mapState, mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
+import { ref } from "vue";
 
 export default {
     name: 'UserCard',
-    data() {
+    setup() {
+        const isOpen = ref(false);
+        const userDetail = {
+            hpl: '16 JUNE 2025',
+            nip: '3450895734895734892',
+        }
+
+        const toggleCollapse = () => {
+            isOpen.value = !isOpen.value;
+        };
+
         return {
-            userState: null
+            isOpen,
+            toggleCollapse,
+            userDetail
         };
     },
     computed: {
-        ...mapState(['user']),
-        ...mapGetters([
-            'getUser'
-        ])
-    },
-    mounted() {
-
+        ...mapState(["user", "user_hpl"]),
+        ...mapGetters(["getUser", "user_hpl"]),
     },
     methods: {
-
-        ...mapActions(['updateUser']),
-
-    }
+        ...mapActions(["updateUser"]),
+    },
+    // data() {
+    //     return {
+    //         userState: null
+    //     };
+    // }
+    // }
 }
 </script>
 
