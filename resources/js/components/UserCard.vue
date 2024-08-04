@@ -1,5 +1,25 @@
 <template>
-    <div class="mb-2 grid grid-cols-3">
+    <div class="collapse collapse-arrow bg-base-200">
+        <input type="radio" name="my-accordion-2" />
+        <div class="collapse-title text-xl font-medium">
+            <div class="grid grid-cols-2 grid-rows-2 gap-4">
+                <div class="row-span-2">
+                    <img :src="baseUrl + '/storage/' + user.avatar" alt="Profile Picture"
+                        class="rounded-full w-10 h-10 cursor-pointer">
+                </div>
+                <div>
+                    <h2>{{ user.name }}</h2>
+                </div>
+                <div>
+                    <p>{{ user.hpl }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="collapse-content">
+            <p>hello</p>
+        </div>
+    </div>
+    <!-- <div class="mb-2 grid grid-cols-3">
         <div class="col-span-1 bg-white p-4 ">
             <span class="font-bold">Ibu</span>
             <div class="mt-2">
@@ -23,7 +43,7 @@
 
         </div>
 
-    </div>
+    </div> -->
 </template>
 
 <script>
@@ -45,12 +65,12 @@ export default {
         ])
     },
     mounted() {
-        
+
     },
     methods: {
 
         ...mapActions(['updateUser']),
-        
+
     }
 }
 </script>

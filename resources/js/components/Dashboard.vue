@@ -1,26 +1,22 @@
 <template>
-<div class="flex flex-col h-screen bg-gray-100 p-6">
-    <user-card />
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-    <!-- Profile Card -->
-    <ProfileCard
-        v-for="card in cards"
-        :key="card.title"
-        :title="card.title"
-        :description="card.description"
-        :link="card.link"
-        :img="card.img"
-    />
+    <div class="flex flex-col h-screen bg-gray-100 p-6">
+        <user-card />
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-    <!-- Chart Section -->
-    <!-- <div class="col-span-1 md:col-span-2 lg:col-span-3">
+
+            <!-- Profile Card -->
+            <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
+                :link="card.link" :img="card.img" />
+
+            <!-- Chart Section -->
+            <!-- <div class="col-span-1 md:col-span-2 lg:col-span-3">
         <div class="bg-white shadow rounded-lg p-4">
         <h2 class="text-xl font-semibold mb-4">Grafik Evaluasi Kehamilan</h2>
         <LineChart :data="chartData" />
         </div>
     </div> -->
+        </div>
     </div>
-</div>
 </template>
 
 <script>
