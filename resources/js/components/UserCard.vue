@@ -49,7 +49,7 @@
 
         </div>
 
-    </div> -->
+    </div> --->
 </template>
 
 <script>
@@ -84,7 +84,7 @@ export default {
         ])
     },
     mounted() {
-
+        
     },
     methods: {
         ...mapActions(["updateUser"]),

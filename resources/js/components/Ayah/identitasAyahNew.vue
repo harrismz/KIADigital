@@ -112,7 +112,8 @@ export default {
             let form = {
                 ...this.form,
                 ...{
-                    user_id: this.getUser.id || null
+                    user_id: this.getUser.id || null,
+                    mother_id: this.getUser.id || null, //yg nambah data ayah si ibu
                 }
             }
 
