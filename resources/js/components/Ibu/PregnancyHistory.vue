@@ -28,10 +28,16 @@ export default {
       pregnancyData: {}
     };
   },
+
+  computed: {
+    week() {
+      return this.$router.query.weeks; //weeks = router 
+    }
+  },
   async created() {
     const id = this.$route.params.id;
     try {
-      const response = await axios.get('/pregnancy-history');
+      const response = await axios.get('/api/pregnancy-history');
       this.pregnancyData = response.data;
     } catch (error) {
       console.error("Error fetching pregnancy data:", error);
