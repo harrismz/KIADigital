@@ -12,7 +12,7 @@ use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PregnancyHistoryController;
 use App\Http\Controllers\VaksinController;
-
+use App\Http\Controllers\ComboController;
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -36,6 +36,7 @@ use App\Http\Controllers\VaksinController;
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/kelurahan', [LocationController::class, 'getKelurahan']);
+Route::get('/kecamatan', [LocationController::class, 'getAllKecamatan']);
 Route::get('/kecamatan/{id}', [LocationController::class, 'getKecamatan']);
 Route::get('/provinsi/{id}', [LocationController::class, 'getProvince']);
 
@@ -43,6 +44,9 @@ Route::get('/pendidikan', [IdentityController::class, 'getEducation']);
 Route::get('/pekerjaan', [IdentityController::class, 'getJob']);
 Route::get('/blood-types', [IdentityController::class, 'getBloodType']);
 Route::get('/religion', [IdentityController::class, 'getReligion']);
+Route::post('/identitas-ibu', [IdentityController::class, 'store']);
+Route::post('/identitas-ayah', [IdentityController::class, 'storeAyah']);
+Route::get('/combo/{modelname}', [ComboController::class, 'get']);
 
 Route::get('/get_mother/{user_id}', [IbuController::class, 'index']);
 Route::get('/get_week_user', [IbuController::class, 'getWeek']);
