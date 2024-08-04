@@ -4,14 +4,14 @@
             <input type="radio" name="my-accordion-2" v-model="isOpen" class="hidden" />
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
                 <h1 class="font-mono">{{ user.name }}</h1>
-                <p v-if="user.role.name == 'medic'" class="font-sans font-light">
+                <p v-if="isMedic" class="font-sans font-light">
                     NIP : {{ userDetail.nip }}
                 </p>
                 <p v-else class="font-sans font-light">
                     HPL : {{ userDetail.hpl }}
                 </p>
             </div>
-            <div v-if="user.role.name == 'ibu'" class="collapse-content">
+            <div v-if="isMom" class="collapse-content">
                 <span class="font-bold">Anak</span>
                 <div class="flex justify-between mt-2">
                     <a href="admin/child/create" class=" flex items-center space-x-2">
@@ -77,8 +77,8 @@ export default {
         };
     },
     computed: {
-        ...mapState(["user", "user_hpl"]),
-        ...mapGetters(["getUser", "user_hpl"]),
+        ...mapState(["user"]),
+        ...mapGetters(["getUser", "isMom", "isMedic"]),
     },
     methods: {
         ...mapActions(["updateUser"]),

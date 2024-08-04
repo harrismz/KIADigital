@@ -105,6 +105,14 @@ const store = createStore({
         baseUrl: (state) => state.config.baseUrl,
         imgLogo: (state) => state.config.imgLogo,
 
+        isMom(state) {
+            return state.user.role.name == 'ibu';
+        },
+
+        isMedic(state) {
+            return state.user.role.name == 'medic';
+        },
+
         getMenu: (state) => {
             // check current role
             let dm = state.dashboard_menu;
