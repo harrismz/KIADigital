@@ -1,0 +1,25 @@
+### Struktur web
+
+        Login Ibu -> Dashboard Ibu -> menu 
+
+
+
+
+
+# template identitas ibu
+    - [ ] template HPL ibu input data pregnancy
+    - [ ] tampilan lebih bagusin
+    - [ ] Riwayat Persalinan
+    - [ ] ketika klik icon profile maka mengarah ke show and edit profile
+          - [ ] Profile Identitas ibu,
+          - [ ] Profile Identitas Ayah bisa lebih dari 1
+          - [ ] Profile Identitas Anak bisa lebih dari 1
+
+# template identitas anak
+    - [ ] ketika registrasi dan pilih identitas anak maka mengarah ke input identitas anak komponennya sama dengan riwayat persalinan
+    - [ ] setelah itu masuk ke halaman dashboard anak.
+
+
+# sync
+    - [ ] setup ProfileCard.vue tampilan card sesuaikan dengan profile.vue
+    - [ ]  

@@ -2,18 +2,15 @@
     <LoginLayout>
         <div class="min-h-screen flex items-center justify-center bg-gray-100">
             <div class="flex w-full max-w-4xl shadow-md rounded-lg overflow-hidden">
-                <div class="w-1/2 bg-gray-200 flex items-center justify-center">
+                <div class="w-1/3 bg-gray-200 flex items-center justify-center">
                     <div>
-                        <!-- <img src="http://localhost:8000/storage/users/July2024/5EBVXVtkaXZtpxHTUFxL.png" alt="Logo"
-                        class="w-32 h-32 mb-4"> -->
-                        <img src="/storage/images/buku_kia.png" alt="Image"
-                            class="w-full h-full object-cover">
+                        <img src="/storage/images/buku_kia.png" alt="Image" class="w-full h-full object-cover">
                     </div>
                 </div>
-                <div class="w-1/2 p-8 bg-white">
+                <div class="w-2/3 p-8 bg-white">
                     <h2 class="text-2xl font-bold mb-6 text-center">LOGIN</h2>
                     <p class="mb-6 text-center">Pastikan anda sudah memiliki akun.</p>
-                    <form @submit.prevent="login">
+                    <form @submit.prevent="doLogin">
                         <div class="mb-4">
                             <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                             <input v-model="form.email" type="email" id="email"
@@ -48,7 +45,7 @@
 import axios from 'axios';
 import LoginLayout from '../layouts/LoginLayout.vue';
 import toastr from 'toastr';
-
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
     components: {
@@ -64,32 +61,14 @@ export default {
         };
     },
     methods: {
-        async login() {
-        try {
-            
-            const response = await axios.post('/api/login', {
-                email: this.form.email,
-                password: this.form.password
+        ...mapActions(['login']),
+
+        async doLogin() {
+            return this.login(this.form).then(res => {
+                console.log("redirect!!! : ", this.$route.query.redirect);
+                const redirect = this.$route.query.redirect || { name: 'home' };
+                this.$router.push(redirect);
             });
-            
-            let data = response.data;
-
-            console.log({response, data})
-
-            localStorage.setItem('auth_token', data.access_token);
-            
-            // save to store
-            this.$store.commit('setToken', data.access_token );
-
-            this.$router.push('/profile');
-
-        } catch (error) {
-            console.log(error)
-            let res = error.response;
-            let data = res.data;
-            let msg = data.message;
-            toastr.error(msg)
-        }
         }
     }
 };

@@ -24,6 +24,12 @@ class LocationController extends Controller
         }
     }
 
+    public function getAllKecamatan() {
+        $kecamatan = Kecamatan::limit(1000)->get();
+
+        return response()->json($kecamatan, 200);
+    }
+
     public function getKecamatan($id)
     {
         $kecamatan_id = Kelurahan::where('id',$id)->pluck('kecamatan_id');

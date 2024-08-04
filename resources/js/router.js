@@ -3,8 +3,8 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
-import IdentitasAyah from './components/Ayah/IdentitasAyah.vue';
-import Profile from './components/Ibu/Profile.vue';
+import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
+import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
 import QRCode from './components/utils/QRCode.vue';
 import UserLayout from './layouts/UserLayout.vue';
@@ -20,16 +20,18 @@ import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue'
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
+import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
+import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
-
+    console.log({ userRole });
     switch (userRole) {
         case null:
             return Dashboard;
         case 'ibu':
-            return MenuIbu;
+            return DashboardIbu;
         case 'ayah':
             return IdentitasAyah;
         default:
@@ -101,9 +103,9 @@ const routes = [
         }
     },
     {
-        path: '/profile',
-        name: 'user-profile',
-        component: Profile,
+        path: '/dashboard-ibu',
+        name: 'dashboard-ibu',
+        component: DashboardIbu,
         meta: {
             layout: 'UserLayout',
             requiresAuth: false
@@ -152,7 +154,25 @@ const routes = [
         component: PregnancyHistory,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+        }
+    },
+    {
+        path: '/informasi-medis',
+        name: 'informasi-medis',
+        component: ListInfoMedis,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/informasi-medis/:slug',
+        name: 'informasi-medis-detail',
+        component: InfoMedis,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
         }
     },
 
@@ -190,26 +210,26 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
 
     {
         path: '/checkup',
-        name: 'admin-checkup',
+        name: 'checkup',
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {
         path: '/checkup/show',
-        name: 'admin-checkup-show',
+        name: 'checkup-show',
         component: CheckupShow,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: false
+            requiresAuth: true
         }
     },
     {
@@ -231,15 +251,23 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth) {
-        const isAuthenticated = store.getters.isAuthenticated;
+    // console.log('dispatching fetch user')
 
-        if (!isAuthenticated) {
-            next({ name: 'login' });
-        } else {
-            next();
-        }
+    if (to.meta.requiresAuth) {
+        store.dispatch('fetchUser').then((res) => {
+
+            console.log('res dari dispatch', {res})
+            const isAuthenticated = store.getters.isAuthenticated;
+            console.log('im before each', {isAuthenticated})
+
+            if (!isAuthenticated) {
+                next({ name: 'login', query: { redirect: to.fullPath } });
+            } else {
+                next();
+            }
+        })
     } else {
+        store.dispatch('fetchUser'); //fetch juga biar sama
         next();
     }
 });
