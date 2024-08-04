@@ -8,6 +8,7 @@ const origin = window.location.origin;
 const store = createStore({
     state: {
         user: null,
+        lastHpl: null,
 
         auth_token: null,
 
@@ -73,6 +74,7 @@ const store = createStore({
         },
 
         user: (state) => state.user,
+        user_hpl: (state) => state.lastHpl,
 
         staff_id: (state) => {
 
@@ -149,6 +151,10 @@ const store = createStore({
             state.user = user;
         },
 
+        setUserHpl(state, lastHpl) {
+            state.lastHpl = lastHpl;
+        },
+
         setToken(state, token) {
             // ini
             state.auth_token = token;
@@ -180,7 +186,7 @@ const store = createStore({
         async fetchUser( context ) {
             try {
                 let endpoint = context.getters.baseUrl + '/api/user';
-                // console.log({ endpoint })
+                console.log({ endpoint })
                 return axios.get( endpoint , {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -199,6 +205,35 @@ const store = createStore({
                         // this.updateUser(null)
                         console.log('catch fetch user')
                         context.commit('setUser', null);
+
+                    })
+            } catch (error) {
+                console.error('Error fetching user:', error);
+            }
+        },
+
+        async fetchLastHpl(context) {
+            try {
+                let endpoint = context.getters.baseUrl + '/api/pregnancy';
+                console.log({ endpoint })
+                return axios.get(endpoint, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                })
+                    .then(response => response.data)
+                    .then(pregnancy => {
+                        console.log({ pregnancy })
+                        context.commit('setLastHpl', pregnancy.estimate_date_of_delivery);
+                    })
+                    .catch(err => {
+                        // do something like remove the localStorage
+
+                        // localStorage.removeItem('auth_token');
+                        // this
+                        // this.updateUser(null)
+                        console.log('catch fetch LastHpl', err)
+                        context.commit('setLastHpl', null);
 
                     })
             } catch (error) {
