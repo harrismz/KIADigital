@@ -36,6 +36,7 @@ use App\Http\Controllers\VaksinController;
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/kelurahan', [LocationController::class, 'getKelurahan']);
+Route::get('/kecamatan', [LocationController::class, 'getAllKecamatan']);
 Route::get('/kecamatan/{id}', [LocationController::class, 'getKecamatan']);
 Route::get('/provinsi/{id}', [LocationController::class, 'getProvince']);
 
@@ -43,6 +44,7 @@ Route::get('/pendidikan', [IdentityController::class, 'getEducation']);
 Route::get('/pekerjaan', [IdentityController::class, 'getJob']);
 Route::get('/blood-types', [IdentityController::class, 'getBloodType']);
 Route::get('/religion', [IdentityController::class, 'getReligion']);
+Route::post('/identitas-ibu', [IdentityController::class, 'store']);
 
 Route::get('/get_mother/{user_id}', [IbuController::class, 'index']);
 Route::get('/get_week_user', [IbuController::class, 'getWeek']);
