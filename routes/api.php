@@ -60,7 +60,7 @@ Route::get('user', [AuthController::class, 'user'])->middleware('auth:api');
 Route::get('test', [TestController::class, 'test']);
 
 Route::get('/checkup/{guid}', [CheckupController::class, 'get'])->name('checkup.get'); //untuk menampilan semua data checkup based on guid mother or children
-Route::post('/checkup', [CheckupController::class, 'store'])->name('checkup.store'); // save data checkup 
+Route::post('/checkup', [CheckupController::class, 'store'])->name('checkup.store'); // save data checkup
 
 Route::get('/vaksin/combo', [VaksinController::class, 'combo'] )->name('vaksin.combo');
 Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisasi.store');
@@ -68,3 +68,6 @@ Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisa
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
 Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class, 'showByWeek']);
+
+// route anak
+Route::get('childbirth-history/{id}', [ChildDevelopmentHistoryController::class, 'showChildBirth']);

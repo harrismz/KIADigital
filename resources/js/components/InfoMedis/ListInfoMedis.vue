@@ -1,25 +1,36 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Informasi</h1>
-    <div class="mb-4">
-      <input v-model="searchQuery" @input="searchInformations" type="text" placeholder="Search..." class="w-full p-2 border rounded-md" />
-    </div>
-    <div v-for="info in paginatedInformations" :key="info.id" class="bg-white shadow-md rounded-lg p-4 mb-4">
-      <div class="flex">
-        <img :src="getImageUrl(info.image)" alt="Thumbnail" class="w-20 h-20 object-cover rounded-lg mr-4">
-        <div>
-          <h2 class="text-xl font-semibold">{{ info.title }}</h2>
-          <div v-html="info.excerpt"></div>
-          <button @click="viewDetail(info.slug)" class="mt-2 text-blue-500 hover:text-blue-700">Read more</button>
+    <div class="container mx-auto p-4">
+        <div class="mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <h1 class="text-2xl font-bold">Informasi</h1>
+                <div class="flex justify-end gap-x-3">
+                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'"></img>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="mb-4">
+            <input v-model="searchQuery" @input="searchInformations" type="text" placeholder="Search..."
+                class="w-full p-2 border rounded-md" />
+        </div>
+        <div v-for="info in paginatedInformations" :key="info.id" class="bg-white shadow-md rounded-lg p-4 mb-4">
+            <div class="flex">
+                <img :src="getImageUrl(info.image)" alt="Thumbnail" class="w-20 h-20 object-cover rounded-lg mr-4">
+                <div>
+                    <h2 class="text-xl font-semibold">{{ info.title }}</h2>
+                    <div v-html="info.excerpt"></div>
+                    <button @click="viewDetail(info.slug)" class="mt-2 text-blue-500 hover:text-blue-700">Read
+                        more</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center mt-4">
+            <button @click="previousPage" :disabled="currentPage === 1"
+                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">Previous</button>
+            <span class="px-4">{{ currentPage }}</span>
+            <button @click="nextPage" :disabled="currentPage === totalPages"
+                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">Next</button>
+        </div>
     </div>
-    <div class="flex justify-center mt-4">
-      <button @click="previousPage" :disabled="currentPage === 1" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">Previous</button>
-      <span class="px-4">{{ currentPage }}</span>
-      <button @click="nextPage" :disabled="currentPage === totalPages" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">Next</button>
-    </div>
-  </div>
 </template>
 <script>
 import { ref, computed, onMounted } from 'vue';
@@ -89,6 +100,13 @@ export default {
       return `${baseUrl.value}/storage/${path}`;
     };
 
+        const gotoHome = () => {
+            router.push({
+                name: 'home',
+                params: {}
+            });
+        };
+
     onMounted(() => {
       fetchInformations();
     });
@@ -104,6 +122,8 @@ export default {
         nextPage,
         previousPage,
         getImageUrl,
+        gotoHome,
+        baseUrl,
     };
   }
 };

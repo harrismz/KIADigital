@@ -25,4 +25,14 @@
     - [ ] set default public dashboard when not authenticate
     - [ ] cek saving identitas ibu dan ayah
     - [ ] refer identitas ibu dan ayah untuk form inputan
-    - [ ] 
+  
+  # target besok
+- [ ] Dashboard Anak
+- [ ] Diary Anak
+- [ ] login tenaga medis
+- [ ] menu check up
+- [ ] scan barcode ditenaga medis
+- [ ] menu input vaksin
+- [ ] menu input riwayat persalinan
+- [ ] menu input catatan kesehatan anak
+- [ ] 

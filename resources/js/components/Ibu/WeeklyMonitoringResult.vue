@@ -63,7 +63,7 @@ export default {
 
         const gotoHome = () => {
             router.push({
-                name: 'profile',
+                name: 'home',
                 params: {}
             });
         };

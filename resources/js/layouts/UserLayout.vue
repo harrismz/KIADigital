@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen flex flex-col">
-        <header class="bg-gray-800 text-white p-4">
+        <header class="bg-gray-800 text-white p-3">
             <div class="container mx-auto flex justify-between items-center">
                 <!-- <h1 class="text-xl font-bold">{{Logo}}</h1> -->
                 <img :src="baseUrl +  '/storage/images/avatar.png'" alt="" srcset="" class="w-10 h-10">
@@ -26,7 +26,7 @@
                                     Edit Identitas
                                 </router-link>
                                 <div v-else>
-                                    {{ user.name }} - {{ user.role.display_name }} 
+                                    {{ user.name }} - {{ user.role.display_name }}
                                 </div>
                             </li>
 
@@ -43,7 +43,7 @@
         <main class="flex-grow container mx-auto p-4">
             <slot></slot>
         </main>
-        <footer class="bg-gray-800 text-white p-4">
+        <footer class="bg-gray-800 text-white p-2">
             <div class="container mx-auto text-center">
                 &copy; 2024 KIA Digital
             </div>

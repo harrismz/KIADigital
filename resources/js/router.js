@@ -21,6 +21,7 @@ import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue'
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
+import RiwayatPersalinanEdit from './components/Ibu/RiwayatPersalinan_edit.vue';
 import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
 import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
@@ -159,6 +160,26 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    {
+        path: '/riwayat-persalinan-edit',
+        name: 'riwayat-persalinan-edit',
+        component: RiwayatPersalinanEdit,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+
+    {
+        path: '/health-records',
+        name: 'health-records',
+        component: HealthRecordIbu,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+
     {
         path: '/pregnancy_history/:weeks',
         name: 'pregnancy_history',
