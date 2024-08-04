@@ -14,7 +14,7 @@
     Legend
   } from 'chart.js'
   import { Line } from 'vue-chartjs'
-  import * as chartConfig from '../chartConfig.js'
+  import * as chartConfig from './chartConfig.js'
   
   ChartJS.register(
     CategoryScale,
