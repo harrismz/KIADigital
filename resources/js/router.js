@@ -15,6 +15,7 @@ import Checkup from './components/medis/checkup.vue';
 import CheckupShow from './components/medis/checkupShow.vue';
 import MenuIbu from './components/Ibu/menu.vue';
 import Dashboard from './components/Dashboard.vue';
+import DashboardAnak from './components/Anak/DashboardAnak.vue';
 import StatusKehamilan from './components/Ibu/StatusKehamilan.vue';
 import KalenderHpl from './components/ibu/KalenderHpl.vue';
 import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue';
@@ -27,6 +28,8 @@ import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 import StuntingChart from './components/StuntingChart.vue';
 import Imunisasi from './components/medis/Imunisasi.vue';
+import DiaryAnak from './components/anak/ChildWeeklyMonitoringResult.vue';
+import DiaryAnakEdit from './components/anak/ChildWeeklyMonitoringAnswer.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -107,8 +110,8 @@ const routes = [
         }
     },
     {
-        path: '/child',
-        name: 'child',
+        path: '/identitas-anak',
+        name: 'identitas-anak',
         component: IdentitasAnak,
         props: true,
         meta: {
@@ -218,6 +221,34 @@ const routes = [
         }
     },
 
+    // Halaman Anak
+    {
+        path: '/dashboard-anak',
+        name: 'dashboard-anak',
+        component: DashboardAnak,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/child-weekly-monitoring-result',
+        name: 'child-weekly-monitoring-result',
+        component: DiaryAnak,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/child-weekly-monitoring-answer',
+        name: 'child-weekly-monitoring-answer',
+        component: DiaryAnakEdit,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
     // Halaman Admin
     {
         path: '/admin',

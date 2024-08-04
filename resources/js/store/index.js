@@ -141,6 +141,11 @@ const store = createStore({
 
             return dm.public;
         },
+        getMenuAnak: (state) => {
+            // check current role
+            let dm = state.dashboard_menu;
+            return dm.anak;
+        },
 
         userRole(state) {
             let user = state.user;
