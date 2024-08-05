@@ -8,6 +8,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CheckupController;
+use App\Http\Controllers\ChildDevelopmentHistory;
+use App\Http\Controllers\ChildDevelopmentHistoryController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PregnancyHistoryController;
@@ -70,4 +72,5 @@ Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show'
 Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class, 'showByWeek']);
 
 // route anak
-Route::get('childbirth-history/{id}', [ChildDevelopmentHistoryController::class, 'showChildBirth']);
+Route::get('child-development-history/{id}', [ChildDevelopmentHistoryController::class, 'show']);
+Route::get('child-development-history', [ChildDevelopmentHistoryController::class, 'index']);
