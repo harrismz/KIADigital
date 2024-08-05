@@ -59,11 +59,11 @@ const store = createStore({
             anak: [
                 { title: 'Diary Anak', description: 'Pemantauan kondisi dan perkembangan serta keluhan yang anak rasakah dapat diisi dalam menu ini.', link: 'child-weekly-monitoring-result', img: '/storage/images/diary.png' },
 
-                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img: '/storage/images/information.png' },
+                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'informasi-medis', img: '/storage/images/information.png' },
 
-                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img: '/storage/images/information-anak.png' },
+                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'pertumbuhan-anak', img: '/storage/images/information-anak.png' },
 
-                { title: 'Pelayanan Imunisasi', description: 'Pelayanan Imunisasi imerupakan informasi mengenai imunisasi yang wajib dilakukan oleh anak. Sudah maupun belum dilakukan imunisasi dapat dilacak dalam menu ini.', link: '#', img: '/storage/images/jarum.png' },
+                { title: 'Pelayanan Imunisasi', description: 'Pelayanan Imunisasi ini merupakan informasi mengenai imunisasi yang wajib dilakukan oleh anak. Sudah maupun belum dilakukan imunisasi dapat dilacak dalam menu ini.', link: 'imunisasi', img: '/storage/images/jarum.png' },
             ]
 
         }

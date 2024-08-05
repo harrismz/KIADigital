@@ -30,6 +30,7 @@ import StuntingChart from './components/StuntingChart.vue';
 import Imunisasi from './components/medis/Imunisasi.vue';
 import DiaryAnak from './components/anak/ChildWeeklyMonitoringResult.vue';
 import DiaryAnakEdit from './components/anak/ChildWeeklyMonitoringAnswer.vue';
+import PertumbuhanAnak from './components/anak/PertumbuhanAnak.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -244,6 +245,15 @@ const routes = [
         path: '/child-weekly-monitoring-answer',
         name: 'child-weekly-monitoring-answer',
         component: DiaryAnakEdit,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/pertumbuhan-anak',
+        name: 'pertumbuhan-anak',
+        component: PertumbuhanAnak,
         meta: {
             layout: 'UserLayout',
             requiresAuth: false
