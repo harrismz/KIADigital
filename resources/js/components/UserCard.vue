@@ -5,11 +5,11 @@
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
                 <!-- disini problem pengambilan nama user yang login tlg di cek ya guh
                     dan ketika yg login si ibu ambil nama ibu dari identitas ibu / table mother -->
-                <!-- <h1 class="font-mono">{{ user.name }}</h1> -->
+                <h1 class="font-mono">{{ userName }} </h1>
                 <!-- sementara gw comment -->
                 <h1 class="font-mono" v-if="isMedic">MEDIC</h1>
                 <h1 class="font-mono" v-if="isMom">MEDIC</h1>
-                <h1 class="font-mono" v-else>Nama User</h1>
+                <h1 class="font-mono" v-else> - </h1>
                 <p v-if="isMedic" class="font-sans font-light">
                     NIP : {{ userDetail.nip }}
                 </p>
@@ -100,13 +100,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(['user']),
+        // ...mapState(['user']),
         ...mapGetters([
-            'getUser', 'isMom', 'userRole', 'userRoleDisplayName', 'isMedic'
+            'getUser', 'isMom', 'userRole', 'userRoleDisplayName', 'isMedic', 'userName'
         ])
     },
     methods: {
-        ...mapActions(["updateUser"]),
+        // ...mapActions(["updateUser"]),
     },
     // data() {
     //     return {

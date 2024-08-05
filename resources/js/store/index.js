@@ -8,6 +8,7 @@ const origin = window.location.origin;
 const store = createStore({
     state: {
         user: null,
+
         lastHpl: null,
 
         auth_token: null,
@@ -84,6 +85,24 @@ const store = createStore({
         },
 
         user: (state) => state.user,
+
+        userName: (state, getters) => {
+            // jika ibu, ambil dari ibu, jika staff ambil dari staff
+            if(!state.user) {
+                return 'user not found';
+            }
+
+            if(state.user.mother) {
+                return state.user.mother.name;
+            }
+
+            if(state.user.staff) {
+                return state.user.staff.name;
+            }
+
+            return state.user.name;
+        },
+
         user_hpl: (state) => state.lastHpl,
 
         staff_id: (state) => {
@@ -112,14 +131,33 @@ const store = createStore({
         },
 
         getUser: (state) => state.user,
+
         baseUrl: (state) => state.config.baseUrl,
+
         imgLogo: (state) => state.config.imgLogo,
 
         isMom(state) {
+            // cek dulu role nya null ngga, nanti error
+            if(!state.user) {
+                return false;
+            }
+
+            if(!state.user.role){
+                return false;
+            }
+
             return state.user.role.name == 'ibu';
         },
 
         isMedic(state) {
+            if(!state.user) {
+                return false;
+            }
+
+            if(!state.user.role){
+                return false;
+            }
+
             return state.user.role.name == 'medic';
         },
 
