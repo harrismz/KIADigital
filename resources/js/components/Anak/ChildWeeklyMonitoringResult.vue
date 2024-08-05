@@ -1,12 +1,14 @@
 <template>
     <div class="max-w-3xl mx-auto p-4">
         <div class="mb-6">
-            <div class="grid grid-cols-2 gap-4">
-                <h1 class="text-2xl font-bold">Dairy Ibu Hamil - Week 3</h1>
-                <div class="flex justify-end gap-x-3">
-                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'"></img>
+            <div class="grid grid-cols-2 grid-rows-2 gap-4">
+                <h1 class="text-2xl font-bold">Dairy Anak - 1 Bulan</h1>
+                <div class="flex justify-end gap-x-3 row-span-2">
+                    <img class="w-6 h-6" @click="gotoDashboardAnak" :src="'storage/images/home.png'"></img>
                     <img class="w-6 h-6" @click="editAnswer" :src="'storage/images/edit.png'"></img>
                 </div>
+                <p>Pemantauan Perkembangan Anak</p>
+
             </div>
         </div>
 
@@ -30,40 +32,39 @@ import { ref } from 'vue';
 export default {
     setup() {
         const router = useRouter();
-
         const questions = ref([
             {
-                text: 'Demam Lebih dari Dua Hari?',
-                type: 'choice',
-                answer: 'YA'
-            },
-            {
-                text: 'Pusing/Sakit Kepala Berat?',
-                type: 'choice',
-                answer: 'YA'
-            },
-            {
-                text: 'Sulit Tidur / Cemas Berlebih?',
+                text: 'Bayi bisa mengangkat kepala mandiri hingga setinggi 45 derajat ?',
                 type: 'choice',
                 answer: 'TIDAK'
             },
             {
-                text: 'Keluhan/Gejala Lainnya',
-                type: 'text',
-                answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus malesuada ultrices. Quisque in lobortis justo. Morbi placerat eget erat eu maximus. Nullam in dapibus est. Fusce vel maximus tortor. Fusce a eros erat. Curabitur posuere tellus id nisl vulputate, ut tristique orci fringilla. Suspendisse a orci eget tellus tincidunt pulvinar. Morbi dignissim, arcu at elementum porttitor, nunc risus pulvinar erat, aliquet dictum risus nunc ut lorem. Cras id scelerisque dui, et pharetra quam. Integer placerat tincidunt leo non viverra. Donec consequat nibh venenatis, pellentesque arcu id, eleifend turpis. In hac habitasse platea dictumst. Nunc vel urna nec tellus fermentum congue. Curabitur laoreet vitae leo eget rutrum. Proin a posuere turpis.'
+                text: 'Bayi bisa menggerakan kepala dari kiri / kanan ke tengah ?',
+                type: 'choice',
+                answer: 'YA'
+            },
+            {
+                text: 'Bayi  bisa melihat dan menatap wajah anda ?',
+                type: 'choice',
+                answer: 'YA'
+            },
+            {
+                text: 'Bayi bisa mengoceh spontant atau bereaksi dengan mengoceh ?',
+                type: 'choice',
+                answer: 'Tidak'
             }
         ]);
 
         const editAnswer = () => {
             router.push({
-                name: 'weekly-monitoring-answer',
+                name: 'child-weekly-monitoring-answer',
                 params: {}
             });
         };
 
-        const gotoHome = () => {
+        const gotoDashboardAnak = () => {
             router.push({
-                name: 'home',
+                name: 'dashboard-anak',
                 params: {}
             });
         };
@@ -71,7 +72,7 @@ export default {
         return {
             questions,
             editAnswer,
-            gotoHome
+            gotoDashboardAnak
         };
     }
 }

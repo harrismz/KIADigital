@@ -56,16 +56,33 @@ export default {
         const router = useRouter();
 
         const questions = reactive([
-            { text: 'Demam Lebih dari Dua Hari?', type: 'choice', answer: '' },
-            { text: 'Pusing/Sakit Kepala Berat?', type: 'choice', answer: '' },
-            { text: 'Sulit Tidur / Cemas Berlebih?', type: 'choice', answer: '' },
-            { text: 'Keluhan/Gejala Lainnya', type: 'text', answer: '' }
+            {
+                text: 'Bayi bisa mengangkat kepala mandiri hingga setinggi 45 derajat ?',
+                type: 'choice',
+                answer: ''
+            },
+            {
+                text: 'Bayi bisa menggerakan kepala dari kiri / kanan ke tengah ?',
+                type: 'choice',
+                answer: ''
+            },
+            {
+                text: 'Bayi  bisa melihat dan menatap wajah anda ?',
+                type: 'choice',
+                answer: ''
+            },
+            {
+                text: 'Bayi bisa mengoceh spontant atau bereaksi dengan mengoceh ?',
+                type: 'choice',
+                answer: ''
+            }
+
         ]);
 
         const submit = () => {
             console.log(questions);
             toastr.success('Data Berhasil disimpan');
-            router.push('/weekly-monitoring-result');
+            router.push('/child-weekly-monitoring-result');
         };
 
         const addQuestion = () => {

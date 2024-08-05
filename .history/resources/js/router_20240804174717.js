@@ -3,7 +3,6 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
-import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
@@ -15,22 +14,16 @@ import Checkup from './components/medis/checkup.vue';
 import CheckupShow from './components/medis/checkupShow.vue';
 import MenuIbu from './components/Ibu/menu.vue';
 import Dashboard from './components/Dashboard.vue';
-import DashboardAnak from './components/Anak/DashboardAnak.vue';
 import StatusKehamilan from './components/Ibu/StatusKehamilan.vue';
 import KalenderHpl from './components/ibu/KalenderHpl.vue';
 import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue';
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
-import RiwayatPersalinanEdit from './components/Ibu/RiwayatPersalinan_edit.vue';
 import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
 import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 import StuntingChart from './components/StuntingChart.vue';
-import Imunisasi from './components/medis/Imunisasi.vue';
-import DiaryAnak from './components/anak/ChildWeeklyMonitoringResult.vue';
-import DiaryAnakEdit from './components/anak/ChildWeeklyMonitoringAnswer.vue';
-import PertumbuhanAnak from './components/anak/PertumbuhanAnak.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -107,16 +100,6 @@ const routes = [
         component: KalenderHpl,
         props: true,
         meta: {
-            layout: 'UserLayout',
-            requiresAuth: true
-        }
-    },
-    {
-        path: '/child',
-        name: 'child',
-        component: IdentitasAnak,
-        props: true,
-        meta: {
             layout: 'LoginLayout'
         }
     },
@@ -167,35 +150,6 @@ const routes = [
         }
     },
     {
-        path: '/riwayat-persalinan-edit',
-        name: 'riwayat-persalinan-edit',
-        component: RiwayatPersalinanEdit,
-        props: true,
-        meta: {
-            layout: 'UserLayout'
-        }
-    },
-
-    {
-        path: '/health-records',
-        name: 'health-records',
-        component: HealthRecordIbu,
-        props: true,
-        meta: {
-            layout: 'UserLayout'
-        }
-    },
-
-    {
-        path: '/pregnancy_history/:weeks',
-        name: 'pregnancy_history',
-        component: PregnancyHistory,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: true,
-        }
-    },
-    {
         path: '/informasi-medis',
         name: 'informasi-medis',
         component: ListInfoMedis,
@@ -213,53 +167,7 @@ const routes = [
             layout: 'UserLayout'
         }
     },
-    {
-        path: '/imunisasi',
-        name: 'imunisasi',
-        component: Imunisasi,
-        props: true,
-        meta: {
-            layout: 'UserLayout'
-        }
-    },
 
-    // Halaman Anak
-    {
-        path: '/dashboard-anak',
-        name: 'dashboard-anak',
-        component: DashboardAnak,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: false
-        }
-    },
-    {
-        path: '/child-weekly-monitoring-result',
-        name: 'child-weekly-monitoring-result',
-        component: DiaryAnak,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: false
-        }
-    },
-    {
-        path: '/child-weekly-monitoring-answer',
-        name: 'child-weekly-monitoring-answer',
-        component: DiaryAnakEdit,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: false
-        }
-    },
-    {
-        path: '/pertumbuhan-anak',
-        name: 'pertumbuhan-anak',
-        component: PertumbuhanAnak,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: false
-        }
-    },
     // Halaman Admin
     {
         path: '/admin',

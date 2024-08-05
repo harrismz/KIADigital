@@ -14,7 +14,7 @@
     Legend
   } from 'chart.js'
   import { Line } from 'vue-chartjs'
-  import * as chartConfig from '../chartConfig.js'
+  import * as chartConfig from './chartConfig.js'
   
   ChartJS.register(
     CategoryScale,
@@ -27,7 +27,7 @@
   )
   
   export default {
-    name: 'StuntingChart',
+    name: 'App',
     components: {
       Line
     },

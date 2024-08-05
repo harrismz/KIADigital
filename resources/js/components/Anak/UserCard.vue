@@ -3,31 +3,37 @@
         <div class="collapse collapse-arrow col-span-1 bg-pink-200 mb-2 shadow-md" :class="{ 'collapse-open': isOpen }">
             <input type="radio" name="my-accordion-2" v-model="isOpen" class="hidden" />
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
-                <h1 class="font-mono">{{ user.name }}</h1>
-                <p v-if="isMedic" class="font-sans font-light">
-                    NIP : {{ userDetail.nip }}
+                <h1 class="font-mono">Rafasya Andaru</h1>
+                <p class="font-sans font-light">
+                    TTL : 21 Juni 2024
                 </p>
-                <p v-else class="font-sans font-light">
-                    HPL : {{ userDetail.hpl }}
-                </p>
+
             </div>
-            <div v-if="isMom" class="collapse-content">
+            <div class="collapse-content">
+                <span class="font-bold">Ibu</span>
+                <div class="flex justify-between mt-2">
+                    <h1 class="font-mono">Diah Ayu Puspitasari</h1>
+                    <p class="font-sans font-light">
+                        HPL : 21 Juni 2024
+                    </p>
+                </div>
                 <span class="font-bold">Anak</span>
-                <div class="grid grid-cols-2 grid-rows-3 gap-4">
-                    <h1 class="font-mono cursor-pointer" @click="goToAnak">Rafasya Andaru</h1>
-                    <div class="flex justify-end gap-x-3 row-span-3">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex gap-x-3">
+                        <h1 class="font-mono">Rafasya Andaru</h1>
+                        <p class="font-sans font-light">
+                            TTL : 21 Juni 2024
+                        </p>
+                        <a href="admin/child/create" class=" flex items-center space-x-2">
+                            <img src="storage/images/anak-icon.png" alt="" class="h-5 w-5">
+                            <span>
+                                tambah identitas anak
+                            </span>
+                        </a>
+                    </div>
+                    <div class="flex justify-end gap-x-3">
                         <img class="w-6 h-6" @click="editAnswer" :src="'storage/images/edit.png'"></img>
                     </div>
-                    <p class="font-sans font-light cursor-pointer" @click="goToAnak">
-                        TTL : 21 Juni 2024
-                    </p>
-                    <a href="admin/child/create" class=" flex items-center space-x-2 cursor-pointer">
-                        <img src="storage/images/anak-icon.png" alt="" class="h-5 w-5">
-                        <span>
-                            tambah identitas anak
-                        </span>
-                    </a>
-
 
                 </div>
             </div>
@@ -66,12 +72,10 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 import axios from 'axios';
 import { ref } from "vue";
-import { useRouter } from 'vue-router';
 
 export default {
     name: 'UserCard',
     setup() {
-        const router = useRouter();
         const isOpen = ref(false);
         const userDetail = {
             hpl: '16 JUNE 2025',
@@ -82,15 +86,10 @@ export default {
             isOpen.value = !isOpen.value;
         };
 
-        const goToAnak = () => {
-            router.push('/dashboard-anak');
-        };
-
         return {
             isOpen,
             toggleCollapse,
-            userDetail,
-            goToAnak
+            userDetail
         };
     },
     computed: {
