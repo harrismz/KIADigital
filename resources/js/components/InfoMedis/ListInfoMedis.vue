@@ -4,7 +4,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <h1 class="text-2xl font-bold">Informasi</h1>
                 <div class="flex justify-end gap-x-3">
-                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'"></img>
+                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'">
                 </div>
             </div>
         </div>
@@ -33,98 +33,75 @@
     </div>
 </template>
 <script>
-import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
-  setup() {
-    const store = useStore();
-    const router = useRouter();
-    const informations = ref([]);
-    const searchQuery = ref('');
-    const currentPage = ref(1);
-    const itemsPerPage = 5;
-    const totalItems = ref(0);
-    const baseUrl = computed(() => store.getters.baseUrl);
-
-    const fetchInformations = () => {
+  name: 'ListInfoMedis',
+  data() {
+    return {
+      informations: [],
+      searchQuery: '',
+      currentPage: 1,
+      itemsPerPage: 5,
+      totalItems: 0
+    };
+  },
+  computed: {
+    ...mapGetters(['baseUrl']),
+    paginatedInformations() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.informations.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.totalItems / this.itemsPerPage);
+    }
+  },
+  mounted() {
+    this.fetchInformations();
+  },
+  methods: {
+    fetchInformations() {
       const queryParams = new URLSearchParams({
-        page: currentPage.value,
-        search: searchQuery.value
+        page: this.currentPage,
+        search: this.searchQuery
       }).toString();
 
-      axios.get(`${baseUrl.value}/api/post?${queryParams}`)
+      axios.get(`${this.baseUrl}/api/post?${queryParams}`)
         .then(response => {
-          informations.value = response.data.data;
-          totalItems.value = response.data.total;
+          this.informations = response.data.data;
+          this.totalItems = response.data.total;
         })
         .catch(error => {
           console.error(error);
         });
-    };
-
-    const searchInformations = () => {
-      currentPage.value = 1; // Reset to first page on new search
-      fetchInformations();
-    };
-
-    const paginatedInformations = computed(() => {
-      const start = (currentPage.value - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      return informations.value.slice(start, end);
-    });
-
-    const totalPages = computed(() => Math.ceil(totalItems.value / itemsPerPage));
-
-    const nextPage = () => {
-      if (currentPage.value < totalPages.value) {
-        currentPage.value += 1;
-        fetchInformations();
+    },
+    searchInformations() {
+      this.currentPage = 1; // Reset to first page on new search
+      this.fetchInformations();
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage += 1;
+        this.fetchInformations();
       }
-    };
-
-    const previousPage = () => {
-      if (currentPage.value > 1) {
-        currentPage.value -= 1;
-        fetchInformations();
+    },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage -= 1;
+        this.fetchInformations();
       }
-    };
-
-    const viewDetail = (slug) => {
-      router.push({ name: 'informasi-medis-detail', params: { slug } });
-    };
-
-    const getImageUrl = (path) => {
-      return `${baseUrl.value}/storage/${path}`;
-    };
-
-        const gotoHome = () => {
-            router.push({
-                name: 'home',
-                params: {}
-            });
-        };
-
-    onMounted(() => {
-      fetchInformations();
-    });
-
-    return {
-        informations,
-        searchQuery,
-        currentPage,
-        totalPages,
-        paginatedInformations,
-        searchInformations,
-        viewDetail,
-        nextPage,
-        previousPage,
-        getImageUrl,
-        gotoHome,
-        baseUrl,
-    };
+    },
+    viewDetail(slug) {
+      this.$router.push({ name: 'informasi-medis-detail', params: { slug } });
+    },
+    getImageUrl(path) {
+      return `${this.baseUrl}/storage/${path}`;
+    },
+    gotoHome() {
+      this.$router.push({ name: 'home' });
+    }
   }
 };
 </script>
