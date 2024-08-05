@@ -13,15 +13,16 @@
             </div>
             <div v-if="isMom" class="collapse-content">
                 <span class="font-bold">Anak</span>
-                <div class="grid grid-cols-2 grid-rows-3 gap-4">
+                <div class="grid grid-cols-2 grid-rows-2 gap-4">
                     <h1 class="font-mono cursor-pointer" @click="goToAnak">Rafasya Andaru</h1>
-                    <div class="flex justify-end gap-x-3 row-span-3">
+                    <div class="flex justify-end gap-x-3 row-span-2">
                         <img class="w-6 h-6" @click="editAnswer" :src="'storage/images/edit.png'"></img>
                     </div>
                     <p class="font-sans font-light cursor-pointer" @click="goToAnak">
                         TTL : 21 Juni 2024
                     </p>
-                    <a href="admin/child/create" class=" flex items-center space-x-2 cursor-pointer">
+
+                    <a href="admin/child/create" class="flex items-center space-x-2 cursor-pointer col-span-2">
                         <img src="storage/images/anak-icon.png" alt="" class="h-5 w-5">
                         <span>
                             tambah identitas anak
