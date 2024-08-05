@@ -11,6 +11,8 @@ class Pregnancy extends Model
     
     protected $table = "pregnancy";
 
+    protected $guarded = ['id'];
+
     public function checkups(){
         return $this->hasMany(PregnancyHistory::class);
     }

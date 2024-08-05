@@ -13,6 +13,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\PregnancyHistoryController;
 use App\Http\Controllers\VaksinController;
 use App\Http\Controllers\ComboController;
+use App\Http\Controllers\PregnancyController;
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -64,6 +65,8 @@ Route::post('/checkup', [CheckupController::class, 'store'])->name('checkup.stor
 
 Route::get('/vaksin/combo', [VaksinController::class, 'combo'] )->name('vaksin.combo');
 Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisasi.store');
+
+Route::post('/pregnancy', [PregnancyController::class, 'store']); // Untuk menampilkan semua data pregnancy history
 
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
