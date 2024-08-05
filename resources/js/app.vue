@@ -27,3 +27,8 @@ export default {
     }
 }
 </script>
+
+<style scope>
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+</style>

@@ -31,7 +31,7 @@ const store = createStore({
                     link: 'checkup', img:  origin+ "/storage/images/checkup.png" },
                 {
                     title: 'History', description: 'History seluruh check up yang telah dilakukan baik pada ibu hamil maupun anak.',
-                    link: 'pregnancy_history', img:  origin+ "/storage/images/history.png" },
+                    link: 'history', img:  origin+ "/storage/images/history.png" },
                 {
                     title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.',
                     link: 'informasi-medis', img:  origin+ "/storage/images/information.png" },

@@ -5,26 +5,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\pregnancy_history;
+use App\Models\PregnancyHistory;
 use Illuminate\Support\Facades\Auth;
 
 class PregnancyHistoryController extends Controller
 {
     // Method untuk menampilkan semua data pregnancy_history untuk user yang sedang login
-    public function index()
+    public function index(Request $request)
     {
-        $user = Auth::user(); // Mendapatkan user yang sedang login
-        $pregnancy_history = pregnancy_history::where('user_id', $user->id)->get(); // Mengambil semua catatan kehamilan dari user tersebut
+        // $user = Auth::user(); // Mendapatkan user yang sedang login
+        $history = PregnancyHistory::where(
+            function($q) use ($request){
 
-        return response()->json([
-            'pregnancy_history' => $pregnancy_history
-        ], 200); // Mengembalikan data dalam bentuk JSON
+            }
+        )
+        ->with('pregnancy.mother')
+        // how to get with mother ??? pregnancy_history belongsTo Pregnancy, PRegnancy belongsTo Mother;
+        ->paginate(); // Mengambil semua catatan kehamilan dari user tersebut
+
+        return $history;
     }
 
     // Method untuk menampilkan data pregnancy_history berdasarkan ID
     public function show($id)
     {
         $user = Auth::user();
-        $pregnancy_history = pregnancy_history::where('user_id', $user->id)->findOrFail($id); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
+        $pregnancy_history = PregnancyHistory::where('user_id', $user->id)->findOrFail($id); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
 
         return response()->json([
             'pregnancy_history' => $pregnancy_history

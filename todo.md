@@ -9,3 +9,6 @@ setup dashboard untuk ibu dan dokter pake vue
         - come from one component: checkup, whick search the guid of mother or children
         - anak:
             - 
+
+    - staff id and hospital id belum terisi ketika input pregnancy checkup history
+    - input nya juga masih text semua, harusnya ada yang upload, ada yang calendar
