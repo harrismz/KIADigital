@@ -111,8 +111,8 @@ const routes = [
         }
     },
     {
-        path: '/identitas-anak',
-        name: 'identitas-anak',
+        path: '/child',
+        name: 'child',
         component: IdentitasAnak,
         props: true,
         meta: {
