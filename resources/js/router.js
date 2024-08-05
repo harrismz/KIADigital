@@ -107,7 +107,8 @@ const routes = [
         component: KalenderHpl,
         props: true,
         meta: {
-            layout: 'LoginLayout'
+            layout: 'UserLayout',
+            requiresAuth: true
         }
     },
     {
