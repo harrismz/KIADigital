@@ -96,11 +96,8 @@ export default {
     computed: {
         ...mapState(['user']),
         ...mapGetters([
-            'getUser', 'isMom', 'userRole', 'userRoleDisplayName'
+            'getUser', 'isMom', 'userRole', 'userRoleDisplayName', 'isMedic'
         ])
-    },
-    mounted() {
-
     },
     methods: {
         ...mapActions(["updateUser"]),

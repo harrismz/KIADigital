@@ -1,19 +1,10 @@
 <template>
     <div class="flex flex-col min-h-24 bg-gray-100 p-6">
         <user-card />
-        <progress-bar></progress-bar>
+        <progress-bar v-if="isMom"></progress-bar>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Profile Card -->
             <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
                 :link="card.link" :img="card.img" />
-
-            <!-- Chart Section -->
-            <!-- <div class="col-span-1 md:col-span-2 lg:col-span-3">
-        <div class="bg-white shadow rounded-lg p-4">
-        <h2 class="text-xl font-semibold mb-4">Grafik Evaluasi Kehamilan</h2>
-        <LineChart :data="chartData" />
-        </div>
-    </div> -->
         </div>
     </div>
 </template>
@@ -99,7 +90,7 @@ methods: {
 },
 
 computed:{
-    ...mapGetters(['getMenu']),
+    ...mapGetters(['getMenu', 'isMom', 'isMedic']),
 
     cards(){
         return this.getMenu;
