@@ -32,6 +32,7 @@ import DiaryAnak from './components/anak/ChildWeeklyMonitoringResult.vue';
 import DiaryAnakEdit from './components/anak/ChildWeeklyMonitoringAnswer.vue';
 import PertumbuhanAnak from './components/anak/PertumbuhanAnak.vue';
 import History from './components/medis/history.vue';
+import HistoryDetail from './components/medis/historyDetail.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -61,6 +62,15 @@ const routes = [
         path:'/history',
         name:'history',
         component: History,
+        meta :{
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
+    },
+    {
+        path:'/history/:id',
+        name:'history-detail',
+        component: HistoryDetail,
         meta :{
             layout: 'UserLayout',
             requiresAuth: true

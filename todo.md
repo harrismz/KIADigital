@@ -12,3 +12,4 @@ setup dashboard untuk ibu dan dokter pake vue
 
     - staff id and hospital id belum terisi ketika input pregnancy checkup history
     - input nya juga masih text semua, harusnya ada yang upload, ada yang calendar
+    - Checkup history harus handle juga anak dan hanya memunculkan yang staff_id == current user

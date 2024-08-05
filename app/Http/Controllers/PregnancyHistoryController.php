@@ -29,11 +29,11 @@ class PregnancyHistoryController extends Controller
     // Method untuk menampilkan data pregnancy_history berdasarkan ID
     public function show($id)
     {
-        $user = Auth::user();
-        $pregnancy_history = PregnancyHistory::where('user_id', $user->id)->findOrFail($id); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
+        $data = PregnancyHistory::findOrFail($id); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
 
-        return response()->json([
-            'pregnancy_history' => $pregnancy_history
-        ], 200); // Mengembalikan data dalam bentuk JSON
+        return [
+            'success'=> true,
+            'data' => $data
+        ];
     }
 }
