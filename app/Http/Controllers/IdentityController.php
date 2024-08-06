@@ -104,6 +104,7 @@ class IdentityController extends Controller
             'job_id' => 'nullable|integer|exists:job,id', // Assuming it references an ID in the jobs table
             'height' => 'nullable|numeric|min:0|max:300', // height is optional, should be a number between 0 and 300 cm
             'user_id' => 'nullable|integer|exists:users,id', // Assuming it references an ID in the users table
+            'mother_id' => 'nullable|integer|exists:users,id', // Assuming it references an ID in the users table
         ];
 
         $validated = $request->validate($rule);

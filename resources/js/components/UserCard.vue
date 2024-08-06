@@ -3,7 +3,7 @@
         <div class="collapse collapse-arrow col-span-1 bg-pink-200 mb-2 shadow-md" :class="{ 'collapse-open': isOpen }">
             <input type="radio" name="my-accordion-2" v-model="isOpen" class="hidden" />
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
-                <h1 class="font-mono">{{ user.name }}</h1>
+                <h1 class="font-mono">DISINI NAMA IBU BUKAN USER</h1>
                 <p v-if="isMedic" class="font-sans font-light">
                     NIP : {{ userDetail.nip }}
                 </p>
@@ -49,7 +49,7 @@
 
         </div>
 
-    </div> -->
+    </div> --->
 </template>
 
 <script>

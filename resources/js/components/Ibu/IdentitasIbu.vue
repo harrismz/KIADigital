@@ -225,11 +225,14 @@ const submitIdentitasIbu = async () => {
     } catch (error) {
         let message = error;
 
+        console.log(error)
+
         if(error.response) {
-            if(error.data) {
-                message = error.data.message;
+            if(error.response.data) {
+                message = error.response.data.message;
             }
         }
+
         console.error(message);
         toastr.error(message)
         // Handle the error

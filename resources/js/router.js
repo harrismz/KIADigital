@@ -3,6 +3,7 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
+import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
@@ -20,10 +21,14 @@ import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue'
 import WeeklyMonitoringResult from './components/Ibu/WeeklyMonitoringResult.vue';
 import GrafikEvaluasiKehamilan from './components/Ibu/GrafikEvaluasiKehamilan.vue';
 import RiwayatPersalinan from './components/Ibu/RiwayatPersalinan.vue';
+import RiwayatPersalinanEdit from './components/Ibu/RiwayatPersalinan_edit.vue';
 import ListInfoMedis from './components/InfoMedis/ListInfoMedis.vue';
 import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 import StuntingChart from './components/StuntingChart.vue';
+import Imunisasi from './components/medis/Imunisasi.vue';
+import ChildDevelopmentList from './components/Anak/ChildDevelopmentList.vue';
+import ChildDevelopment from './components/Anak/ChildDevelopment.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -104,6 +109,15 @@ const routes = [
         }
     },
     {
+        path: '/child',
+        name: 'child',
+        component: IdentitasAnak,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
         path: '/dashboard-ibu',
         name: 'dashboard-ibu',
         component: DashboardIbu,
@@ -150,6 +164,26 @@ const routes = [
         }
     },
     {
+        path: '/riwayat-persalinan-edit',
+        name: 'riwayat-persalinan-edit',
+        component: RiwayatPersalinanEdit,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+
+    {
+        path: '/health-records',
+        name: 'health-records',
+        component: HealthRecordIbu,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+
+    {
         path: '/pregnancy_history/:weeks',
         name: 'pregnancy_history',
         component: PregnancyHistory,
@@ -171,6 +205,34 @@ const routes = [
         path: '/informasi-medis/:slug',
         name: 'informasi-medis-detail',
         component: InfoMedis,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/imunisasi',
+        name: 'imunisasi',
+        component: Imunisasi,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    // child
+    {
+        path: '/child-development',
+        name: 'child-development-list',
+        component: ChildDevelopmentList,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/child-development/:id',
+        name: 'child-development',
+        component: ChildDevelopment,
         props: true,
         meta: {
             layout: 'UserLayout'
