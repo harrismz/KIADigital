@@ -76,7 +76,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['baseUrl', '']),
+        // ...mapGetters(['baseUrl']),
     },
     mounted() {
         this.fetchWeek();
