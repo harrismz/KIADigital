@@ -8,6 +8,7 @@ const origin = window.location.origin;
 const store = createStore({
     state: {
         user: null,
+
         lastHpl: null,
 
         auth_token: null,
@@ -30,7 +31,7 @@ const store = createStore({
                     link: 'checkup', img:  origin+ "/storage/images/checkup.png" },
                 {
                     title: 'History', description: 'History seluruh check up yang telah dilakukan baik pada ibu hamil maupun anak.',
-                    link: 'pregnancy_history', img:  origin+ "/storage/images/history.png" },
+                    link: 'history', img:  origin+ "/storage/images/history.png" },
                 {
                     title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.',
                     link: 'informasi-medis', img:  origin+ "/storage/images/information.png" },
@@ -59,13 +60,12 @@ const store = createStore({
             anak: [
                 { title: 'Diary Anak', description: 'Pemantauan kondisi dan perkembangan serta keluhan yang anak rasakah dapat diisi dalam menu ini.', link: 'child-weekly-monitoring-result', img: '/storage/images/diary.png' },
 
-                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img: '/storage/images/information.png' },
+                { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'informasi-medis', img: '/storage/images/information.png' },
 
-                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: '#', img: '/storage/images/information-anak.png' },
+                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'pertumbuhan-anak', img: '/storage/images/information-anak.png' },
 
-                { title: 'Pelayanan Imunisasi', description: 'Pelayanan Imunisasi imerupakan informasi mengenai imunisasi yang wajib dilakukan oleh anak. Sudah maupun belum dilakukan imunisasi dapat dilacak dalam menu ini.', link: '#', img: '/storage/images/jarum.png' },
+                { title: 'Pelayanan Imunisasi', description: 'Pelayanan Imunisasi ini merupakan informasi mengenai imunisasi yang wajib dilakukan oleh anak. Sudah maupun belum dilakukan imunisasi dapat dilacak dalam menu ini.', link: 'imunisasi', img: '/storage/images/jarum.png' },
             ]
-
         }
     },
 
@@ -84,6 +84,24 @@ const store = createStore({
         },
 
         user: (state) => state.user,
+
+        userName: (state, getters) => {
+            // jika ibu, ambil dari ibu, jika staff ambil dari staff
+            if(!state.user) {
+                return 'user not found';
+            }
+
+            if(state.user.mother) {
+                return state.user.mother.name;
+            }
+
+            if(state.user.staff) {
+                return state.user.staff.name;
+            }
+
+            return state.user.name;
+        },
+
         user_hpl: (state) => state.lastHpl,
 
         staff_id: (state) => {
@@ -112,14 +130,33 @@ const store = createStore({
         },
 
         getUser: (state) => state.user,
+
         baseUrl: (state) => state.config.baseUrl,
+
         imgLogo: (state) => state.config.imgLogo,
 
         isMom(state) {
+            // cek dulu role nya null ngga, nanti error
+            if(!state.user) {
+                return false;
+            }
+
+            if(!state.user.role){
+                return false;
+            }
+
             return state.user.role.name == 'ibu';
         },
 
         isMedic(state) {
+            if(!state.user) {
+                return false;
+            }
+
+            if(!state.user.role){
+                return false;
+            }
+
             return state.user.role.name == 'medic';
         },
 
@@ -140,6 +177,11 @@ const store = createStore({
             }
 
             return dm.public;
+        },
+        getMenuAnak: (state) => {
+            // check current role
+            let dm = state.dashboard_menu;
+            return dm.anak;
         },
 
         userRole(state) {

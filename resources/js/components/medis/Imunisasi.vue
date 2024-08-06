@@ -12,7 +12,7 @@
                     <option v-for="(value, key) in vaksinOptions" :key="value.key" :value="value.value">{{value.key}}</option>
                 </select>
             </div>
-            
+
             <div class="col-span-full mb-4">
                 <label for="tanggal">Tanggal Dilakukan Vaksin</label>
                 <input v-model="form.date_vaccinated" type="date" name="date_vacinated" id="date_vacinated" class="block w-full rounded-md p-2 ">
@@ -60,7 +60,7 @@ export default {
     methods: {
         fetchVaksinCombo() {
             const url = this.baseUrl + "/api/vaksin/combo";
-                        
+
             axios.get(url, {
                 // apa aja nih disini;
                 params:{}
@@ -80,7 +80,7 @@ export default {
 
             // console.log("data form submit ",{form})
             const url = this.baseUrl + "/api/imunisasi";
-                        
+
             axios.post(url, form )
             .then(res => res.data)
             .then(res => {
@@ -99,6 +99,4 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style scoped></style>

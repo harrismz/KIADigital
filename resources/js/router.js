@@ -15,6 +15,7 @@ import Checkup from './components/medis/checkup.vue';
 import CheckupShow from './components/medis/checkupShow.vue';
 import MenuIbu from './components/Ibu/menu.vue';
 import Dashboard from './components/Dashboard.vue';
+import DashboardAnak from './components/Anak/DashboardAnak.vue';
 import StatusKehamilan from './components/Ibu/StatusKehamilan.vue';
 import KalenderHpl from './components/ibu/KalenderHpl.vue';
 import WeeklyMonitoringAnswer from './components/Ibu/WeeklyMonitoringAnswer.vue';
@@ -29,6 +30,11 @@ import StuntingChart from './components/StuntingChart.vue';
 import Imunisasi from './components/medis/Imunisasi.vue';
 import ChildDevelopmentList from './components/Anak/ChildDevelopmentList.vue';
 import ChildDevelopment from './components/Anak/ChildDevelopment.vue';
+import DiaryAnak from './components/anak/ChildWeeklyMonitoringResult.vue';
+import DiaryAnakEdit from './components/anak/ChildWeeklyMonitoringAnswer.vue';
+import PertumbuhanAnak from './components/anak/PertumbuhanAnak.vue';
+import History from './components/medis/history.vue';
+import HistoryDetail from './components/medis/historyDetail.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -52,6 +58,24 @@ const routes = [
         component: Login,
         meta: {
             layout: 'LoginLayout'
+        }
+    },
+    {
+        path:'/history',
+        name:'history',
+        component: History,
+        meta :{
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
+    },
+    {
+        path:'/history/:id',
+        name:'history-detail',
+        component: HistoryDetail,
+        meta :{
+            layout: 'UserLayout',
+            requiresAuth: true
         }
     },
     {
@@ -105,7 +129,8 @@ const routes = [
         component: KalenderHpl,
         props: true,
         meta: {
-            layout: 'LoginLayout'
+            layout: 'UserLayout',
+            requiresAuth: true
         }
     },
     {
@@ -239,6 +264,43 @@ const routes = [
         }
     },
 
+    // Halaman Anak
+    {
+        path: '/dashboard-anak',
+        name: 'dashboard-anak',
+        component: DashboardAnak,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/child-weekly-monitoring-result',
+        name: 'child-weekly-monitoring-result',
+        component: DiaryAnak,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/child-weekly-monitoring-answer',
+        name: 'child-weekly-monitoring-answer',
+        component: DiaryAnakEdit,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/pertumbuhan-anak',
+        name: 'pertumbuhan-anak',
+        component: PertumbuhanAnak,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: false
+        }
+    },
     // Halaman Admin
     {
         path: '/admin',
