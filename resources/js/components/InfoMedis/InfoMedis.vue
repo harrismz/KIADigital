@@ -12,45 +12,41 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useStore } from 'vuex';
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
-  setup() {
-    const store = useStore();
-    const router = useRouter();
-    const route = useRoute();
-    const information = ref({});
-    const baseUrl = computed(() => store.getters.baseUrl);
-
-    const fetchInformation = () => {
-      axios.get(`${baseUrl.value}/api/post/${route.params.slug}`)
+  name: 'InfoMedis',
+  data() {
+    return {
+      information: {}
+    };
+  },
+  computed: {
+    ...mapGetters(['baseUrl']),
+    slug() {
+      return this.$route.params.slug;
+    }
+  },
+  mounted() {
+    this.fetchInformation();
+  },
+  methods: {
+    fetchInformation() {
+      axios.get(`${this.baseUrl}/api/post/${this.slug}`)
         .then(response => {
-          information.value = response.data;
+          this.information = response.data;
         })
         .catch(error => {
           console.error(error);
         });
-    };
-
-    const goBack = () => {
-      router.push({ name: 'informasi-medis' });
-    };
-    const getImageUrl = (path) => {
-      return `${baseUrl.value}/storage/${path}`;
-    };
-
-    onMounted(() => {
-      fetchInformation();
-    });
-
-    return {
-      information,
-        getImageUrl,
-      goBack
-    };
+    },
+    goBack() {
+      this.$router.push({ name: 'informasi-medis' });
+    },
+    getImageUrl(path) {
+      return `${this.baseUrl}/storage/${path}`;
+    }
   }
 };
 </script>

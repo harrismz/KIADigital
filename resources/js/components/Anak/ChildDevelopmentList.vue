@@ -2,23 +2,23 @@
     <div class="container mx-auto p-4">
         <div class="mb-6">
             <div class="grid grid-cols-2 gap-4">
-                <h1 class="text-2xl font-bold">Informasi</h1>
+                <h1 class="text-2xl font-bold">Catatan Pertumbuhan Anak</h1>
                 <div class="flex justify-end gap-x-3">
                     <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'">
                 </div>
             </div>
         </div>
         <div class="mb-4">
-            <input v-model="searchQuery" @input="searchInformations" type="text" placeholder="Search..."
+            <input v-model="searchQuery" @input="searchChildDevelopments" type="text" placeholder="Search..."
                 class="w-full p-2 border rounded-md" />
         </div>
-        <div v-for="info in paginatedInformations" :key="info.id" class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <div v-for="childDev in paginatedChildDevelopments" :key="childDev.id" class="bg-white shadow-md rounded-lg p-4 mb-4">
             <div class="flex">
-                <img :src="getImageUrl(info.image)" alt="Thumbnail" class="w-20 h-20 object-cover rounded-lg mr-4">
+                <img :src="getImageUrl(childDev.image)" alt="Thumbnail" class="w-20 h-20 object-cover rounded-lg mr-4">
                 <div>
-                    <h2 class="text-xl font-semibold">{{ info.title }}</h2>
-                    <div v-html="info.excerpt"></div>
-                    <button @click="viewDetail(info.slug)" class="mt-2 text-blue-500 hover:text-blue-700">Read
+                    <h2 class="text-xl font-semibold">{{ childDev.child?.child_name }}</h2>
+                    <div v-html="childDev.created_at"></div>
+                    <button @click="viewDetail(childDev.id)" class="mt-2 text-blue-500 hover:text-blue-700">Detail
                         more</button>
                 </div>
             </div>
@@ -37,64 +37,65 @@ import axios from 'axios';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'ListInfoMedis',
+  name: 'ChildDevelopment',
   data() {
     return {
-      informations: [],
+      childDevelopment: [],
       searchQuery: '',
       currentPage: 1,
       itemsPerPage: 5,
-      totalItems: 0
+      totalItems: 0,
     };
   },
   computed: {
     ...mapGetters(['baseUrl']),
-    paginatedInformations() {
+    queryParams() {
+      return new URLSearchParams({
+        page: this.currentPage,
+        search: this.searchQuery
+      }).toString();
+    },
+    paginatedChildDevelopments() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
-      return this.informations.slice(start, end);
+      return this.childDevelopment.slice(start, end);
     },
     totalPages() {
       return Math.ceil(this.totalItems / this.itemsPerPage);
     }
   },
   mounted() {
-    this.fetchInformations();
+    this.fetchChildDevelopments();
   },
   methods: {
-    fetchInformations() {
-      const queryParams = new URLSearchParams({
-        page: this.currentPage,
-        search: this.searchQuery
-      }).toString();
-
-      axios.get(`${this.baseUrl}/api/post?${queryParams}`)
+    fetchChildDevelopments() {
+      axios.get(`${this.baseUrl}/api/child-development-history?${this.queryParams}`)
         .then(response => {
-          this.informations = response.data.data;
+          this.childDevelopment = response.data.data;
           this.totalItems = response.data.total;
         })
         .catch(error => {
           console.error(error);
         });
     },
-    searchInformations() {
+    searchChildDevelopments() {
       this.currentPage = 1; // Reset to first page on new search
-      this.fetchInformations();
+      this.fetchChildDevelopments();
     },
     nextPage() {
       if (this.currentPage < this.totalPages) {
         this.currentPage += 1;
-        this.fetchInformations();
+        this.fetchChildDevelopments();
       }
     },
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage -= 1;
-        this.fetchInformations();
+        this.fetchChildDevelopments();
       }
     },
-    viewDetail(slug) {
-      this.$router.push({ name: 'informasi-medis-detail', params: { slug } });
+    viewDetail(id) {
+      this.$router.push({ name: 'child-development', params: { id } });
     },
     getImageUrl(path) {
       return `${this.baseUrl}/storage/${path}`;
