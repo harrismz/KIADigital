@@ -5,8 +5,16 @@
         
         <div class="space-y-4">
 
-        <div v-for="(value, key) in renderData" :key="key" class="flex justify-between ">
-            <span class="">{{ key }}:</span>
+        <div class="p-4 bg-gray-800 flex">
+            <div class="flex justify-center items-center ">
+
+                <h2 class="font-l rounded text-white font-bold">Name : {{name}}</h2>
+                <img class="w-10 " :src="getImage" alt="">
+            </div>
+        </div>
+
+        <div v-for="(value, key) in renderData" :key="key" class="flex justify-between font-l text-gray-600">
+            <span class="">{{ ucfirst( key) }}:</span>
             <span>{{ value }}</span>
         </div>
 
@@ -33,10 +41,40 @@ export default {
     computed: {
         ...mapGetters(['baseUrl']),
 
+        getImage(){
+            let img = '/mom.png';
+            if(!this.isMom) {
+                img = '/child.png';
+            }
+
+            return this.baseUrl + `/storage/images/` + img;
+        },
+
+        name(){
+            let name = '-'
+
+            if(this.data) {
+                if( this.data.child ) {
+                    return this.data.child.child_name;
+                }
+
+                
+                if(this.data.pregnancy) {
+                    
+                    if(this.data.pregnancy.mother){
+                        return this.data.pregnancy.mother.name;
+                    }
+                }
+                
+            }
+
+            return name;
+        },
+
         renderData(){
             // return this.data except when the key is id
             if(this.data){
-                const excludedKeys = ['id', 'created_at', 'prenancy_id','updated_at', 'staff_id', 'hospital_id'];
+                const excludedKeys = ['id','child_id','child', 'pregnancy', 'created_at', 'prenancy_id','updated_at', 'staff_id', 'hospital_id'];
                 return Object.fromEntries(
                     Object.entries(this.data).filter(([key]) => !excludedKeys.includes(key))
                 );
@@ -57,6 +95,10 @@ export default {
     },
 
     methods: {
+        ucfirst(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+
         fetchCheckupHistory(){
             let url = '';
             

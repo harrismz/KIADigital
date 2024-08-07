@@ -50,7 +50,7 @@ class ChildDevelopmentHistoryController extends Controller
     }
 
     public function showData($id) {
-        $data = ModelsChildDevelopmentHistory::findOrFail($id);
+        $data = ModelsChildDevelopmentHistory::with('child:id,child_name')->findOrFail($id);
         
         return [
             'success'=> true,
