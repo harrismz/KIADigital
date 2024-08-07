@@ -64,6 +64,7 @@ Route::get('test', [TestController::class, 'test']);
 
 Route::get('/checkup/{guid}', [CheckupController::class, 'get'])->name('checkup.get'); //untuk menampilan semua data checkup based on guid mother or children
 Route::post('/checkup', [CheckupController::class, 'store'])->name('checkup.store'); // save data checkup
+Route::get('/checkup', [CheckupController::class, 'index'])->name('checkup.index'); // save data checkup
 
 Route::get('/vaksin/combo', [VaksinController::class, 'combo'] )->name('vaksin.combo');
 Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisasi.store');
@@ -76,4 +77,6 @@ Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class,
 
 // route anak
 Route::get('child-development-history/{id}', [ChildDevelopmentHistoryController::class, 'show']);
+// mif, I need the api to always retur 'success' & 'data' key, not immediately return the result query
+Route::get('child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 'showData']); 
 Route::get('child-development-history', [ChildDevelopmentHistoryController::class, 'index']);

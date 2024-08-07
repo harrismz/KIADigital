@@ -42,5 +42,8 @@ class PregnancyController extends Controller
             'message' => "Data saved!",
             'data' => $data
         ];
+    },
+    public function getWeek() {
+        return $pregnancy;
     }
 }

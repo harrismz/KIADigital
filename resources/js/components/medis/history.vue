@@ -14,15 +14,18 @@
             <div class="flex">
                 <!-- <img :src="getImage(val.usg_image)" alt="Thumbnail" class="w-20 h-20 object-cover rounded-lg mr-4"> -->
                 <div>
-                    <h2 class="text-xl font-semibold">{{ getName(val) }}</h2>
+                    <h2 class="text-xl font-semibold flex">
+                        {{ getName(val) }} <img :src="isMom(val) ? getImage('images/mom.png'): getImage('images/child.png')" class="w-10 h-10" alt=""> 
+                    </h2>
                     <div class="fs-7 text-sm text-gray-500 mb-4"> <i class="fa fa-clock"></i> 2024-07-30 </div>
                     <div>Complain : {{val.complaint}}</div>
                     <div>Action : {{val.action}}</div>
-                    <button @click="viewDetail(val.id)" class="mt-2 text-blue-500 hover:text-blue-700">Read
+                    <button @click="viewDetail(val.type, val.id)" class="mt-2 text-blue-500 hover:text-blue-700">Read
                         more</button>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -47,7 +50,7 @@ export default {
 
     methods:{
         fetchData(){
-            const url = this.baseUrl + "/api/pregnancy-history";
+            const url = this.baseUrl + "/api/checkup";
                         
             axios.get(url, {
                 // apa aja nih disini;
@@ -62,8 +65,21 @@ export default {
             })
         },
 
+        isMom(d){
+            if(d.pregnancy) {
+                return true;
+            }
+
+            return false;
+        },
+
         getName(d) {
             let name = '-'
+            
+            if(d.child) {
+                name = d.child.child_name;
+            }
+
             if(!d.pregnancy){
                 return name;
             }
@@ -79,8 +95,8 @@ export default {
             return this.baseUrl + "/storage/" + img;
         },
 
-        viewDetail(id){
-            this.$router.push(`/history/${id}`)
+        viewDetail(type, id){
+            this.$router.push(`/history/${type}/${id}`)
         }
     },
 

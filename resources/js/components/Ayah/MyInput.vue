@@ -7,6 +7,7 @@
             :type="inputType" 
             :id="inputKey"
             @input="$emit('update:modelValue', $event.target.value)"
+            @change="onFileChange"
             class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             :required="wajib" 
         />
@@ -24,13 +25,22 @@ export default {
             .split('_')                  // Split the string by underscores
             .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
             .join(' '); 
-        }
+        },
+
+        onFileChange(event) {
+            const input = event.target;
+            if (input && input.type === 'file' && input.files.length > 0) {
+                const file = input.files[0];
+                this.$emit('update:modelValue', file); // Emit the file object to the parent component
+            }
+        },
+
     },
 
     props : {
         inputKey: String,
         isRequired: Boolean,
-        modelValue: String,
+        modelValue: [String, File],
         inputType: {
             default: 'text',
             type: String

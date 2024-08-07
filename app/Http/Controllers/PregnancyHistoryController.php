@@ -29,7 +29,7 @@ class PregnancyHistoryController extends Controller
     // Method untuk menampilkan data pregnancy_history berdasarkan ID
     public function show($id)
     {
-        $data = PregnancyHistory::findOrFail($id); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
+        $data = PregnancyHistory::with(['pregnancy:id,mother_id', 'pregnancy.mother:id,name'])->findOrFail($id); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
 
         return [
             'success'=> true,
