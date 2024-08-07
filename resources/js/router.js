@@ -28,11 +28,14 @@ import InfoMedis from './components/InfoMedis/InfoMedis.vue';
 import PregnancyHistory from './components/Ibu/PregnancyHistory.vue';
 import StuntingChart from './components/StuntingChart.vue';
 import Imunisasi from './components/medis/Imunisasi.vue';
+import ChildDevelopmentList from './components/Anak/ChildDevelopmentList.vue';
+import ChildDevelopment from './components/Anak/ChildDevelopment.vue';
 import DiaryAnak from './components/anak/ChildWeeklyMonitoringResult.vue';
 import DiaryAnakEdit from './components/anak/ChildWeeklyMonitoringAnswer.vue';
 import PertumbuhanAnak from './components/anak/PertumbuhanAnak.vue';
 import History from './components/medis/history.vue';
 import HistoryDetail from './components/medis/historyDetail.vue';
+import MyProfile from './components/Ibu/MyProfile.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -149,7 +152,16 @@ const routes = [
             requiresAuth: false
         }
     },
-    // Detail Halaman Profile
+    // Detail Halaman Ibu
+    {
+        path: '/my-profile',
+        name: 'my-profile',
+        component: MyProfile,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
+    },
     {
         path: '/weekly-monitoring-answer',
         name: 'weekly-monitoring-answer',
@@ -237,6 +249,25 @@ const routes = [
         path: '/imunisasi',
         name: 'imunisasi',
         component: Imunisasi,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    // child
+    {
+        path: '/child-development',
+        name: 'child-development-list',
+        component: ChildDevelopmentList,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/child-development/:id',
+        name: 'child-development',
+        component: ChildDevelopment,
         props: true,
         meta: {
             layout: 'UserLayout'
