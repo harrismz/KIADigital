@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Child;
 use App\Models\ChildDevelopmentHistory;
+use App\Models\MedicalStaff;
 use App\Models\Mother;
 use App\Models\PregnancyHistory;
 use Illuminate\Http\Request;
@@ -74,6 +75,7 @@ class CheckupController extends Controller
     }
 
     public function storeMother(Request $request) {
+
         $validated = $request->validate([
             'pregnancy_id' => 'required|integer',
             'complaint' => 'nullable',
@@ -84,9 +86,31 @@ class CheckupController extends Controller
             'fetus_position' => "nullable|max:100",
             'swollen_foot' => "nullable",
             'lab_result' => "nullable",
+            'usg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'hospital_id' => "nullable|integer", // find hospital id from staff_id
+            'staff_id' => "nullable|integer", //
+            'next_control' => "nullable|date",
+            'week' => "nullable",
+            'advice_given' => "nullable",
+            'action' => "nullable",
         ]);
 
+        if ($request->hasFile('usg_image')) {
+            $file = $request->file('usg_image');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $filename, 'public');
+            $validated['usg_image'] = $filePath;
+            
+        }
+
         $data = new PregnancyHistory($validated);
+
+        // get hospital id
+        $staff = MedicalStaff::where('user_id', $validated['staff_id'])->first();
+        if($staff) {
+            $data->staff_id = $staff->id;
+            $data->hospital_id = $staff->hospital_id;
+        }
 
         $data->save();
 
