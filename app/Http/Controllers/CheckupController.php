@@ -8,6 +8,7 @@ use App\Models\MedicalStaff;
 use App\Models\Mother;
 use App\Models\PregnancyHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckupController extends Controller
 {
@@ -27,7 +28,7 @@ class CheckupController extends Controller
         
         // link ke detail
         $pregnancy = PregnancyHistory::select([
-            'complaint', 'action', 'created_at', 'pregnancy_id'
+            'id','complaint', 'action', 'created_at', 'pregnancy_id', DB::raw( "'mom' as type")
         ])->where(
             function($q) use ($request){
 
@@ -39,7 +40,7 @@ class CheckupController extends Controller
         ->get(); // Mengambil semua catatan kehamilan dari user tersebut
 
         $child = ChildDevelopmentHistory::select([
-            'complaint', 'action', 'created_at', 'id', 'child_id'
+            'id', 'complaint', 'action', 'created_at', 'id', 'child_id', DB::raw('"child" as type')
         ])->with('child:id,child_name')->get();
 
         // $merge = $pregnancy->merge($child); //how to merge the laravel Collection ???
