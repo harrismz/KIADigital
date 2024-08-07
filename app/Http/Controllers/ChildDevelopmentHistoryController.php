@@ -49,6 +49,15 @@ class ChildDevelopmentHistoryController extends Controller
         ]);
     }
 
+    public function showData($id) {
+        $data = ModelsChildDevelopmentHistory::findOrFail($id);
+        
+        return [
+            'success'=> true,
+            'data' => $data
+        ];
+    }
+
     public function show($id)
     {
         // Find the data by id

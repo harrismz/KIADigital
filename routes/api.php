@@ -77,4 +77,6 @@ Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class,
 
 // route anak
 Route::get('child-development-history/{id}', [ChildDevelopmentHistoryController::class, 'show']);
+// mif, I need the api to always retur 'success' & 'data' key, not immediately return the result query
+Route::get('child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 'showData']); 
 Route::get('child-development-history', [ChildDevelopmentHistoryController::class, 'index']);

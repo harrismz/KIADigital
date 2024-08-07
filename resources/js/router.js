@@ -71,7 +71,7 @@ const routes = [
         }
     },
     {
-        path:'/history/:id',
+        path:'/history/:type/:id',
         name:'history-detail',
         component: HistoryDetail,
         meta :{

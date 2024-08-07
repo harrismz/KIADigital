@@ -45,12 +45,26 @@ export default {
 
         id(){
             return this.$route.params.id;
+        },
+        
+        type(){
+            return this.$route.params.type;
+        },
+
+        isMom() {
+            return this.type == 'mom' ? true : false;
         }
     },
 
     methods: {
         fetchCheckupHistory(){
-            const url = this.baseUrl + "/api/pregnancy-history/"+this.id;
+            let url = '';
+            
+            if(this.isMom){
+                url = this.baseUrl + "/api/pregnancy-history/"+this.id;
+            }else{
+                url = this.baseUrl + "/api/child-dev-history/"+this.id;
+            }
             // window.alert(url)
             axios.get(url, {
                 // apa aja nih disini;

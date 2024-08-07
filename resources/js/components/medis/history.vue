@@ -20,7 +20,7 @@
                     <div class="fs-7 text-sm text-gray-500 mb-4"> <i class="fa fa-clock"></i> 2024-07-30 </div>
                     <div>Complain : {{val.complaint}}</div>
                     <div>Action : {{val.action}}</div>
-                    <button @click="viewDetail(val.id)" class="mt-2 text-blue-500 hover:text-blue-700">Read
+                    <button @click="viewDetail(val.type, val.id)" class="mt-2 text-blue-500 hover:text-blue-700">Read
                         more</button>
                 </div>
             </div>
@@ -95,8 +95,8 @@ export default {
             return this.baseUrl + "/storage/" + img;
         },
 
-        viewDetail(id){
-            this.$router.push(`/history/${id}`)
+        viewDetail(type, id){
+            this.$router.push(`/history/${type}/${id}`)
         }
     },
 
