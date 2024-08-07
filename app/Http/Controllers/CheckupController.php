@@ -12,6 +12,53 @@ use Illuminate\Http\Request;
 class CheckupController extends Controller
 {
     //
+    public function index(Request $request) {
+        // disini, harus menggabungkan data checkup ibu di table pregnancy_history
+        // dengan data anak, child_developent history
+        // baru di kirim
+
+        // todo, json key harus punya type, sisanya key nya disamain.
+
+        // yang perlu, nama patient
+
+        // complain & action
+
+        // created at
+        
+        // link ke detail
+        $pregnancy = PregnancyHistory::select([
+            'complaint', 'action', 'created_at', 'pregnancy_id'
+        ])->where(
+            function($q) use ($request){
+
+            }
+        )
+        ->with(['pregnancy:id,mother_id','pregnancy.mother:id,name'])
+        ->orderBy('id', 'desc')
+        // how to get with mother ??? pregnancy_history belongsTo Pregnancy, PRegnancy belongsTo Mother;
+        ->get(); // Mengambil semua catatan kehamilan dari user tersebut
+
+        $child = ChildDevelopmentHistory::select([
+            'complaint', 'action', 'created_at', 'id', 'child_id'
+        ])->with('child:id,child_name')->get();
+
+        // $merge = $pregnancy->merge($child); //how to merge the laravel Collection ???
+         // Merge the collections
+        $merged = $pregnancy->concat($child);
+
+        // Sort the merged collection by created_at
+        $sorted = $merged->sortByDesc('created_at');
+
+        // Convert to array (optional, based on your API response format)
+        $sortedArray = $sorted->values()->all();
+
+        return [
+            'success' => true,
+            
+            'data' => $sortedArray
+        ];
+
+    }
     public function get(Request $request, $guid) {
         $data = $this->getByGuid($guid);
 
