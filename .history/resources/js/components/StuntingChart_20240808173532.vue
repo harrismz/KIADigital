@@ -150,7 +150,7 @@
               datasets: [
                 {
                   label: "Malnutrition Count",
-                  borderColor: 'rgb(75, 192, 192)',
+                  backgroundColor: 'rgb(75, 192, 192)',
                   data: dataValues
                 },
               ]
