@@ -9,6 +9,8 @@ const store = createStore({
     state: {
         user: null,
 
+        active_child:null,
+
         lastHpl: null,
 
         auth_token: null,
@@ -139,6 +141,27 @@ const store = createStore({
 
         imgLogo: (state) => state.config.imgLogo,
 
+        mom: (state) => {
+
+            if(!state.user) {
+                return null;
+            }
+
+            return state.user.mother
+        },
+
+        children: (state, getters) => {
+            if(!getters.mom) {
+                return null;
+            }
+
+            return getters.mom.children;
+        },
+
+        child: (state) => {
+            return state.active_child;
+        },
+
         isMom(state) {
             // cek dulu role nya null ngga, nanti error
             if(!state.user) {
@@ -182,6 +205,7 @@ const store = createStore({
 
             return dm.public;
         },
+
         getMenuAnak: (state) => {
             // check current role
             let dm = state.dashboard_menu;
@@ -217,14 +241,18 @@ const store = createStore({
             return user.role.display_name;
         },
 
-        isMom(state,getters) {
-            return getters.userRole == 'ibu'
-        }
+        // isMom(state,getters) {
+        //     return getters.userRole == 'ibu'
+        // }
     },
 
     mutations: {
         SET_USER(state, user) {
             state.user = user;
+        },
+
+        setActiveChild(state, child) {
+            state.active_child = child;
         },
 
         setPatient(state, patient) {
