@@ -16,7 +16,7 @@ use App\Http\Controllers\PregnancyHistoryController;
 use App\Http\Controllers\VaksinController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\PregnancyController;
-use App\Http\Controllers\StuntingAnalysisController;
+use App\Http\Controllers\StuntingAnalysis;
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -83,4 +83,4 @@ Route::get('child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 
 Route::get('child-development-history', [ChildDevelopmentHistoryController::class, 'index']);
 
 // StuntingAnalysis
-Route::get('stunting-analysis', [StuntingAnalysisController::class, 'index']);
+Route::get('stunting-analysis', [StuntingAnalysis::class, 'index']);

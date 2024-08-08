@@ -33,22 +33,8 @@ import { useRouter } from 'vue-router';
     components: {
       Line
     },
-    setup(){
-      const store = useStore();
-      const router = useRouter();
-
-      return{
-        store,
-        router
-      }
-    },
     mounted() {
       this.getChildDevelopmentHistory();
-    },
-    computed: {
-      getBaseUrl(){
-        return this.store.getters.baseUrl
-      }
     },
     data() {
       return chartConfig
@@ -56,7 +42,9 @@ import { useRouter } from 'vue-router';
     methods: {
       async getChildDevelopmentHistory(){
         try {
-            const response = await axios.get(`${this.baseUrl}/stunting-analysis`);
+            console.log(window.location.origin);
+            const response = await axios.get(window.location.origin+`/stunting-analysis`);
+            console.log("test")
             console.log(response.data);
         } catch (error) {
             console.error('Error fetching kelurahan:', error);
