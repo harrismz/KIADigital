@@ -10,4 +10,10 @@ class PregnancyHistory extends Model
     use HasFactory;
     
     protected $table = "pregnancy_history";
+
+    protected $guarded = ['id'];
+
+    public function pregnancy(){
+        return $this->belongsTo(Pregnancy::class);
+    }
 }

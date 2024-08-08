@@ -10,12 +10,14 @@
             <div class="w-1/2 p-8 bg-white">
                 <h2 class="text-2xl font-bold mb-6 text-center">IDENTITAS AYAH</h2>
                 <form @submit.prevent="submitIdentitasAyah">
+
                     <div class="mb-4">
                         <label for="namaAyah" class="block text-sm font-medium text-gray-700">Nama Ayah</label>
                         <input v-model="formIdentitasAyah.namaAyah" type="text" id="namaAyah"
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required />
                     </div>
+                    
                     <div class="mb-4">
                         <label for="nik" class="block text-sm font-medium text-gray-700">Nomor Induk
                             Kependudukan</label>
@@ -138,6 +140,8 @@ import { reactive, computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import toastr from 'toastr';
+import MyInput from './MyInput.vue';
+
 
 toastr.options = {
     "closeButton": true,

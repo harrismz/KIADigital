@@ -122,6 +122,15 @@ export default {
                 });
 
                 const data = await response.json();
+                
+                console.log({data});
+
+                // set token to localStorage
+                localStorage.setItem('auth_token', data.access_token);
+                
+                // save to store
+                this.$store.commit('setToken', data.access_token );
+
                 if (data.success) {
                     this.currentStep++;
                 } else {

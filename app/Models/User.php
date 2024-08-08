@@ -13,8 +13,29 @@ class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function getTypeAttribute(){
+        
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            // Assign default role to the newly created user
+            $defaultRole = \TCG\Voyager\Models\Role::where('name', 'ibu')->first();
+            $user->roles()->attach($defaultRole);
+            $user->role_id = $defaultRole->id;
+            $user->save();
+        });
+    }
+
     public function mother(){
         return $this->hasOne(Mother::class, 'user_id', 'id' );
+    }
+
+    public function staff(){
+        return $this->hasOne(MedicalStaff::class, 'user_id', 'id');
     }
 
     /**

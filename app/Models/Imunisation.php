@@ -10,4 +10,6 @@ class Imunisation extends Model
     use HasFactory;
     
     protected $table = "imunisation";
+
+    protected $guarded = ['id'];
 }

@@ -1,8 +1,12 @@
 <template>
     <div class="p-8 bg-gray-100 font-sans">
-        <div class="flex items-center mb-8">
-            <img src="@/assets/logo.png" alt="Logo" class="w-16 h-16 mr-4">
-            <h1 class="text-2xl font-bold">Catatan Kesehatan Ibu</h1>
+        <div class="mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <h1 class="text-2xl font-bold">Catatan Kesehatan Ibu</h1>
+                <div class="flex justify-end">
+                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'"></img>
+                </div>
+            </div>
         </div>
         <div class="bg-white p-8 rounded-lg shadow-md">
             <ul class="list-disc list-inside mb-4 space-y-2">
@@ -14,7 +18,7 @@
                 <li>Hasil USG :</li>
             </ul>
             <div class="flex justify-center mb-4">
-                <img src="@/assets/ultrasound.png" alt="Hasil USG" class="rounded shadow-md">
+                <img :src="'storage/images/usg.png'" alt="Hasil USG" class="rounded shadow-md" />
             </div>
             <ul class="list-disc list-inside space-y-2">
                 <li>Pemeriksaan Laboratorium : Hemoglobin x gr/dL, golongan darah & Rhesus O, gula darah sewaktu mg/dL,
@@ -27,8 +31,23 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+
 export default {
-    name: "HealthRecord"
+    name: "HealthRecord",
+    setup() {
+        const router = useRouter();
+        const gotoHome = () => {
+            router.push({
+                name: 'home',
+                params: {}
+            });
+        };
+
+        return {
+            gotoHome,
+        };
+    },
 };
 </script>
 
