@@ -2,20 +2,53 @@
 import Vuex, { createStore } from 'vuex';
 import axios from 'axios';
 import toastr from 'toastr';
+import { localStoragePlugin, loadState } from '../localStoragePlugin';
+
 // Vue.useAttrs(Vuex)
 const origin = window.location.origin;
 
+const determineActiveUser = (user) => {
+
+    const savedState = localStorage.getItem('store');
+    
+    if (!savedState) {
+        return ;
+    }
+
+    let str = JSON.parse(savedState);
+
+    let activeProfile = str.active_profile;
+
+    if(activeProfile) {
+        return activeProfile;
+    }
+
+    if (user.staff) {
+        return user.staff;
+    } else if (user.mom) {
+        return user.mom;
+    }
+
+    return null;
+}
+
+const initialState = loadState();
+
 const store = createStore({
+    plugins:[localStoragePlugin],
+
     state: {
-        user: null,
+        user: initialState.user || null,
 
-        active_child:null,
+        active_child:initialState.active_child || null,
 
-        lastHpl: null,
+        active_profile: initialState.active_profile || null,
 
-        auth_token: null,
+        lastHpl: initialState.lastHpl || null,
 
-        patient: null,  //could be mother, could be children, fetched by checkupshow by guid
+        auth_token: initialState.auth_token || null,
+
+        patient: initialState.patient || null,  //could be mother, could be children, fetched by checkupshow by guid
 
         baseUrl: origin,
 
@@ -95,12 +128,18 @@ const store = createStore({
                 return 'user not found';
             }
 
+            // yg active_profile siapa,
+            if(state.active_profile) {
+                // gmn cara cek active_profile antara name / child_name ?
+                return state.active_profile.name ? state.active_profile.name : state.active_profile.child_name;
+            }
+
             if(state.user.mother) {
                 return state.user.mother.name;
             }
 
             if(state.user.staff) {
-                return state.user.staff.name;
+                return state.user.staff.staff_name;
             }
 
             return state.user.name;
@@ -156,6 +195,42 @@ const store = createStore({
             }
 
             return getters.mom.children;
+        },
+
+        activeProfile: (state, getters) => {
+            return state.active_profile
+        },
+
+        activeProfileType: (state,getters) => {
+            if(getters.activeProfile) {
+                if(getters.activeProfile.child_name) {
+                    return 'anak'
+                }
+                
+                if(getters.activeProfile.name) {
+                    return 'ibu'
+                }
+                
+                if(getters.activeProfile.staff_name) {
+                    return 'staff'
+                }
+            }
+
+            return null;
+        },
+
+        relations: (state, getters) => {
+            if(getters.activeProfile) {
+                if(getters.activeProfile.child_name) {
+                    return [getters.mom] //as an array of mom karena dipake di v-for
+                }
+                
+                if(getters.activeProfile.name) {
+                    return getters.children; // udah array dari sono nya
+                }
+            }
+
+            return [];
         },
 
         child: (state) => {
@@ -255,6 +330,10 @@ const store = createStore({
             state.active_child = child;
         },
 
+        setActiveProfile(state, person) {
+            state.active_profile = person; //person could be mom coulb be child
+        },
+
         setPatient(state, patient) {
             state.patient = patient;
         },
@@ -309,6 +388,17 @@ const store = createStore({
                     .then(user => {
                         console.log({ user })
                         context.commit('setUser', user);
+                        // context.commit('setActiveUser', determineActiveUser(user) );
+
+                        // I have user that has mom, child, and staff properties
+                        // if user is is staff, then it shouldn't be a mom
+                        // if user is a mom, it chould have a children
+                        // now, i want to set one of them, (staff, mom, or child) to become active_profile in the state
+                        // but i wonder how to do it properly,
+                        // the default active users could be mother or a staff
+                        // if it is a mom, people can click in children menu and set it into active user with children data changes into array of mom ( because it's used in component as v-for )
+                        // how can I do that ?
+
                     })
                     .catch(err => {
                         // do something like remove the localStorage

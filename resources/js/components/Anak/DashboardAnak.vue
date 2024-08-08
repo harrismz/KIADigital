@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col min-h-24 bg-gray-100 p-6">
         <user-card />
-        <progress-bar></progress-bar>
+        <!-- <progress-bar></progress-bar> -->
         <div class="grid grid-cols-2 gap-4">
             <!-- Profile Card -->
             <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
@@ -24,7 +24,8 @@ import { Chart as ChartJS, LineElement, CategoryScale, LinearScale } from 'chart
 // import ProfileCard from './utils/ProfileCard.vue';
 import ProfileCard from './ProfileCard.vue';
 import toastr from 'toastr';
-import UserCard from './UserCard.vue';
+import UserCard from '../UserCard.vue'; //ke UserCard general
+
 ChartJS.register(LineElement, CategoryScale, LinearScale);
 import { mapGetters } from 'vuex';
 
@@ -34,33 +35,34 @@ export default {
         LineChart: Line,
         UserCard
     },
-    // data() {
-    //     return {
-    //         user: {},
-    //         mother: [],
-    //         currentWeek: 0,
-    //         weeks: [],
-    //         chartData: {
-    //             labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
-    //             datasets: [
-    //                 {
-    //                     label: 'Weight Gain (kg)',
-    //                     data: [1, 2, 2.5, 3, 4, 5],
-    //                     borderColor: '#42A5F5',
-    //                     backgroundColor: 'rgba(66, 165, 245, 0.2)',
-    //                     fill: true
-    //                 },
-    //                 {
-    //                     label: 'Pregnancy Progress (%)',
-    //                     data: [10, 20, 30, 50, 70, 90],
-    //                     borderColor: '#FF5722',
-    //                     backgroundColor: 'rgba(255, 87, 34, 0.2)',
-    //                     fill: true
-    //                 }
-    //             ]
-    //         }
-    //     };
-    // },
+    data() {
+        return {
+            // user: {},
+            mother: [],
+            currentWeek: 0,
+            weeks: [],
+            chartData: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                datasets: [
+                    {
+                        label: 'Weight Gain (kg)',
+                        data: [1, 2, 2.5, 3, 4, 5],
+                        borderColor: '#42A5F5',
+                        backgroundColor: 'rgba(66, 165, 245, 0.2)',
+                        fill: true
+                    },
+                    {
+                        label: 'Pregnancy Progress (%)',
+                        data: [10, 20, 30, 50, 70, 90],
+                        borderColor: '#FF5722',
+                        backgroundColor: 'rgba(255, 87, 34, 0.2)',
+                        fill: true
+                    }
+                ]
+            },
+            
+        };
+    },
     methods: {
         // fetchUserAuth() {
 
@@ -102,7 +104,9 @@ export default {
 
         cards() {
             return this.getMenuAnak;
-        }
+        },
+
+        
     },
     mounted() {
 
