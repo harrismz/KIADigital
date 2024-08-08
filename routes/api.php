@@ -73,14 +73,16 @@ Route::get('/imunisasi/{child_id}', [ImunisasiController::class, 'showVaccinePer
 
 Route::post('/pregnancy', [PregnancyController::class, 'store']); // Untuk menampilkan semua data pregnancy history
 
+
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
 Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class, 'showByWeek']);
+Route::get('/pregnancy-history-last', [PregnancyHistoryController::class, 'showLast']);
 
 // route anak
 Route::get('child-development-history/{id}', [ChildDevelopmentHistoryController::class, 'show']);
 // mif, I need the api to always retur 'success' & 'data' key, not immediately return the result query
-Route::get('child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 'showData']); 
+Route::get('child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 'showData']);
 Route::get('child-development-history', [ChildDevelopmentHistoryController::class, 'index']);
 
 // StuntingAnalysis

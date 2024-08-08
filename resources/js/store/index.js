@@ -10,7 +10,7 @@ const origin = window.location.origin;
 const determineActiveUser = (user) => {
 
     const savedState = localStorage.getItem('store');
-    
+
     if (!savedState) {
         return ;
     }
@@ -206,11 +206,11 @@ const store = createStore({
                 if(getters.activeProfile.child_name) {
                     return 'anak'
                 }
-                
+
                 if(getters.activeProfile.name) {
                     return 'ibu'
                 }
-                
+
                 if(getters.activeProfile.staff_name) {
                     return 'staff'
                 }
@@ -224,7 +224,7 @@ const store = createStore({
                 if(getters.activeProfile.child_name) {
                     return [getters.mom] //as an array of mom karena dipake di v-for
                 }
-                
+
                 if(getters.activeProfile.name) {
                     return getters.children; // udah array dari sono nya
                 }
@@ -347,6 +347,10 @@ const store = createStore({
             state.lastHpl = lastHpl;
         },
 
+        setPregnancyInfo(state, pregnancy) {
+            state.dashboard_menu.ibu[0].description = pregnancy.description;
+        },
+
         setToken(state, token) {
             // ini
             state.auth_token = token;
@@ -412,6 +416,34 @@ const store = createStore({
                     })
             } catch (error) {
                 console.error('Error fetching user:', error);
+            }
+        },
+
+        async fetchPregnancyInfo( context ) {
+            try {
+                let endpoint = context.getters.baseUrl + '/api/pregnancy-history-last';
+                console.log({ endpoint })
+                return axios.get( endpoint , {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                })
+                .then(response => response.data)
+                .then(pregnancyhistory => {
+                    console.log({ pregnancyhistory })
+                    const data = pregnancyhistory.data;
+                    const payload = {
+                        description: `Tinggi: ${data.height} cm Berat: ${data.weight} cm Ukuran: ${data.size} Ciri-ciri: ${data.characteristics}`
+                    };
+                    context.commit('setPregnancyInfo', payload);
+                })
+                .catch(err => {
+                    console.log('catch fetch pregnancy info')
+                    context.commit('setPregnancyInfo', null);
+
+                })
+            } catch (error) {
+                console.error('Error fetching pregnancy info:', error);
             }
         },
 
