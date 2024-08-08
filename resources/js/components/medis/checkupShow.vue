@@ -301,6 +301,7 @@ export default {
                 console.log(res);
                 if(res.success) {
                     this.data = res.data;
+                    this.$store.commit('setPatient', res.data ); //set patient di store untuk diakses imunisasi
                     this.populateForm(this.latest_checkup);
                 }
             }).catch(error => {

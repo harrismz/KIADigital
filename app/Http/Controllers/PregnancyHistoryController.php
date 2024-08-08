@@ -25,6 +25,20 @@ class PregnancyHistoryController extends Controller
 
         return $history;
     }
+    public function showLast(Request $request)
+    {
+        // TODO : get mother_id from user login
+        $pregnancy = PregnancyHistory::where(
+            function ($q) use ($request) {
+                // $q->where('id', $request->mother_id);
+            }
+        )
+        ->with('pregnancy.mother')
+        ->latest()
+        ->first();
+
+        return $pregnancy;
+    }
 
     // Method untuk menampilkan data pregnancy_history berdasarkan ID
     public function show($id)

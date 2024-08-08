@@ -42,8 +42,10 @@ class PregnancyController extends Controller
             'message' => "Data saved!",
             'data' => $data
         ];
-    },
+    }
     public function getWeek() {
+        // TODO get week of pregnancy
+        $pregnancy = Pregnancy::where('mother_id', 1)->first();
         return $pregnancy;
     }
 }

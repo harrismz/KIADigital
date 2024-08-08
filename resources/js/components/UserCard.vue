@@ -4,6 +4,7 @@
             <input type="radio" name="my-accordion-2" v-model="isOpen" class="hidden" />
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
                 <h1 class="font-mono">{{ userName }} </h1>
+
                 <p v-if="isMedic" class="font-sans font-light">
                     NIP : {{ userDetail.nip }}
                 </p>
@@ -11,26 +12,30 @@
                     HPL : {{ userDetail.hpl }}
                 </p>
             </div>
+
             <div v-if="isMom" class="collapse-content">
-                <span class="font-bold">Anak</span>
-                <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                    <h1 class="font-mono cursor-pointer" @click="goToAnak">Rafasya Andaru</h1>
-                    <div class="flex justify-end gap-x-3 row-span-2">
-                        <img class="w-6 h-6" @click="editAnswer" :src="'storage/images/edit.png'"></img>
+                
+                <div v-for="child in relations" :key="child.id" @click="goToAnak(child)">
+                    <span class="font-bold"> {{getType(child)}}</span>
+                    <div class="grid grid-cols-2 grid-rows-2 gap-4">
+                        <h1 class=" cursor-pointer">{{ getName(child) }}</h1>
+                        <div class="flex justify-end gap-x-3 row-span-2">
+                            <img class="w-6 h-6" @click="editAnswer" :src=" baseUrl + '/storage/images/edit.png'"></img>
+                        </div>
+                        <p class=" cursor-pointer">
+                            TTL : {{ child.date_of_birth }}
+                        </p>
+    
+                        <a v-if="getType(child) == 'ibu'" href="#" class="flex items-center space-x-2 cursor-pointer col-span-2">
+                            <img :src="baseUrl +  '/storage/images/anak-icon.png'" alt="" class="h-5 w-5">
+                            <span>
+                                tambah identitas anak
+                            </span>
+                        </a>
+    
                     </div>
-                    <p class="font-sans font-light cursor-pointer" @click="goToAnak">
-                        TTL : 21 Juni 2024
-                    </p>
-
-                    <a href="admin/child/create" class="flex items-center space-x-2 cursor-pointer col-span-2">
-                        <img src="storage/images/anak-icon.png" alt="" class="h-5 w-5">
-                        <span>
-                            tambah identitas anak
-                        </span>
-                    </a>
-
-
                 </div>
+                
             </div>
         </div>
     </div>
@@ -71,44 +76,63 @@ import { useRouter } from 'vue-router';
 
 export default {
     name: 'UserCard',
-    setup() {
-        const router = useRouter();
-        const isOpen = ref(false);
-        const userDetail = {
-            hpl: '16 JUNE 2025',
-            nip: '3450895734895734892',
-        }
+    
+    // jangan pake setup 
 
-        const toggleCollapse = () => {
-            isOpen.value = !isOpen.value;
-        };
-
-        const goToAnak = () => {
-            router.push('/dashboard-anak');
-        };
-
-        return {
-            isOpen,
-            toggleCollapse,
-            userDetail,
-            goToAnak
-        };
-    },
     computed: {
         // ...mapState(['user']),
         ...mapGetters([
-            'getUser', 'isMom', 'userRole', 'userRoleDisplayName', 'isMedic', 'userName'
+            'getUser', 
+            'activeProfileType',
+            'isMom', 'userRole', 'userRoleDisplayName', 'isMedic', 'userName', 'mom', 'children', 'baseUrl', 'relations', 'activeProfile'
         ])
+
     },
     methods: {
         // ...mapActions(["updateUser"]),
+        goToAnak(child) {
+            this.$store.commit('setActiveChild', child );
+            this.$store.commit('setActiveProfile', child );
+            
+            let id = child.id;
+
+            if(this.activeProfileType == 'ibu' ) {
+                this.$router.push('/dashboard-anak/'+id );
+            }
+            
+            if(this.activeProfileType == 'anak' ) {
+                this.$router.push('/');
+            }
+        },
+
+        getType(child){
+            return child.name ? 'Ibu' : 'Anak';
+        },
+
+        getName(child) {
+            return child.name ? child.name : child.child_name;
+        },
+
+        toggleCollapse() {
+            this.isOpen = !this.isOpen;
+        },
     },
-    // data() {
-    //     return {
-    //         userState: null
-    //     };
-    // }
-    // }
+    
+    data() {
+        return {
+            userState: null,
+            
+            isOpen: false,
+
+            userDetail: {
+                // ini perlu diganit
+                hpl: '16 JUNE 2025',
+                nip: '3450895734895734892',
+            },
+
+        };
+    }
+    
 }
 </script>
 
