@@ -1,7 +1,7 @@
 <template>
     
     <div>
-      <div style="height: 200px; background-color: #f8f9fa;">
+      <div style="height: 200px;">
         <Line :data="chartData" :options="chartOptions"/>
       </div>
       {{ data }}
@@ -111,10 +111,10 @@
               labels: labels,
               datasets: [
                 {
-                  label: 'Stunting Count',
+                  label: 'Data One',
                   backgroundColor: '#f87979',
                   data: dataValues
-                },
+                }
               ]
             }
           } else {

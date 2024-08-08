@@ -44,14 +44,15 @@ class StuntingAnalysisController extends Controller
 
             if ($data->gender == 'Perempuan') {
                 $additionalData = DB::table('lhfa_girls')->where('month', $data->age)->first();
-                $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
+
+            
+
             } else {
                 $additionalData = DB::table('lhfa_boys')->where('month', $data->age)->first();
-                $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
             }
 
-            if ($statusLhfa) {
-                $childData['status_lhfa'] = $statusLhfa; 
+            if ($additionalData) {
+                $childData['additional_info'] = $additionalData; 
             }
 
             $finalData[] = $childData;
@@ -73,8 +74,6 @@ class StuntingAnalysisController extends Controller
         if($height >= $lhfa->sd2neg || $height > $lhfa->sd3) {
             return "Normal";
         }
-
-        return "Unidentified";
     }
 
     /**

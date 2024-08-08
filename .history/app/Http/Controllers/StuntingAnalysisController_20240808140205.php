@@ -44,14 +44,13 @@ class StuntingAnalysisController extends Controller
 
             if ($data->gender == 'Perempuan') {
                 $additionalData = DB::table('lhfa_girls')->where('month', $data->age)->first();
-                $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
+
             } else {
                 $additionalData = DB::table('lhfa_boys')->where('month', $data->age)->first();
-                $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
             }
 
-            if ($statusLhfa) {
-                $childData['status_lhfa'] = $statusLhfa; 
+            if ($additionalData) {
+                $childData['status_lhfa'] = $additionalData; 
             }
 
             $finalData[] = $childData;

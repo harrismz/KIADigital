@@ -1,7 +1,7 @@
 <template>
     
     <div>
-      <div style="height: 200px; background-color: #f8f9fa;">
+      <div style="height: 200px;">
         <Line :data="chartData" :options="chartOptions"/>
       </div>
       {{ data }}
@@ -91,30 +91,38 @@
             this.data = response.data.data;
 
             const uniqueCreatedAt = [...new Set(this.data.map((item: { created_at: any; }) => item.created_at))];
+            console.log({uniqueCreatedAt});
 
-            const stuntingCounts = uniqueCreatedAt.reduce((acc, date) => {
-              acc[date] = 0;
+            const statusCounts = uniqueCreatedAt.reduce((acc, date) => {
+              acc[date] = {
+                Normal: 0,
+                Stunting: 0
+              };
               return acc;
             }, {});
 
-            this.data.forEach((item: { created_at: any; status_lhfa: string; }) => {
-                const date = item.created_at;
-                if (item.status_lhfa === 'Stunting' && stuntingCounts[date] !== undefined) {
-                  stuntingCounts[date]++;
-                }
-              });
+            this.data.forEach((item: { created_at: any; status_lhfa: any; }) => {
+              const date = item.created_at;
+              const status = item.status_lhfa;
+              if (statusCounts[date]) {
+                statusCounts[date][status]++;
+              }
+            });
 
-            const labels = uniqueCreatedAt;
-            const dataValues = uniqueCreatedAt.map(date => stuntingCounts[date]);
+            console.log(statusCounts);
+
+            const labels = this.data.map((item: { created_at: any; }) => item.created_at);
+            const stuntingCount = this.data.map((item: { status_lhfa: string; }) => item.status_lhfa);
+            console.log({labels, stuntingCount});
 
             this.chartData = {
               labels: labels,
               datasets: [
                 {
-                  label: 'Stunting Count',
+                  label: 'Data One',
                   backgroundColor: '#f87979',
-                  data: dataValues
-                },
+                  data: [40, 3]
+                }
               ]
             }
           } else {

@@ -50,8 +50,8 @@ class StuntingAnalysisController extends Controller
                 $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
             }
 
-            if ($statusLhfa) {
-                $childData['status_lhfa'] = $statusLhfa; 
+            if ($additionalData) {
+                $childData['status_lhfa'] = $additionalData; 
             }
 
             $finalData[] = $childData;

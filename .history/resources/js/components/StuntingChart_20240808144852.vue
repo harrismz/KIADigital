@@ -1,7 +1,7 @@
 <template>
     
     <div>
-      <div style="height: 200px; background-color: #f8f9fa;">
+      <div style="height: 200px;">
         <Line :data="chartData" :options="chartOptions"/>
       </div>
       {{ data }}
@@ -104,17 +104,16 @@
                 }
               });
 
-            const labels = uniqueCreatedAt;
-            const dataValues = uniqueCreatedAt.map(date => stuntingCounts[date]);
+              console.log(stuntingCounts);
 
             this.chartData = {
-              labels: labels,
+              labels: uniqueCreatedAt,
               datasets: [
                 {
-                  label: 'Stunting Count',
+                  label: 'Data One',
                   backgroundColor: '#f87979',
-                  data: dataValues
-                },
+                  data: [40, 3]
+                }
               ]
             }
           } else {

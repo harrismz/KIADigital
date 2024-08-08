@@ -51,7 +51,7 @@ class StuntingAnalysisController extends Controller
             }
 
             if ($statusLhfa) {
-                $childData['status_lhfa'] = $statusLhfa; 
+                $childData['status_lhfa'] = $additionalData; 
             }
 
             $finalData[] = $childData;
