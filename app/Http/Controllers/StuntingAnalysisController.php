@@ -15,8 +15,6 @@ class StuntingAnalysisController extends Controller
     {
         $result = ChildDevelopmentHistory::all();
 
-        print_r($result);
-
         return response()->json([
             'success' => true,
             'message' => "Success",
