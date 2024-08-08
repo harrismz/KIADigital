@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Imunisation;
+use App\Models\Vaccine;
 use Illuminate\Http\Request;
 
 class ImunisasiController extends Controller
@@ -27,5 +28,23 @@ class ImunisasiController extends Controller
             'data' => $data,
             'message' => "Data Imunisasi Tersimpan!"
         ];
+    }
+
+    public function showVaccinePerChild(Request $request, $child_id ) {
+
+        // get all Imunisation by child_id
+        $imunisation = Imunisation::where('child_id', $child_id)
+        ->with([
+            'child:id,child_name', 'hospital:id,hospital_name', 'staff:id,staff_name', 'vaccine:id,vaccine_name'
+        ])
+        ->get();
+
+        return [
+            'data' => $imunisation,
+            'success' => true
+        ];
+
+        // 
+        
     }
 }

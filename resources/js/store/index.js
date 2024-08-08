@@ -13,6 +13,8 @@ const store = createStore({
 
         auth_token: null,
 
+        patient: null,  //could be mother, could be children, fetched by checkupshow by guid
+
         baseUrl: origin,
 
         config: {
@@ -131,6 +133,8 @@ const store = createStore({
 
         getUser: (state) => state.user,
 
+        patient: (state) => state.patient,
+
         baseUrl: (state) => state.config.baseUrl,
 
         imgLogo: (state) => state.config.imgLogo,
@@ -220,8 +224,11 @@ const store = createStore({
 
     mutations: {
         SET_USER(state, user) {
-
             state.user = user;
+        },
+
+        setPatient(state, patient) {
+            state.patient = patient;
         },
 
         setUser(state, user) {

@@ -68,6 +68,7 @@ Route::get('/checkup', [CheckupController::class, 'index'])->name('checkup.index
 
 Route::get('/vaksin/combo', [VaksinController::class, 'combo'] )->name('vaksin.combo');
 Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisasi.store');
+Route::get('/imunisasi/{child_id}', [ImunisasiController::class, 'showVaccinePerChild'] )->name('imunisasi.get');
 
 Route::post('/pregnancy', [PregnancyController::class, 'store']); // Untuk menampilkan semua data pregnancy history
 
