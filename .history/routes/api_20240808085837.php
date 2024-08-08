@@ -16,7 +16,6 @@ use App\Http\Controllers\PregnancyHistoryController;
 use App\Http\Controllers\VaksinController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\PregnancyController;
-use App\Http\Controllers\StuntingAnalysisController;
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -69,7 +68,6 @@ Route::get('/checkup', [CheckupController::class, 'index'])->name('checkup.index
 
 Route::get('/vaksin/combo', [VaksinController::class, 'combo'] )->name('vaksin.combo');
 Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisasi.store');
-Route::get('/imunisasi/{child_id}', [ImunisasiController::class, 'showVaccinePerChild'] )->name('imunisasi.get');
 
 Route::post('/pregnancy', [PregnancyController::class, 'store']); // Untuk menampilkan semua data pregnancy history
 
@@ -82,6 +80,3 @@ Route::get('child-development-history/{id}', [ChildDevelopmentHistoryController:
 // mif, I need the api to always retur 'success' & 'data' key, not immediately return the result query
 Route::get('child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 'showData']); 
 Route::get('child-development-history', [ChildDevelopmentHistoryController::class, 'index']);
-
-// StuntingAnalysis
-Route::get('stunting-analysis', [StuntingAnalysisController::class, 'index']);
