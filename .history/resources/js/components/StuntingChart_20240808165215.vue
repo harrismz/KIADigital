@@ -131,27 +131,13 @@
             const uniqueCreatedAt = [...new Set(this.data.map((item: { created_at: any; }) => item.created_at))];
             const labels = uniqueCreatedAt;
 
-            const malnutritionCounts = uniqueCreatedAt.reduce((acc, date) => {
-              acc[date] = 0;
-              return acc;
-            }, {});
-
-            this.data.forEach((item: { created_at: any; status_wfl: string; }) => {
-                const date = item.created_at;
-                if (item.status_wfl === 'Malnutritiob' && malnutritionCounts[date] !== undefined) {
-                  malnutritionCounts[date]++;
-                }
-              });
-
-            const dataValues = uniqueCreatedAt.map(date => malnutritionCounts[date]);
-
             this.malnutritionData = {
               labels: labels,
               datasets: [
                 {
                   label: "Malnutrition Count",
                   backgroundColor: '#f87979',
-                  data: dataValues
+                  data: [65, 59, 80, 81, 56, 55, 40]
                 },
               ]
             }

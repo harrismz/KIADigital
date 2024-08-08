@@ -1,11 +1,11 @@
 <template>
     
     <div>
-      <div style="height: 200px">
+      <div style="height: 200px; background-color: #f8f9fa;">
         <Line :data="chartData" :options="chartOptions"/>
         <Line :data="malnutritionData" :options="malnutritionOptions"/>
       </div>
-      <!-- {{ data }} -->
+      {{ data }}
     </div>
   </template>
 
@@ -127,29 +127,11 @@
           const response = await axios.get(url); 
           if (response.data && response.data.success) {
             this.data = response.data.data;
-
-            const uniqueCreatedAt = [...new Set(this.data.map((item: { created_at: any; }) => item.created_at))];
-            const labels = uniqueCreatedAt;
-
-            const malnutritionCounts = uniqueCreatedAt.reduce((acc, date) => {
-              acc[date] = 0;
-              return acc;
-            }, {});
-
-            this.data.forEach((item: { created_at: any; status_wfl: string; }) => {
-                const date = item.created_at;
-                if (item.status_wfl === 'Malnutritiob' && malnutritionCounts[date] !== undefined) {
-                  malnutritionCounts[date]++;
-                }
-              });
-
-            const dataValues = uniqueCreatedAt.map(date => malnutritionCounts[date]);
-
-            this.malnutritionData = {
-              labels: labels,
+            this.chartData = {
+              labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
               datasets: [
                 {
-                  label: "Malnutrition Count",
+                  label: [65, 59, 80, 81, 56, 55, 40],
                   backgroundColor: '#f87979',
                   data: dataValues
                 },

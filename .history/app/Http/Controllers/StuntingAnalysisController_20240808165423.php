@@ -44,14 +44,14 @@ class StuntingAnalysisController extends Controller
 
             if ($data->gender == 'Perempuan') {
                 $additionalData = DB::table('lhfa_girls')->where('month', $data->age)->first();
-                $malnutritionData = DB::table('wfl_girls')->where('length', $data->height)->first();
+                $malnutritionData = DB::table('wfl_girls')->where('lenght', $data->height)->first();
                 $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
-                $statusWfl = $this->getMalnutritionAnalysis($data->weight, $malnutritionData);
+                $statusWfl = $this->getStuntingAnalysis($data->weight, $malnutritionData);
             } else {
                 $additionalData = DB::table('lhfa_boys')->where('month', $data->age)->first();
-                $malnutritionData = DB::table('wfl_boys')->where('length', $data->height)->first();
+                $malnutritionData = DB::table('wfl_boys')->where('lenght', $data->height)->first();
                 $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
-                $statusWfl = $this->getMalnutritionAnalysis($data->weight, $malnutritionData);
+                $statusWfl = $this->getStuntingAnalysis($data->weight, $malnutritionData);
             }
 
             if ($statusLhfa) {

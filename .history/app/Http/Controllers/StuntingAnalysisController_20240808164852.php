@@ -44,14 +44,14 @@ class StuntingAnalysisController extends Controller
 
             if ($data->gender == 'Perempuan') {
                 $additionalData = DB::table('lhfa_girls')->where('month', $data->age)->first();
-                $malnutritionData = DB::table('wfl_girls')->where('length', $data->height)->first();
+                $malnutritionData = DB::table('wfl_girls')->where('lenght', $data->height)->first();
                 $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
-                $statusWfl = $this->getMalnutritionAnalysis($data->weight, $malnutritionData);
+                $statusWfl = $this->getStuntingAnalysis($data->weight, $malnutritionData);
             } else {
                 $additionalData = DB::table('lhfa_boys')->where('month', $data->age)->first();
-                $malnutritionData = DB::table('wfl_boys')->where('length', $data->height)->first();
+                $malnutritionData = DB::table('wfl_boys')->where('lenght', $data->height)->first();
                 $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
-                $statusWfl = $this->getMalnutritionAnalysis($data->weight, $malnutritionData);
+                $statusWfl = $this->getStuntingAnalysis($data->weight, $malnutritionData);
             }
 
             if ($statusLhfa) {
@@ -73,6 +73,7 @@ class StuntingAnalysisController extends Controller
     }
 
     private function getStuntingAnalysis($height, $lhfa) {
+        // =IF(H<=sd3neg,"Stunting",IF(H<sd2neg,"Stunting",IF(H>=sd2neg,"Normal", IF(H>sd3,"Normal", "Unidentified"))))
         if($height <= $lhfa->sd3neg || $height < $lhfa->sd2neg) {
             return "Stunting";
         }
@@ -81,10 +82,6 @@ class StuntingAnalysisController extends Controller
             return "Normal";
         }
 
-        return "Unidentified";
-    }
-
-    private function getMalnutritionAnalysis($weight, $malnutrition) {
         if ($weight <= $malnutrition->sd3neg || $weight < $malnutrition->sd2neg) {
             return "Malnutrition";
         }

@@ -5,7 +5,7 @@
         <Line :data="chartData" :options="chartOptions"/>
         <Line :data="malnutritionData" :options="malnutritionOptions"/>
       </div>
-      <!-- {{ data }} -->
+      {{ data }}
     </div>
   </template>
 
