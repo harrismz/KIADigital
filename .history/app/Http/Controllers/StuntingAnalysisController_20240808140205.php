@@ -44,22 +44,13 @@ class StuntingAnalysisController extends Controller
 
             if ($data->gender == 'Perempuan') {
                 $additionalData = DB::table('lhfa_girls')->where('month', $data->age)->first();
-                $malnutritionData = DB::table('wfl_girls')->where('length', $data->height)->first();
-                $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
-                $statusWfl = $this->getMalnutritionAnalysis($data->weight, $malnutritionData);
+
             } else {
                 $additionalData = DB::table('lhfa_boys')->where('month', $data->age)->first();
-                $malnutritionData = DB::table('wfl_boys')->where('length', $data->height)->first();
-                $statusLhfa = $this->getStuntingAnalysis($data->height, $additionalData);
-                $statusWfl = $this->getMalnutritionAnalysis($data->weight, $malnutritionData);
             }
 
-            if ($statusLhfa) {
-                $childData['status_lhfa'] = $statusLhfa; 
-            }
-
-            if ($statusWfl) {
-                $childData['status_wfl'] = $statusWfl;
+            if ($additionalData) {
+                $childData['status_lhfa'] = $additionalData; 
             }
 
             $finalData[] = $childData;
@@ -73,32 +64,13 @@ class StuntingAnalysisController extends Controller
     }
 
     private function getStuntingAnalysis($height, $lhfa) {
+        // =IF(H<=sd3neg,"Stunting",IF(H<sd2neg,"Stunting",IF(H>=sd2neg,"Normal", IF(H>sd3,"Normal", "Unidentified"))))
         if($height <= $lhfa->sd3neg || $height < $lhfa->sd2neg) {
             return "Stunting";
         }
 
         if($height >= $lhfa->sd2neg || $height > $lhfa->sd3) {
             return "Normal";
-        }
-
-        return "Unidentified";
-    }
-
-    private function getMalnutritionAnalysis($weight, $malnutrition) {
-        if ($weight <= $malnutrition->sd3neg || $weight < $malnutrition->sd2neg) {
-            return "Malnutrition";
-        }
-        
-        if ($weight >= $malnutrition->sd2neg || $weight <= $malnutrition->sd1) {
-            return "Normal";
-        }
-
-        if ($weight > $malnutrition->sd1 || $weight >= $malnutrition->sd2) {
-            return "Possible Overweight";
-        }
-
-        if ($weight > $malnutrition->sd3) {
-            return "Obesitas";
         }
 
         return "Unidentified";

@@ -1,11 +1,10 @@
 <template>
     
     <div>
-      <div style="height: 200px">
+      <div style="height: 200px; background-color: #f8f9fa;">
         <Line :data="chartData" :options="chartOptions"/>
-        <Line :data="malnutritionData" :options="malnutritionOptions"/>
       </div>
-      <!-- {{ data }} -->
+      {{ data }}
     </div>
   </template>
 
@@ -47,18 +46,23 @@
           responsive: true,
           maintainAspectRatio: false
         },
-        malnutritionOptions: {
-          responsive: true,
-          maintainAspectRatio: false
-        },
+        // chartData: {
+        //   labels: [],
+        //   datasets: [
+        //     {
+        //       label: 'Data One',
+        //       data: [40, 39, 10, 40, 39, 80, 40],
+        //       tension: 0.2,
+        //       borderColor: 'rgb(75, 192, 192)',
+        //     }
+        //   ]
+        // }
         chartData: {
-          labels: [],
-          datasets: []
-        },
-        malnutritionData: {
-          labels: [],
-          datasets: []
-        },
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [
+            
+          ]
+        }
       };
     },
 
@@ -73,14 +77,14 @@
     },
 
     mounted() {
-      this.fetchStunting();
-      this.fetchMalnutrition();
+      this.fetchInformation();
     },
 
     methods: {
-      async fetchStunting() {
+      async fetchInformation() {
         // TODO : get child id
         const url = this.baseUrl + '/api/stunting-analysis/';
+
         try {
           const response = await axios.get(url); 
           if (response.data && response.data.success) {
@@ -108,49 +112,7 @@
               datasets: [
                 {
                   label: 'Stunting Count',
-                  borderColor: 'rgb(75, 192, 192)',
-                  data: dataValues
-                },
-              ]
-            }
-          } else {
-            console.error("Failed to fetch data");
-          }
-        } catch (error) {
-          console.error("An error occurred while fetching data:", error);
-        }
-      },
-      async fetchMalnutrition() {
-        // TODO : get child id
-        const url = this.baseUrl + '/api/stunting-analysis/';
-        try {
-          const response = await axios.get(url); 
-          if (response.data && response.data.success) {
-            this.data = response.data.data;
-
-            const uniqueCreatedAt = [...new Set(this.data.map((item: { created_at: any; }) => item.created_at))];
-            const labels = uniqueCreatedAt;
-
-            const malnutritionCounts = uniqueCreatedAt.reduce((acc, date) => {
-              acc[date] = 0;
-              return acc;
-            }, {});
-
-            this.data.forEach((item: { created_at: any; status_wfl: string; }) => {
-                const date = item.created_at;
-                if (item.status_wfl === 'Malnutritiob' && malnutritionCounts[date] !== undefined) {
-                  malnutritionCounts[date]++;
-                }
-              });
-
-            const dataValues = uniqueCreatedAt.map(date => malnutritionCounts[date]);
-
-            this.malnutritionData = {
-              labels: labels,
-              datasets: [
-                {
-                  label: "Malnutrition Count",
-                  borderColor: 'rgb(75, 192, 192)',
+                  backgroundColor: '#f87979',
                   data: dataValues
                 },
               ]

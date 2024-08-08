@@ -5,7 +5,7 @@
         <Line :data="chartData" :options="chartOptions"/>
         <Line :data="malnutritionData" :options="malnutritionOptions"/>
       </div>
-      <!-- {{ data }} -->
+      {{ data }}
     </div>
   </template>
 
@@ -108,7 +108,7 @@
               datasets: [
                 {
                   label: 'Stunting Count',
-                  borderColor: 'rgb(75, 192, 192)',
+                  backgroundColor: '#f87979',
                   data: dataValues
                 },
               ]
@@ -150,7 +150,7 @@
               datasets: [
                 {
                   label: "Malnutrition Count",
-                  borderColor: 'rgb(75, 192, 192)',
+                  backgroundColor: '#f87979',
                   data: dataValues
                 },
               ]
