@@ -4,7 +4,38 @@
             Imunisasi
         </div>
 
-        <form @submit.prevent="submit" class="form">
+        <div class="p-4 bg-white mb-8">
+            <table class="table">
+                <thead>
+                    <th>No</th>
+                    <th>Jenis Vaksin</th>
+                    <th>Tanggal Pelaksanaan</th>
+                    <th>Rumah Sakit</th>
+                    <th>Pemberi Vaksin</th>
+                </thead>
+                <tbody>
+                    <tr v-for="(im, key) in renderImunisasi" :key="im.id">
+                        <td class="fs-sm text-gray-500">
+                            {{ key+1 }}
+                        </td>
+                        <td class="text-gray-500">
+                            {{ im.vaccinename }}
+                        </td>
+                        <td class="fs-sm text-gray-500">
+                            {{ im.date_vaccinated }}
+                        </td>
+                        <td class="fs-sm text-gray-500">
+                            {{ im.hospitalname }}
+                        </td>
+                        <td class="fs-sm text-gray-500">
+                            {{ im.staffname }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form v-if="isMedic" @submit.prevent="submit" class="form">
 
             <div class="col-span-full mb-2">
                 <label for="vaksin">Vaksin</label>
@@ -28,6 +59,7 @@
 <script>
 import {mapGetters, mapActions} from 'vuex';
 import toastr from 'toastr';
+import helper from '../helper';
 
 export default {
     data(){
@@ -37,7 +69,9 @@ export default {
             form:{
                 vaccine_id:null,
                 date_vaccinated:null
-            }
+            },
+
+            imunisasi:null,
         }
     },
 
@@ -45,7 +79,30 @@ export default {
 
     computed: {
 
-        ...mapGetters(['baseUrl', 'staff_id', 'hospital_id']),
+        ...mapGetters(['baseUrl', 'staff_id', 'hospital_id', 'getUser', 'isMedic', 'patient']),
+
+        renderImunisasi(){
+            if(!this.imunisasi) {
+                return [];
+            }
+
+            let res = [];
+            for (let i = 0; i < this.imunisasi.length; i++) {
+                const imunisasi = this.imunisasi[i];
+                let childname = imunisasi.child ? imunisasi.child.child_name : '-';
+                let staffname = imunisasi.staff ? imunisasi.staff.staff_name : '-';
+                let vaccinename = imunisasi.vaccine ? imunisasi.vaccine.vaccine_name : '-';
+                let hospitalname = imunisasi.hospital ? imunisasi.hospital.hospital_name : '-';
+                let date_vaccinated = imunisasi.date_vaccinated;
+                let id = imunisasi.id;
+                let data = {
+                    id, childname, staffname, vaccinename, hospitalname, date_vaccinated
+                }
+
+                res.push(data)
+            }
+            return res;
+        },
 
         additional(){
             // still can't do this without user_id di medical_staff
@@ -54,7 +111,9 @@ export default {
                 child_id: this.child_id,
                 staff_id: this.staff_id
             }
-        }
+        },
+
+        
     },
 
     methods: {
@@ -70,6 +129,25 @@ export default {
                 this.vaksinOptions = res.data;
             }).catch(error => {
                 console.log(error);
+            });
+        },
+        
+        fetchVaksin() {
+            // console.log({patient: this.patient})
+            let id = this.patient.id; // 
+            
+            const url = this.baseUrl + "/api/imunisasi/"+ id;
+
+            axios.get(url, {
+                // apa aja nih disini;
+                params:{}
+            }).then(res => res.data)
+            .then(res => {
+                console.log({res});
+                this.imunisasi = res.data;
+            }).catch(error => {
+                // console.log(error);
+                helper.renderError(error);
             });
         },
 
@@ -95,6 +173,8 @@ export default {
 
     mounted(){
         this.fetchVaksinCombo();
+
+        this.fetchVaksin();
     }
 }
 </script>

@@ -53,7 +53,7 @@ import toastr from 'toastr';
 import { useRouter } from 'vue-router';
 import Stepper from '../utils/Stepper.vue';
 
-const router = useRouter();
+// const router = useRouter();
 
 export default {
     name: 'WeeklyMonitoringAnswer',

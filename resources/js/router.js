@@ -276,7 +276,7 @@ const routes = [
 
     // Halaman Anak
     {
-        path: '/dashboard-anak',
+        path: '/dashboard-anak/:id',
         name: 'dashboard-anak',
         component: DashboardAnak,
         meta: {
