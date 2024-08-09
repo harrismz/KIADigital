@@ -230,7 +230,7 @@ const store = createStore({
                 }
             }
 
-            return [];
+            return getters.children;
         },
 
         child: (state) => {
