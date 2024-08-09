@@ -15,6 +15,14 @@ export default {
 
         console.error(message);
         toastr.error(message)
+    },
+
+
+    label(snakeCaseString){
+        return snakeCaseString
+        .split('_')                  // Split the string by underscores
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+        .join(' '); 
     }
 
 }

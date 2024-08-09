@@ -96,12 +96,16 @@ export default {
             
             let id = child.id;
 
-            if(this.activeProfileType == 'ibu' ) {
-                this.$router.push('/dashboard-anak/'+id );
-            }
-            
-            if(this.activeProfileType == 'anak' ) {
+            if ( child.child_name ) {
+                // console.log('aku ibu')
+                this.$router.push('/dashboard-anak/' + id);
+            } else if (child.name) {
+                // console.log('aku anak')
                 this.$router.push('/');
+            } else {
+                // console.log('aku else')
+                // Handle unexpected profile type or a default case
+                this.$router.push('/dashboard-anak/' + id);
             }
         },
 

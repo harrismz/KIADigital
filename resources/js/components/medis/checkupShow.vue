@@ -33,7 +33,7 @@
                                     <tbody>
                                         <tr v-for="(val, key) in latest_checkup" :key="key">
                                             <td class="py-2 pr-2  font-medium text-xs leading-6 text-gray-500 whitespace-nowrap  border-t border-slate-100 dark:border-slate-400/10">
-                                                {{ key }}
+                                                {{ label( key) }}
                                             </td>
                                             <td class="py-2 pr-2  font-medium text-xs leading-6 text-gray-500 whitespace-nowrap  border-t border-slate-100 dark:border-slate-400/10">
                                                 <div v-if="key == 'usg_image'">
@@ -66,7 +66,7 @@
                                 </div> -->
                                 <my-input :isRequired="value.isRequired" :inputType="value.inputType ? value.inputType : 'text'" v-model="form[key]" :key="key" :inputKey="key" v-for="(value,key) in inputs"></my-input>
                                 
-                                <div class="p-6 w-full  mx-auto bg-white rounded-lg shadow-md">
+                                <div v-if="isMom" class="p-6 w-full  mx-auto bg-white rounded-lg shadow-md">
                                     <span class="text-l font-semibold block mb-6">Kaki Bengkak :</span>
                                     
                                     <div class="space-y-4">
@@ -210,6 +210,35 @@ export default {
                 return m;
             }
 
+
+            if(this.isChild){
+                let c = {
+                    "complaint": {
+                        inputType: 'text'
+                    },
+                    "weight": {
+                        inputType: 'number'
+                    },
+                    "height": {
+                        inputType: 'number'
+                    },
+                    "head_circumference": {
+                        inputType: 'text'
+                    },
+                    "immunisation_status": {
+                        inputType: 'text'
+                    },
+                    "action": {
+                        inputType: 'text'
+                    },
+                    "advice_given": {
+                        inputType: 'text'
+                    },
+                };
+
+                return c;
+            }
+
         },
 
         isMom(){
@@ -253,13 +282,29 @@ export default {
 
         latest_checkup(){
             if(this.data) {
+                let except = {
+                    'id':null, 'child_id':null, 'created_at': null, 'updated_at':null
+                }
+
+                let res = {};
                 if(this.data.pregnancy) {
-                    return this.data.pregnancy.latest_checkup;
+                    res = this.data.pregnancy.latest_checkup;
                 }
 
                 if(this.data.latest_checkup) {
-                    return this.data.latest_checkup
+                    res = this.data.latest_checkup
                 }
+
+                let result ={}
+                for (const key in res) {
+                    if (Object.prototype.hasOwnProperty.call(res, key)) {
+                        // const element = res[key];
+                        if(! (key in except)) {
+                            result[key] = res[key]
+                        }
+                    }
+                }
+                return result;
             }
 
             return {}
@@ -389,6 +434,10 @@ export default {
                 }
             }
         },
+
+        label(str) {
+            return helper.label(str);
+        }
     }
 
 };
