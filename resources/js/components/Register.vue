@@ -14,25 +14,25 @@
                     <div class="mb-4">
                         <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
                         <input v-model="form.nik" type="number" id="nik"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required />
                     </div>
                     <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
                         <input v-model="form.name" type="text" id="name"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required />
                     </div>
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                         <input v-model="form.email" type="email" id="email"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required />
                     </div>
                     <div class="mb-4">
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <input v-model="form.password" type="password" id="password"
-                            class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required />
                     </div>
                     <button type="submit"
