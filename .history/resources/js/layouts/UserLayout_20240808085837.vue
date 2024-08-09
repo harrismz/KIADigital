@@ -43,12 +43,12 @@
         <main class="flex-grow container mx-auto p-4">
             <slot></slot>
         </main>
-    </div>
-    <footer class="bg-gray-800 text-white p-2">
+        <footer class="bg-gray-800 text-white p-2">
             <div class="container mx-auto text-center">
                 &copy; 2024 KIA Digital
             </div>
-    </footer>
+        </footer>
+    </div>
 </template>
 
 <script>

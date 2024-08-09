@@ -1,35 +1,21 @@
 <template>
     
-  <div class="bg-gray-100 p-4 rounded-lg">
-    <h1 class="mt-3 text-2xl font-bold text-blue-500 text-center">Stunting Chart Analysis</h1>
-    <p class="mt-3 text-gray-500 text-xs text-center">
-      Grafik ini bertujuan untuk memberikan wawasan yang jelas tentang jumlah kasus stunting serta gizi buruk di Indonesia secara real-time.
-    </p>
-    
-    <div class="flex flex-col md:flex-row gap-4 mt-8 ml-4 mr-4">
-      <div class="flex-1 rounded-lg shadow-md bg-white p-4 hover:scale-[1.01] transition duration-300 cursor-pointer hover:bg-gray-200">
+    <div class="flex flex-col min-h-24 bg-gray-100 p-6 rounded-lg">
+          <!-- Title and Heading -->
+      <div class="mb-4 text-center mb-8">
+        <h1 class="text-2xl font-bold text-gray-800">Stunting And Malnutrition Analysis</h1>
+        <h2 class="text-xl font-semibold text-red-600">Realtime Data</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-8" style="height: 200px">
         <Line :data="chartData" :options="chartOptions"/>
+        <!-- <Line :data="malnutritionData" :options="malnutritionOptions"/> -->
       </div>
-      <div class="flex-1 rounded-lg shadow-md bg-white p-4 hover:scale-[1.01] transition duration-300 cursor-pointer hover:bg-gray-200">
-        <h3 class="text-md font-bold text-gray-500 mb-4">Deskripsi</h3>
-        <p class="text-xs">
-          Grafik ini menampilkan data tentang prevalensi stunting pada anak-anak usia 0-5 tahun di berbagai provinsi di Indonesia untuk tahun tertera. Stunting, atau kekerdilan, adalah kondisi di mana anak-anak memiliki tinggi badan yang kurang dari standar pertumbuhan yang diharapkan karena kekurangan nutrisi kronis, infeksi berulang, atau faktor-faktor lain selama periode perkembangan kritis.
-        </p>
-      </div>
-    </div>
-
-    <div class="flex flex-col md:flex-row gap-4 mt-8 mb-8 ml-4 mr-4">
-      <div class="flex-1 rounded-lg shadow-md bg-white p-4 hover:scale-[1.01] transition duration-300 cursor-pointer hover:bg-gray-200">
+      <div class="grid grid-cols-2 gap-4" style="height: 200px">
+        <!-- <Line :data="chartData" :options="chartOptions"/> -->
         <Line :data="malnutritionData" :options="malnutritionOptions"/>
       </div>
-      <div class="flex-1 rounded-lg shadow-md bg-white p-4 hover:scale-[1.01] transition duration-300 cursor-pointer hover:bg-gray-200">
-        <h3 class="text-md font-bold text-gray-500 mb-4">Deskripsi</h3>
-        <p class="text-xs">
-          Grafik ini menampilkan data tentang prevalensi malnutrisi pada anak-anak usia 0-5 tahun di berbagai provinsi di Indonesia untuk tahun tertera. Malnutrisi adalah kondisi kesehatan yang terjadi ketika tubuh tidak mendapatkan nutrisi yang cukup atau tidak seimbang. Ini bisa disebabkan oleh kekurangan, kelebihan, atau ketidakseimbangan berbagai nutrisi penting, termasuk vitamin, mineral, protein, lemak, dan karbohidrat.
-        </p>
-      </div>
+      <!-- {{ data }} -->
     </div>
-  </div>
   </template>
 
   <script lang="ts">
@@ -118,7 +104,6 @@ import { data } from 'autoprefixer';
         // TODO : get child id
         const url = this.baseUrl + '/api/stunting-analysis/';
         const currentYear = new Date().getFullYear();
-        const allDates = new Set();
 
         try {
           const response = await axios.get(url); 
@@ -134,7 +119,7 @@ import { data } from 'autoprefixer';
 
             const labels = [...new Set(filteredData.map((item: { created_at: string }) => {
               const date = new Date(item.created_at);
-              // Adjust label format
+              // Adjust the label format as needed (e.g., 'Jan 2024', '2024-01-01')
               return `${date.getMonth() + 1}/${date.getFullYear()}`;
             }))];
 
@@ -149,16 +134,7 @@ import { data } from 'autoprefixer';
             const stuntingCounts = {};
 
             filteredData.forEach(item => {
-              const date = item.created_at.split('T')[0];
-              allDates.add(date);
-            });
-
-            allDates.forEach(date => {
-              stuntingCounts[date] = 0;
-            });
-
-            filteredData.forEach(item => {
-              const date = item.created_at.split('T')[0];
+              const date = item.created_at.split('T')[0]; // Assuming date format is YYYY-MM-DDTHH:mm:ss
               if (item.status_lhfa === 'Stunting') {
                 if (stuntingCounts[date]) {
                   stuntingCounts[date]++;
@@ -168,9 +144,11 @@ import { data } from 'autoprefixer';
               }
             });
 
-            const dataValues = uniqueCreatedAt
-                .map(date => stuntingCounts[date])
-                .filter(value => value !== undefined);
+            console.log({ stuntingCounts });
+
+            const dataValues = uniqueCreatedAt.map(date =>
+             stuntingCounts[date]);
+            console.log({ dataValues });
 
             this.chartData = {
               labels: sortedLabels,
@@ -193,7 +171,6 @@ import { data } from 'autoprefixer';
         // TODO : get child id
         const url = this.baseUrl + '/api/stunting-analysis/';
         const currentYear = new Date().getFullYear();
-        const allDates = new Set();
         try {
           const response = await axios.get(url); 
           if (response.data && response.data.success) {
@@ -208,7 +185,7 @@ import { data } from 'autoprefixer';
             
             const labels = [...new Set(filteredData.map((item: { created_at: string }) => {
               const date = new Date(item.created_at);
-              // Adjust label format
+              // Adjust the label format as needed (e.g., 'Jan 2024', '2024-01-01')
               return `${date.getMonth() + 1}/${date.getFullYear()}`;
             }))];
 
@@ -223,16 +200,7 @@ import { data } from 'autoprefixer';
             const malnutritionCounts = {};
 
             filteredData.forEach(item => {
-              const date = item.created_at.split('T')[0];
-              allDates.add(date);
-            });
-
-            allDates.forEach(date => {
-              malnutritionCounts[date] = 0;
-            });
-
-            filteredData.forEach(item => {
-              const date = item.created_at.split('T')[0];
+              const date = item.created_at.split('T')[0]; // Assuming date format is YYYY-MM-DDTHH:mm:ss
               if (item.status_wfl === 'Malnutrition') {
                 if (malnutritionCounts[date]) {
                   malnutritionCounts[date]++;
@@ -242,7 +210,7 @@ import { data } from 'autoprefixer';
               }
             });
 
-            const dataValues = uniqueCreatedAt.map(date => malnutritionCounts[date]).filter(value => value !== undefined);
+            const dataValues = uniqueCreatedAt.map(date => malnutritionCounts[date]);
 
             this.malnutritionData = {
               labels: sortedLabels,
