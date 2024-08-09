@@ -48,7 +48,7 @@
             <div class="container mx-auto text-center">
                 &copy; 2024 KIA Digital
             </div>
-    </footer>
+        </footer>
 </template>
 
 <script>

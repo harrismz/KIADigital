@@ -11,9 +11,9 @@
         <Line :data="chartData" :options="chartOptions"/>
       </div>
       <div class="flex-1 rounded-lg shadow-md bg-white p-4 hover:scale-[1.01] transition duration-300 cursor-pointer hover:bg-gray-200">
-        <h3 class="text-md font-bold text-gray-500 mb-4">Deskripsi</h3>
+        <h3 class="text-md font-bold text-gray-500">Deskripsi</h3>
         <p class="text-xs">
-          Grafik ini menampilkan data tentang prevalensi stunting pada anak-anak usia 0-5 tahun di berbagai provinsi di Indonesia untuk tahun tertera. Stunting, atau kekerdilan, adalah kondisi di mana anak-anak memiliki tinggi badan yang kurang dari standar pertumbuhan yang diharapkan karena kekurangan nutrisi kronis, infeksi berulang, atau faktor-faktor lain selama periode perkembangan kritis.
+          Grafik ini menampilkan data tentang prevalensi stunting pada anak-anak usia 0-5 tahun di berbagai provinsi di Indonesia untuk tahun 2023. Stunting, atau kekerdilan, adalah kondisi di mana anak-anak memiliki tinggi badan yang kurang dari standar pertumbuhan yang diharapkan karena kekurangan nutrisi kronis, infeksi berulang, atau faktor-faktor lain selama periode perkembangan kritis.
         </p>
       </div>
     </div>
@@ -23,9 +23,9 @@
         <Line :data="malnutritionData" :options="malnutritionOptions"/>
       </div>
       <div class="flex-1 rounded-lg shadow-md bg-white p-4 hover:scale-[1.01] transition duration-300 cursor-pointer hover:bg-gray-200">
-        <h3 class="text-md font-bold text-gray-500 mb-4">Deskripsi</h3>
+        <h3 class="text-md font-bold text-gray-500">Deskripsi</h3>
         <p class="text-xs">
-          Grafik ini menampilkan data tentang prevalensi malnutrisi pada anak-anak usia 0-5 tahun di berbagai provinsi di Indonesia untuk tahun tertera. Malnutrisi adalah kondisi kesehatan yang terjadi ketika tubuh tidak mendapatkan nutrisi yang cukup atau tidak seimbang. Ini bisa disebabkan oleh kekurangan, kelebihan, atau ketidakseimbangan berbagai nutrisi penting, termasuk vitamin, mineral, protein, lemak, dan karbohidrat.
+          Grafik ini menampilkan data tentang prevalensi stunting pada anak-anak usia 0-5 tahun di berbagai provinsi di Indonesia untuk tahun 2023. Stunting, atau kekerdilan, adalah kondisi di mana anak-anak memiliki tinggi badan yang kurang dari standar pertumbuhan yang diharapkan karena kekurangan nutrisi kronis, infeksi berulang, atau faktor-faktor lain selama periode perkembangan kritis.
         </p>
       </div>
     </div>
