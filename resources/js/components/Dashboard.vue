@@ -17,7 +17,7 @@ import ProgressBar from './utils/ProgressBar.vue';
 import toastr from 'toastr';
 import UserCard from './UserCard.vue';
 ChartJS.register(LineElement, CategoryScale, LinearScale);
-import {mapGetters} from 'vuex';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
 components: {
@@ -54,6 +54,7 @@ data() {
     };
 },
 methods: {
+    ...mapActions(['fetchPregnancyInfo']),
     fetchUserAuth() {
 
         axios.get('/user')
@@ -98,6 +99,9 @@ computed:{
 },
 mounted() {
 
+},
+created() {
+    this.fetchPregnancyInfo();
 }
 };
 </script>

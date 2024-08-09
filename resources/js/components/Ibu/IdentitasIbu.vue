@@ -85,7 +85,7 @@
                         </select>
                     </div> -->
                     <div class="mb-4">
-                        <label for="kecamatan" class="block text-sm font-medium text-gray-700">kecamatan</label>
+                        <label for="kecamatan" class="block text-sm font-medium text-gray-700">Kecamatan</label>
                         <select v-model="formIdentitasIbu.kecamatan_id" id="kecamatan"
                             class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required>
@@ -96,7 +96,7 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="religion" class="block text-sm font-medium text-gray-700">religion</label>
+                        <label for="religion" class="block text-sm font-medium text-gray-700">Religion</label>
                         <select v-model="formIdentitasIbu.religion_id" id="religion"
                             class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required>
@@ -201,15 +201,15 @@ const formIdentitasIbu = reactive({
 
 const submitIdentitasIbu = async () => {
     try {
-        // bang lanjutin save 
+        // bang lanjutin save
         const user = store.getters.getUser;
 
         let form = {...formIdentitasIbu, ...{user_id: user.id }};
-        
+
         console.log("submit identitas ",{form})
-        
+
         const response = await axios.post(`${baseUrl.value}/api/identitas-ibu`, form );
-        
+
         if (response && response.data) {
             console.log("creating", response.data);
             console.log("User data:", response.data.user);

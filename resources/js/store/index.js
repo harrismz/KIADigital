@@ -2,16 +2,53 @@
 import Vuex, { createStore } from 'vuex';
 import axios from 'axios';
 import toastr from 'toastr';
+import { localStoragePlugin, loadState } from '../localStoragePlugin';
+
 // Vue.useAttrs(Vuex)
 const origin = window.location.origin;
 
+const determineActiveUser = (user) => {
+
+    const savedState = localStorage.getItem('store');
+
+    if (!savedState) {
+        return ;
+    }
+
+    let str = JSON.parse(savedState);
+
+    let activeProfile = str.active_profile;
+
+    if(activeProfile) {
+        return activeProfile;
+    }
+
+    if (user.staff) {
+        return user.staff;
+    } else if (user.mom) {
+        return user.mom;
+    }
+
+    return null;
+}
+
+const initialState = loadState();
+
 const store = createStore({
+    plugins:[localStoragePlugin],
+
     state: {
-        user: null,
+        user: initialState.user || null,
 
-        lastHpl: null,
+        active_child:initialState.active_child || null,
 
-        auth_token: null,
+        active_profile: initialState.active_profile || null,
+
+        lastHpl: initialState.lastHpl || null,
+
+        auth_token: initialState.auth_token || null,
+
+        patient: initialState.patient || null,  //could be mother, could be children, fetched by checkupshow by guid
 
         baseUrl: origin,
 
@@ -91,12 +128,18 @@ const store = createStore({
                 return 'user not found';
             }
 
+            // yg active_profile siapa,
+            if(state.active_profile) {
+                // gmn cara cek active_profile antara name / child_name ?
+                return state.active_profile.name ? state.active_profile.name : state.active_profile.child_name;
+            }
+
             if(state.user.mother) {
                 return state.user.mother.name;
             }
 
             if(state.user.staff) {
-                return state.user.staff.name;
+                return state.user.staff.staff_name;
             }
 
             return state.user.name;
@@ -131,9 +174,68 @@ const store = createStore({
 
         getUser: (state) => state.user,
 
+        patient: (state) => state.patient,
+
         baseUrl: (state) => state.config.baseUrl,
 
         imgLogo: (state) => state.config.imgLogo,
+
+        mom: (state) => {
+
+            if(!state.user) {
+                return null;
+            }
+
+            return state.user.mother
+        },
+
+        children: (state, getters) => {
+            if(!getters.mom) {
+                return null;
+            }
+
+            return getters.mom.children;
+        },
+
+        activeProfile: (state, getters) => {
+            return state.active_profile
+        },
+
+        activeProfileType: (state,getters) => {
+            if(getters.activeProfile) {
+                if(getters.activeProfile.child_name) {
+                    return 'anak'
+                }
+
+                if(getters.activeProfile.name) {
+                    return 'ibu'
+                }
+
+                if(getters.activeProfile.staff_name) {
+                    return 'staff'
+                }
+            }
+
+            return null;
+        },
+
+        relations: (state, getters) => {
+            if(getters.activeProfile) {
+                if(getters.activeProfile.child_name) {
+                    return [getters.mom] //as an array of mom karena dipake di v-for
+                }
+
+                if(getters.activeProfile.name) {
+                    return getters.children; // udah array dari sono nya
+                }
+            }
+
+            return getters.children;
+        },
+
+        child: (state) => {
+            return state.active_child;
+        },
 
         isMom(state) {
             // cek dulu role nya null ngga, nanti error
@@ -178,6 +280,7 @@ const store = createStore({
 
             return dm.public;
         },
+
         getMenuAnak: (state) => {
             // check current role
             let dm = state.dashboard_menu;
@@ -213,15 +316,26 @@ const store = createStore({
             return user.role.display_name;
         },
 
-        isMom(state,getters) {
-            return getters.userRole == 'ibu'
-        }
+        // isMom(state,getters) {
+        //     return getters.userRole == 'ibu'
+        // }
     },
 
     mutations: {
         SET_USER(state, user) {
-
             state.user = user;
+        },
+
+        setActiveChild(state, child) {
+            state.active_child = child;
+        },
+
+        setActiveProfile(state, person) {
+            state.active_profile = person; //person could be mom coulb be child
+        },
+
+        setPatient(state, patient) {
+            state.patient = patient;
         },
 
         setUser(state, user) {
@@ -231,6 +345,10 @@ const store = createStore({
 
         setUserHpl(state, lastHpl) {
             state.lastHpl = lastHpl;
+        },
+
+        setPregnancyInfo(state, pregnancy) {
+            state.dashboard_menu.ibu[0].description = pregnancy.description;
         },
 
         setToken(state, token) {
@@ -274,6 +392,17 @@ const store = createStore({
                     .then(user => {
                         console.log({ user })
                         context.commit('setUser', user);
+                        // context.commit('setActiveUser', determineActiveUser(user) );
+
+                        // I have user that has mom, child, and staff properties
+                        // if user is is staff, then it shouldn't be a mom
+                        // if user is a mom, it chould have a children
+                        // now, i want to set one of them, (staff, mom, or child) to become active_profile in the state
+                        // but i wonder how to do it properly,
+                        // the default active users could be mother or a staff
+                        // if it is a mom, people can click in children menu and set it into active user with children data changes into array of mom ( because it's used in component as v-for )
+                        // how can I do that ?
+
                     })
                     .catch(err => {
                         // do something like remove the localStorage
@@ -287,6 +416,34 @@ const store = createStore({
                     })
             } catch (error) {
                 console.error('Error fetching user:', error);
+            }
+        },
+
+        async fetchPregnancyInfo( context ) {
+            try {
+                let endpoint = context.getters.baseUrl + '/api/pregnancy-history-last';
+                console.log({ endpoint })
+                return axios.get( endpoint , {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                })
+                .then(response => response.data)
+                .then(pregnancyhistory => {
+                    console.log({ pregnancyhistory })
+                    const data = pregnancyhistory.data;
+                    const payload = {
+                        description: `Tinggi: ${data.height} cm Berat: ${data.weight} cm Ukuran: ${data.size} Ciri-ciri: ${data.characteristics}`
+                    };
+                    context.commit('setPregnancyInfo', payload);
+                })
+                .catch(err => {
+                    console.log('catch fetch pregnancy info')
+                    context.commit('setPregnancyInfo', null);
+
+                })
+            } catch (error) {
+                console.error('Error fetching pregnancy info:', error);
             }
         },
 

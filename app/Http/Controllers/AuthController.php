@@ -94,7 +94,7 @@ class AuthController extends Controller
     public function user(Request $request)
     {
 
-        $user = $request->user()->load(['mother', 'role', 'staff']);
+        $user = $request->user()->load(['mother.children', 'role', 'staff']);
 
         return response()->json(
             $user
