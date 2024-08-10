@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mother;
 use App\Models\Pregnancy;
 use Illuminate\Http\Request;
 
@@ -43,6 +44,18 @@ class PregnancyController extends Controller
             'data' => $data
         ];
     }
+
+    public function show(Request $request, $mother_id) {
+        // find mother
+        $mother = Mother::findOrFail($mother_id);
+
+        return [
+            'success' => true,
+            'data' => $mother->pregnancy
+        ];
+
+    }
+
     public function getWeek() {
         // TODO get week of pregnancy
         $pregnancy = Pregnancy::where('mother_id', 1)->first();
