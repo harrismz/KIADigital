@@ -64,6 +64,16 @@
                                     <input type="text" :placeholder="key" v-model="form[key]" :name="key" :id="key" :autocomplete="key" class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
                                 </div> -->
+
+                                <div v-if="isMom" class="p-6 w-full mb-2 mx-auto bg-white rounded-lg shadow-md">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2" for="week">Weeks</label>
+                                    <select v-model="form.week" name="week" id="week" class="p-2 border border-1 mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option v-for="week in weekOptions" :value="week" :key="week">
+                                            Minggu {{ week }}
+                                        </option>
+                                    </select>
+                                </div>
+
                                 <my-input :isRequired="value.isRequired" :inputType="value.inputType ? value.inputType : 'text'" v-model="form[key]" :key="key" :inputKey="key" v-for="(value,key) in inputs"></my-input>
                                 
                                 <div v-if="isMom" class="p-6 w-full  mx-auto bg-white rounded-lg shadow-md">
@@ -116,6 +126,7 @@ export default {
     data() {
         return {
             inputValue: '',
+
             data: {},
 
             except:{
@@ -239,6 +250,14 @@ export default {
                 return c;
             }
 
+        },
+
+        weekOptions(){
+            let res = []
+            for (let i = 0; i < 40; i++) {
+                res.push(i+1)
+            }
+            return res;
         },
 
         isMom(){
