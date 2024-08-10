@@ -348,6 +348,7 @@ const store = createStore({
         },
 
         setPregnancyInfo(state, pregnancy) {
+            console.log(pregnancy)
             state.dashboard_menu.ibu[0].description = pregnancy.description;
         },
 
@@ -428,12 +429,13 @@ const store = createStore({
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
                     }
                 })
-                .then(response => response.data)
+                // .then(response => response.data)
                 .then(pregnancyhistory => {
+                    console.log('fetch pregnancy info')
                     console.log({ pregnancyhistory })
                     const data = pregnancyhistory.data;
                     const payload = {
-                        description: `Tinggi: ${data.height} cm Berat: ${data.weight} cm Ukuran: ${data.size} Ciri-ciri: ${data.characteristics}`
+                        description: `Tinggi: ${data.fundal_height}cm\nBerat: ${data.weight_baby}g\nDetak Jantung: ${data.fetal_heart_rate}\nSaran: ${data.advice_given}`
                     };
                     context.commit('setPregnancyInfo', payload);
                 })
