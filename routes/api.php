@@ -51,6 +51,7 @@ Route::get('/religion', [IdentityController::class, 'getReligion']);
 Route::post('/identitas-ibu', [IdentityController::class, 'store']);
 Route::post('/identitas-ayah', [IdentityController::class, 'storeAyah']);
 Route::get('/combo/{modelname}', [ComboController::class, 'get']);
+Route::get('/combo/{modelname}/{id}', [ComboController::class, 'getById']);
 
 Route::get('/get_mother/{user_id}', [IbuController::class, 'index']);
 Route::get('/get_week_user', [IbuController::class, 'getWeek']);

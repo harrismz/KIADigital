@@ -1,0 +1,11 @@
+{
+    "terminal.integrated.profiles.windows": {
+        "laragon": {
+            "path": "C:\\laragon\\bin\\cmder\\cmder.bat",
+            "args": [
+                "."
+            ],
+        },
+    },
+    "terminal.integrated.defaultProfile.windows": "laragon",
+}

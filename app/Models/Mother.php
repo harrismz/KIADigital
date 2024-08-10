@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mother extends Model
 {
     use HasFactory, IdableTrait;
-    
+
     protected $table = "mother";
 
     protected $guarded = ['id'];
@@ -24,6 +24,9 @@ class Mother extends Model
 
     public function children(){
         return $this->hasMany(Child::class);
+    }
+    public function father(){
+        return $this->hasMany(Father::class);
     }
 
     public function pregnancy() {
@@ -46,5 +49,25 @@ class Mother extends Model
         $history = $pregnancy->checkups();
 
         return $history;
+    }
+
+    public function kecamatan(): belongsTo
+    {
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+    }
+
+    public function religion(): belongsTo
+    {
+        return $this->belongsTo(Religion::class, 'religion_id');
+    }
+
+    public function education(): belongsTo
+    {
+        return $this->belongsTo(Education::class, 'education_id');
+    }
+
+    public function bloodType(): belongsTo
+    {
+        return $this->belongsTo(BloodType::class, 'blood_type_id');
     }
 }
