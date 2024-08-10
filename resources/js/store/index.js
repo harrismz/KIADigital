@@ -99,7 +99,7 @@ const store = createStore({
 
                 { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'informasi-medis', img: '/storage/images/information.png' },
 
-                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'pertumbuhan-anak', img: '/storage/images/information-anak.png' },
+                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'child-development-list', img: '/storage/images/information-anak.png' },
 
                 { title: 'Pelayanan Imunisasi', description: 'Pelayanan Imunisasi ini merupakan informasi mengenai imunisasi yang wajib dilakukan oleh anak. Sudah maupun belum dilakukan imunisasi dapat dilacak dalam menu ini.', link: 'imunisasi', img: '/storage/images/jarum.png' },
             ]
@@ -348,7 +348,6 @@ const store = createStore({
         },
 
         setPregnancyInfo(state, pregnancy) {
-            console.log(pregnancy)
             state.dashboard_menu.ibu[0].description = pregnancy.description;
         },
 
@@ -429,7 +428,6 @@ const store = createStore({
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
                     }
                 })
-                // .then(response => response.data)
                 .then(pregnancyhistory => {
                     console.log('fetch pregnancy info')
                     console.log({ pregnancyhistory })
