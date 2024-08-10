@@ -1,14 +1,14 @@
 <template>
     <div class="mb-2 grid grid-cols-3">
-        <div class="collapse collapse-arrow col-span-1 bg-pink-200 mb-2 shadow-md" :class="{ 'collapse-open': isOpen }">
+        <div class="collapse collapse-arrow col-span-1 bg-white border border-4 mb-2 shadow-md" :class="{ 'collapse-open': isOpen }">
             <input type="radio" name="my-accordion-2" v-model="isOpen" class="hidden" />
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
-                <h1 class="font-mono">{{ userName }} </h1>
+                <h1 class="font-mono text-lg font-lg font-bold">{{ userName }} </h1>
 
-                <p v-if="isMedic" class="font-sans font-light">
+                <p v-if="isMedic" class="font-sans font-light text-sm">
                     NIP : {{ userDetail.nip }}
                 </p>
-                <p v-else class="font-sans font-light">
+                <p v-else class="font-sans font-light text-sm text-gray-600">
                     HPL : {{ userDetail.hpl }}
                 </p>
             </div>
@@ -16,15 +16,21 @@
             <div v-if="isMom" class="collapse-content">
                 
                 <div v-for="child in relations" :key="child.id" @click="goToAnak(child)">
-                    <span class="font-bold"> {{getType(child)}}</span>
-                    <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                        <h1 class=" cursor-pointer">{{ getName(child) }}</h1>
+                    <div class="">
+                        <span class="font-bold"> {{getType(child)}}</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <h1 class="font-bold cursor-pointer">{{ getName(child) }}</h1>
+                            <p class="text-sm text-gray-500 cursor-pointer">
+                                TTL : {{ child.date_of_birth }}
+                            </p>
+                        </div>
+
                         <div class="flex justify-end gap-x-3 row-span-2">
                             <img class="w-6 h-6" @click="editAnswer" :src=" baseUrl + '/storage/images/edit.png'"></img>
                         </div>
-                        <p class=" cursor-pointer">
-                            TTL : {{ child.date_of_birth }}
-                        </p>
     
                         <a v-if="getType(child) == 'ibu'" href="#" class="flex items-center space-x-2 cursor-pointer col-span-2">
                             <img :src="baseUrl +  '/storage/images/anak-icon.png'" alt="" class="h-5 w-5">
