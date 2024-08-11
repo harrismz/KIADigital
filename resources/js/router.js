@@ -256,7 +256,7 @@ const routes = [
     },
     // child
     {
-        path: '/child-development',
+        path: '/child-development-list',
         name: 'child-development-list',
         component: ChildDevelopmentList,
         props: true,
