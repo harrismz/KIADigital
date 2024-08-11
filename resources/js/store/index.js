@@ -3,6 +3,7 @@ import Vuex, { createStore } from 'vuex';
 import axios from 'axios';
 import toastr from 'toastr';
 import { localStoragePlugin, loadState } from '../localStoragePlugin';
+import helper from '../components/helper';
 
 // Vue.useAttrs(Vuex)
 const origin = window.location.origin;
@@ -48,9 +49,15 @@ const store = createStore({
 
         auth_token: initialState.auth_token || null,
 
-        patient: initialState.patient || null,  //could be mother, could be children, fetched by checkupshow by guid
+        period_id: initialState.period_id || null,
 
+        patient: initialState.patient || null,  //could be mother, could be children, fetched by checkupshow by guid
+        
+        periods: initialState.periods || null,  //could be mother, could be children, fetched by checkupshow by guid
+        
         baseUrl: origin,
+
+        questions:[],
 
         config: {
             baseUrl: origin, // URL dasar yang mungkin diperlukan
@@ -118,6 +125,18 @@ const store = createStore({
 
             return true;
            // Mengembalikan true jika user tidak null
+        },
+
+        period_id(state) {
+            return state.period_id;
+        },
+        
+        periods(state) {
+            return state.periods;
+        },
+
+        questions: (state) => {
+            return state.questions;
         },
 
         user: (state) => state.user,
@@ -324,6 +343,18 @@ const store = createStore({
     mutations: {
         SET_USER(state, user) {
             state.user = user;
+        },
+
+        setPeriodId(state, period_id) {
+            state.period_id = period_id;
+        },
+        
+        setPeriods(state, periods) {
+            state.periods = periods;
+        },
+
+        setQuestions(state, questions) {
+            state.questions = questions;
         },
 
         setActiveChild(state, child) {
@@ -542,6 +573,27 @@ const store = createStore({
             } catch (error) {
                 console.error('Error fetching Logo :', error);
             }
+        },
+
+        fetchQuestionAnswer(self, payload){
+            
+            let child = self.getters.child;
+            const url = self.getters.baseUrl + "/api/questions/"+ payload.period_id;
+                        
+            axios.get(url, {
+                // apa aja nih disini;
+                params:{
+                    child_id: child.id
+                }
+            }).then(res => res.data)
+            .then(res => {
+                console.log(res);
+                // this.questions = res.data;
+                self.commit('setQuestions', res.data )
+            }).catch(error => {
+                console.log(error);
+                helper.renderError(error);
+            })
         },
 
     }
