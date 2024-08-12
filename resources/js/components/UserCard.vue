@@ -32,15 +32,15 @@
                             <img class="w-6 h-6" @click="editAnswer" :src=" baseUrl + '/storage/images/edit.png'"></img>
                         </div>
     
-                        <a v-if="getType(child) == 'ibu'" href="#" class="flex items-center space-x-2 cursor-pointer col-span-2">
-                            <img :src="baseUrl +  '/storage/images/anak-icon.png'" alt="" class="h-5 w-5">
-                            <span>
-                                tambah identitas anak
-                            </span>
-                        </a>
-    
                     </div>
                 </div>
+
+                <a href="/child" class="flex items-center space-x-2 cursor-pointer col-span-2">
+                    <img :src="baseUrl +  '/storage/images/anak-icon.png'" alt="" class="h-5 w-5">
+                    <span>
+                        tambah identitas anak
+                    </span>
+                </a>
                 
             </div>
         </div>
