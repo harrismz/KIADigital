@@ -150,7 +150,18 @@ const store = createStore({
             // yg active_profile siapa,
             if(state.active_profile) {
                 // gmn cara cek active_profile antara name / child_name ?
-                return state.active_profile.name ? state.active_profile.name : state.active_profile.child_name;
+                // return state.active_profile.name ? state.active_profile.name : state.active_profile.child_name;
+                if(state.active_profile.name) {
+                    return state.active_profile.name
+                }
+                
+                if(state.active_profile.child_name) {
+                    return state.active_profile.child_name
+                }
+                
+                if(state.active_profile.staff_name) {
+                    return state.active_profile.staff_name
+                }
             }
 
             if(state.user.mother) {
@@ -436,6 +447,13 @@ const store = createStore({
                     .then(user => {
                         console.log({ user })
                         context.commit('setUser', user);
+                        // ini juga bakal membingungkan sih, 
+                        if(user.staff){
+                            context.commit('setActiveProfile', user.staff );
+                        }else{
+                            context.commit('setActiveProfile', user.mother );
+
+                        }
                         // context.commit('setActiveUser', determineActiveUser(user) );
 
                         // I have user that has mom, child, and staff properties
