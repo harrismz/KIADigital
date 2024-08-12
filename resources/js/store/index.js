@@ -52,9 +52,9 @@ const store = createStore({
         period_id: initialState.period_id || null,
 
         patient: initialState.patient || null,  //could be mother, could be children, fetched by checkupshow by guid
-        
+
         periods: initialState.periods || null,  //could be mother, could be children, fetched by checkupshow by guid
-        
+
         baseUrl: origin,
 
         questions:[],
@@ -83,7 +83,7 @@ const store = createStore({
             ],
 
             ibu: [
-                { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', link: '#', img: '/storage/images/janin.png' },
+                { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', img: '/storage/images/janin.png' },
 
 
                 { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: 'weekly-monitoring-result', img: '/storage/images/diary.png' },
@@ -130,7 +130,7 @@ const store = createStore({
         period_id(state) {
             return state.period_id;
         },
-        
+
         periods(state) {
             return state.periods;
         },
@@ -154,11 +154,11 @@ const store = createStore({
                 if(state.active_profile.name) {
                     return state.active_profile.name
                 }
-                
+
                 if(state.active_profile.child_name) {
                     return state.active_profile.child_name
                 }
-                
+
                 if(state.active_profile.staff_name) {
                     return state.active_profile.staff_name
                 }
@@ -304,11 +304,11 @@ const store = createStore({
             if(getters.activeProfileType == 'anak') {
                 return dm.anak;
             }
-            
+
             if(getters.activeProfileType == 'ibu') {
                 return dm.ibu;
             }
-            
+
             if(getters.activeProfileType == 'medic') {
                 return dm.medic;
             }
@@ -372,7 +372,7 @@ const store = createStore({
         setPeriodId(state, period_id) {
             state.period_id = period_id;
         },
-        
+
         setPeriods(state, periods) {
             state.periods = periods;
         },
@@ -449,7 +449,7 @@ const store = createStore({
                         context.commit('setUser', user);
 
                         return user;
-                        // ini juga bakal membingungkan sih, 
+                        // ini juga bakal membingungkan sih,
                         // if(user.staff){
                         //     context.commit('setActiveProfile', user.staff );
                         // }
@@ -613,10 +613,10 @@ const store = createStore({
         },
 
         fetchQuestionAnswer(self, payload){
-            
+
             let child = self.getters.child;
             const url = self.getters.baseUrl + "/api/questions/"+ payload.period_id;
-                        
+
             axios.get(url, {
                 // apa aja nih disini;
                 params:{
