@@ -448,12 +448,13 @@ const store = createStore({
                         console.log({ user })
                         context.commit('setUser', user);
                         // ini juga bakal membingungkan sih, 
-                        if(user.staff){
-                            context.commit('setActiveProfile', user.staff );
-                        }else{
-                            context.commit('setActiveProfile', user.mother );
-
-                        }
+                        // if(user.staff){
+                        //     context.commit('setActiveProfile', user.staff );
+                        // }
+                        // // only staff that need setActiveProfile everytimes
+                        // else{
+                        //     context.commit('setActiveProfile', user.mother );
+                        // }
                         // context.commit('setActiveUser', determineActiveUser(user) );
 
                         // I have user that has mom, child, and staff properties
@@ -555,6 +556,8 @@ const store = createStore({
 
                 // save to store
                 context.commit('setToken', data.access_token );
+                context.commit('setUser', data.user );
+                context.commit('setActiveProfile', data.user.mother ? data.user.mother : data.user.staff );
 
                 // this.$router.push('/profile');
 
@@ -581,6 +584,7 @@ const store = createStore({
                 // Remove the token from localStorage
                 localStorage.removeItem('auth_token');
                 context.commit('setUser', null);
+                context.commit('setActiveProfile', null);
 
             }).catch(error => {
                 console.log({ error });

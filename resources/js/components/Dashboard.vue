@@ -2,7 +2,8 @@
     <div class="flex flex-col min-h-24 bg-gray-100 p-6">
         <user-card />
         <progress-bar v-if="isMom"></progress-bar>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"> -->
+        <div :class="isMedic ? 'grid grid-cols-3 cols gap-4' : 'grid grid-cols-2 cols gap-4'">
             <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
                 :link="card.link" :img="card.img" />
         </div>
