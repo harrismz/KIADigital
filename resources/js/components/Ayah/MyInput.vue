@@ -18,9 +18,15 @@
 </template>
 
 <script>
+import lang from '../../lang.json';
 export default {
     methods: {
         label(snakeCaseString){
+            
+            if(lang[snakeCaseString]) {
+                return lang[snakeCaseString];
+            }
+
             return snakeCaseString
             .split('_')                  // Split the string by underscores
             .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word

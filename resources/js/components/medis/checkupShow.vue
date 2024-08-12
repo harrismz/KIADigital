@@ -302,7 +302,10 @@ export default {
         latest_checkup(){
             if(this.data) {
                 let except = {
-                    'id':null, 'child_id':null, 'created_at': null, 'updated_at':null
+                    'id':null, 'child_id':null, 'created_at': null, 'updated_at':null,
+                    'pregnancy_id': null,
+                    'staff_id': null,
+                    'hospital_id': null,
                 }
 
                 let res = {};
