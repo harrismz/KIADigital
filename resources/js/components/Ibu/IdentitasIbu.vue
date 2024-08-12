@@ -217,6 +217,12 @@ const submitIdentitasIbu = async () => {
 
         toastr.success('Identitas Ibu Berhasil disimpan.');
 
+        // set setActiveuser kali? 
+        store.dispatch('fetchUser').then(user => {
+            console.log('user', {user})
+            store.commit('setActiveProfile', user.mother );
+        })
+
         router.push({
             name: 'identitas-ayah',
             params: {}

@@ -447,6 +447,8 @@ const store = createStore({
                     .then(user => {
                         console.log({ user })
                         context.commit('setUser', user);
+
+                        return user;
                         // ini juga bakal membingungkan sih, 
                         // if(user.staff){
                         //     context.commit('setActiveProfile', user.staff );
