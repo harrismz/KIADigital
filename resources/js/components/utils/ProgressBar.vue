@@ -95,7 +95,17 @@ export default {
                 return null;
             }
 
-            return new Date(this.pregnancy.estimate_date_of_delivery);
+            let res = this.pregnancy.estimate_date_of_delivery;
+
+            if(res == null ) {
+                // how to calculate 40 weeks from this.pregnancy.first_day_of_last_period ??
+                let lastPeriodDate = new Date(this.pregnancy.first_day_of_last_period);
+                let dueDate = new Date(lastPeriodDate);
+                dueDate.setDate(lastPeriodDate.getDate() + 280); // Add 280 days (40 weeks)
+                return dueDate;
+            }
+
+            return new Date(res);
         },
 
         today(){
