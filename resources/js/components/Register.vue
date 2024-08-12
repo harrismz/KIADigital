@@ -95,6 +95,7 @@ const register = async () => {
             localStorage.setItem('auth_token', data.access_token);
             // save to store
             store.commit('setToken', data.access_token );
+            store.commit('setUser', data.user );
 
             console.log("User data:", response.data.user);
         }
