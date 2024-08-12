@@ -10,4 +10,5 @@ class WeeklyChildMonitoringAnswer extends Model
     use HasFactory;
     
     protected $table = "weekly_child_monitoring_answer";
+    protected $guarded = ['id'];
 }

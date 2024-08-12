@@ -9,11 +9,13 @@ use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CheckupController;
 use App\Http\Controllers\ChildDevelopmentHistoryController;
+use App\Http\Controllers\ChildMonitoringController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PregnancyHistoryController;
 use App\Http\Controllers\VaksinController;
 use App\Http\Controllers\ComboController;
+use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PregnancyController;
 use App\Http\Controllers\StuntingAnalysisController;
 // use App\Http\Controllers\Auth\AuthController;
@@ -87,3 +89,9 @@ Route::get('/child-dev-history/{id}', [ChildDevelopmentHistoryController::class,
 
 // StuntingAnalysis
 Route::get('stunting-analysis', [StuntingAnalysisController::class, 'index']);
+
+// weekly child questions
+Route::get('/questions/{period_id}', [ ChildMonitoringController::class, 'show' ]);
+Route::post('/questions', [ ChildMonitoringController::class, 'store' ]);
+
+Route::get('/periods/{id}', [ PeriodController::class, 'show' ]);

@@ -62,7 +62,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['baseUrl', 'getUser'])
+        ...mapGetters(['baseUrl', 'getUser', 'mom'])
     },
 
     data(){
@@ -126,9 +126,10 @@ export default {
 
         submit(){
             let user = this.getUser;
+            let mother = this.mom;
 
             let form = {...this.form, ... {
-                mother_id: user.id
+                mother_id: mother.id
             }}
 
 

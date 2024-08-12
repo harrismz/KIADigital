@@ -32,7 +32,7 @@ import ChildDevelopmentList from './components/Anak/ChildDevelopmentList.vue';
 import ChildDevelopment from './components/Anak/ChildDevelopment.vue';
 import DiaryAnak from './components/anak/ChildWeeklyMonitoringResult.vue';
 import DiaryAnakEdit from './components/anak/ChildWeeklyMonitoringAnswer.vue';
-import PertumbuhanAnak from './components/anak/PertumbuhanAnak.vue';
+import PertumbuhanAnak from './components/Anak/PertumbuhanAnak.vue';
 import History from './components/medis/history.vue';
 import HistoryDetail from './components/medis/historyDetail.vue';
 import MyProfile from './components/Ibu/MyProfile.vue';
