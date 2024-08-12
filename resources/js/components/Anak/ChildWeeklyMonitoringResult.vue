@@ -157,7 +157,7 @@ export default {
 
         gotoDashboardAnak() {
             this.$router.push({
-                name: 'dashboard-anak',
+                name: 'home',
                 params: {}
             });
         },
