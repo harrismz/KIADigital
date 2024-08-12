@@ -281,12 +281,25 @@ const store = createStore({
             return state.user.role.name == 'medic';
         },
 
-        getMenu: (state) => {
+        getMenu: (state, getters) => {
             // check current role
             let dm = state.dashboard_menu;
             let user = state.user;
             if(user == null) {
                 return dm.public;
+            }
+
+            // if(this.activeProfile)
+            if(getters.activeProfileType == 'anak') {
+                return dm.anak;
+            }
+            
+            if(getters.activeProfileType == 'ibu') {
+                return dm.ibu;
+            }
+            
+            if(getters.activeProfileType == 'medic') {
+                return dm.medic;
             }
 
             if(user.role.name == 'medic') {
