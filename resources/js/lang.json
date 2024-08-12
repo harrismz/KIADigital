@@ -1,0 +1,21 @@
+{
+    "complaint": "Keluhan",
+    "weight": "Berat Badan",
+    "height": "Tinggi Badan",
+    "head_cirumference": "Lingkar Kepala",
+    "immunisation_status": "Status Imunisasi",
+    "blood_pressure": "Tekanan Darah",
+    "gestational_age": "Usia Kehamilan",
+    "fundal_height": "Tinggi Fundus",
+    "fetus_position": "Posisi Janin",
+    "fetal_heart_rate": "Denyut Jantung Janin",
+    "swallon_foot": "Kaki Bengkak",
+    "swollen_foot": "Kaki Bengkak",
+    "lab_result": "Hasil Lab",
+    "action": "Tindakan",
+    "usg_image": "Foto USG",
+    "weight_baby": "Berat Janin",   
+    "next_control": "Kontrol Selanjutnya",
+    "advice_given": "Saran dan Tanggapan",
+    "created_at": "Tanggal Pemeriksaan"
+}

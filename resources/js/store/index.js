@@ -3,6 +3,7 @@ import Vuex, { createStore } from 'vuex';
 import axios from 'axios';
 import toastr from 'toastr';
 import { localStoragePlugin, loadState } from '../localStoragePlugin';
+import helper from '../components/helper';
 
 // Vue.useAttrs(Vuex)
 const origin = window.location.origin;
@@ -48,9 +49,15 @@ const store = createStore({
 
         auth_token: initialState.auth_token || null,
 
-        patient: initialState.patient || null,  //could be mother, could be children, fetched by checkupshow by guid
+        period_id: initialState.period_id || null,
 
+        patient: initialState.patient || null,  //could be mother, could be children, fetched by checkupshow by guid
+        
+        periods: initialState.periods || null,  //could be mother, could be children, fetched by checkupshow by guid
+        
         baseUrl: origin,
+
+        questions:[],
 
         config: {
             baseUrl: origin, // URL dasar yang mungkin diperlukan
@@ -99,7 +106,7 @@ const store = createStore({
 
                 { title: 'Information', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'informasi-medis', img: '/storage/images/information.png' },
 
-                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'pertumbuhan-anak', img: '/storage/images/information-anak.png' },
+                { title: 'Catatan Pertumbuhan Anak', description: 'Informasi seputar perawatan dan pemenuhan gizi anak, serta informasi relevan lainnya dapat dibaca pada menu ini.', link: 'child-development-list', img: '/storage/images/information-anak.png' },
 
                 { title: 'Pelayanan Imunisasi', description: 'Pelayanan Imunisasi ini merupakan informasi mengenai imunisasi yang wajib dilakukan oleh anak. Sudah maupun belum dilakukan imunisasi dapat dilacak dalam menu ini.', link: 'imunisasi', img: '/storage/images/jarum.png' },
             ]
@@ -120,6 +127,18 @@ const store = createStore({
            // Mengembalikan true jika user tidak null
         },
 
+        period_id(state) {
+            return state.period_id;
+        },
+        
+        periods(state) {
+            return state.periods;
+        },
+
+        questions: (state) => {
+            return state.questions;
+        },
+
         user: (state) => state.user,
 
         userName: (state, getters) => {
@@ -131,7 +150,18 @@ const store = createStore({
             // yg active_profile siapa,
             if(state.active_profile) {
                 // gmn cara cek active_profile antara name / child_name ?
-                return state.active_profile.name ? state.active_profile.name : state.active_profile.child_name;
+                // return state.active_profile.name ? state.active_profile.name : state.active_profile.child_name;
+                if(state.active_profile.name) {
+                    return state.active_profile.name
+                }
+                
+                if(state.active_profile.child_name) {
+                    return state.active_profile.child_name
+                }
+                
+                if(state.active_profile.staff_name) {
+                    return state.active_profile.staff_name
+                }
             }
 
             if(state.user.mother) {
@@ -262,12 +292,25 @@ const store = createStore({
             return state.user.role.name == 'medic';
         },
 
-        getMenu: (state) => {
+        getMenu: (state, getters) => {
             // check current role
             let dm = state.dashboard_menu;
             let user = state.user;
             if(user == null) {
                 return dm.public;
+            }
+
+            // if(this.activeProfile)
+            if(getters.activeProfileType == 'anak') {
+                return dm.anak;
+            }
+            
+            if(getters.activeProfileType == 'ibu') {
+                return dm.ibu;
+            }
+            
+            if(getters.activeProfileType == 'medic') {
+                return dm.medic;
             }
 
             if(user.role.name == 'medic') {
@@ -324,6 +367,18 @@ const store = createStore({
     mutations: {
         SET_USER(state, user) {
             state.user = user;
+        },
+
+        setPeriodId(state, period_id) {
+            state.period_id = period_id;
+        },
+        
+        setPeriods(state, periods) {
+            state.periods = periods;
+        },
+
+        setQuestions(state, questions) {
+            state.questions = questions;
         },
 
         setActiveChild(state, child) {
@@ -392,6 +447,16 @@ const store = createStore({
                     .then(user => {
                         console.log({ user })
                         context.commit('setUser', user);
+
+                        return user;
+                        // ini juga bakal membingungkan sih, 
+                        // if(user.staff){
+                        //     context.commit('setActiveProfile', user.staff );
+                        // }
+                        // // only staff that need setActiveProfile everytimes
+                        // else{
+                        //     context.commit('setActiveProfile', user.mother );
+                        // }
                         // context.commit('setActiveUser', determineActiveUser(user) );
 
                         // I have user that has mom, child, and staff properties
@@ -428,12 +493,12 @@ const store = createStore({
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
                     }
                 })
-                .then(response => response.data)
                 .then(pregnancyhistory => {
+                    console.log('fetch pregnancy info')
                     console.log({ pregnancyhistory })
                     const data = pregnancyhistory.data;
                     const payload = {
-                        description: `Tinggi: ${data.height} cm Berat: ${data.weight} cm Ukuran: ${data.size} Ciri-ciri: ${data.characteristics}`
+                        description: `Tinggi: ${data.fundal_height}cm\nBerat: ${data.weight_baby}g\nDetak Jantung: ${data.fetal_heart_rate}\nSaran: ${data.advice_given}`
                     };
                     context.commit('setPregnancyInfo', payload);
                 })
@@ -493,6 +558,8 @@ const store = createStore({
 
                 // save to store
                 context.commit('setToken', data.access_token );
+                context.commit('setUser', data.user );
+                context.commit('setActiveProfile', data.user.mother ? data.user.mother : data.user.staff );
 
                 // this.$router.push('/profile');
 
@@ -519,6 +586,7 @@ const store = createStore({
                 // Remove the token from localStorage
                 localStorage.removeItem('auth_token');
                 context.commit('setUser', null);
+                context.commit('setActiveProfile', null);
 
             }).catch(error => {
                 console.log({ error });
@@ -542,6 +610,27 @@ const store = createStore({
             } catch (error) {
                 console.error('Error fetching Logo :', error);
             }
+        },
+
+        fetchQuestionAnswer(self, payload){
+            
+            let child = self.getters.child;
+            const url = self.getters.baseUrl + "/api/questions/"+ payload.period_id;
+                        
+            axios.get(url, {
+                // apa aja nih disini;
+                params:{
+                    child_id: child.id
+                }
+            }).then(res => res.data)
+            .then(res => {
+                console.log(res);
+                // this.questions = res.data;
+                self.commit('setQuestions', res.data )
+            }).catch(error => {
+                console.log(error);
+                helper.renderError(error);
+            })
         },
 
     }

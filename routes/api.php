@@ -8,13 +8,14 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\IdentityController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CheckupController;
-use App\Http\Controllers\ChildDevelopmentHistory;
 use App\Http\Controllers\ChildDevelopmentHistoryController;
+use App\Http\Controllers\ChildMonitoringController;
 use App\Http\Controllers\ImunisasiController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PregnancyHistoryController;
 use App\Http\Controllers\VaksinController;
 use App\Http\Controllers\ComboController;
+use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PregnancyController;
 use App\Http\Controllers\StuntingAnalysisController;
 // use App\Http\Controllers\Auth\AuthController;
@@ -72,6 +73,7 @@ Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisa
 Route::get('/imunisasi/{child_id}', [ImunisasiController::class, 'showVaccinePerChild'] )->name('imunisasi.get');
 
 Route::post('/pregnancy', [PregnancyController::class, 'store']); // Untuk menampilkan semua data pregnancy history
+Route::get('/pregnancy/{mother_id}', [PregnancyController::class, 'show']); // Untuk menampilkan semua data pregnancy history
 
 
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
@@ -80,10 +82,16 @@ Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class,
 Route::get('/pregnancy-history-last', [PregnancyHistoryController::class, 'showLast']);
 
 // route anak
-Route::get('child-development-history/{id}', [ChildDevelopmentHistoryController::class, 'show']);
+Route::get('/child-development-history/{id}', [ChildDevelopmentHistoryController::class, 'index']);
+Route::get('/child-development-detail/{id}', [ChildDevelopmentHistoryController::class, 'show']);
 // mif, I need the api to always retur 'success' & 'data' key, not immediately return the result query
-Route::get('child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 'showData']);
-Route::get('child-development-history', [ChildDevelopmentHistoryController::class, 'index']);
+Route::get('/child-dev-history/{id}', [ChildDevelopmentHistoryController::class, 'showData']);
 
 // StuntingAnalysis
 Route::get('stunting-analysis', [StuntingAnalysisController::class, 'index']);
+
+// weekly child questions
+Route::get('/questions/{period_id}', [ ChildMonitoringController::class, 'show' ]);
+Route::post('/questions', [ ChildMonitoringController::class, 'store' ]);
+
+Route::get('/periods/{id}', [ PeriodController::class, 'show' ]);

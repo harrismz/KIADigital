@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div v-if="data" class="card-body">
                         <h2 class="text-lg font-bold">Check Up : {{ data.type }}</h2>
                         <div class="separator"></div>
                         
@@ -64,6 +64,16 @@
                                     <input type="text" :placeholder="key" v-model="form[key]" :name="key" :id="key" :autocomplete="key" class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
                                 </div> -->
+
+                                <div v-if="isMom" class="p-6 w-full mb-2 mx-auto bg-white rounded-lg shadow-md">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2" for="week">Weeks</label>
+                                    <select v-model="form.week" name="week" id="week" class="p-2 border border-1 mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option v-for="week in weekOptions" :value="week" :key="week">
+                                            Minggu {{ week }}
+                                        </option>
+                                    </select>
+                                </div>
+
                                 <my-input :isRequired="value.isRequired" :inputType="value.inputType ? value.inputType : 'text'" v-model="form[key]" :key="key" :inputKey="key" v-for="(value,key) in inputs"></my-input>
                                 
                                 <div v-if="isMom" class="p-6 w-full  mx-auto bg-white rounded-lg shadow-md">
@@ -91,6 +101,20 @@
                         <imunisasi v-if="type == 'child'" :child_id="data.id" />
                         
                     </div>
+
+                    <div v-else>
+                        <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+                        <div class="text-center">
+                            <p class="text-base font-semibold text-indigo-600">404</p>
+                            <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Data not found</h1>
+                            <p class="mt-6 text-base leading-7 text-gray-600">Sorry, we couldn’t find the data you’re looking for.</p>
+                            <div class="mt-10 flex items-center justify-center gap-x-6">
+                            <a href="/" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Go back home</a>
+                            <a href="/" class="text-sm font-semibold text-gray-900">Contact support <span aria-hidden="true">&rarr;</span></a>
+                            </div>
+                        </div>
+                        </main>
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,6 +140,7 @@ export default {
     data() {
         return {
             inputValue: '',
+
             data: {},
 
             except:{
@@ -241,6 +266,14 @@ export default {
 
         },
 
+        weekOptions(){
+            let res = []
+            for (let i = 0; i < 40; i++) {
+                res.push(i+1)
+            }
+            return res;
+        },
+
         isMom(){
             return this.data.type == 'mother';
         },
@@ -283,7 +316,10 @@ export default {
         latest_checkup(){
             if(this.data) {
                 let except = {
-                    'id':null, 'child_id':null, 'created_at': null, 'updated_at':null
+                    'id':null, 'child_id':null, 'created_at': null, 'updated_at':null,
+                    'pregnancy_id': null,
+                    'staff_id': null,
+                    'hospital_id': null,
                 }
 
                 let res = {};

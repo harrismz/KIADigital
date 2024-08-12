@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ChildDevelopmentHistory as ModelsChildDevelopmentHistory;
+use App\Models\ChildDevelopmentHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChildDevelopmentHistoryController extends Controller
 {
@@ -13,9 +14,8 @@ class ChildDevelopmentHistoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request, $childId)
     {
-        $childId = $request->input('child_id');
         // if childId is not provided, return error
         if (!$childId) {
             return response()->json([
@@ -28,7 +28,7 @@ class ChildDevelopmentHistoryController extends Controller
         $itemsPerPage = 5; // Define the number of items per page
 
         // Fetch child development history with optional search query
-        $query = ModelsChildDevelopmentHistory::query()
+        $query = ChildDevelopmentHistory::with('child')
             ->where('child_id', $childId);
 
         if ($searchQuery) {
@@ -38,20 +38,20 @@ class ChildDevelopmentHistoryController extends Controller
 
         $totalItems = $query->count(); // Get total count of items
 
-        $blogPosts = $query->orderBy('created_at', 'desc')
+        $childDevelopmentHistories = $query->orderBy('created_at', 'desc')
             ->skip(($currentPage - 1) * $itemsPerPage)
             ->take($itemsPerPage)
             ->get();
 
         return response()->json([
-            'data' => $blogPosts,
+            'data' => $childDevelopmentHistories,
             'total' => $totalItems
         ]);
     }
 
     public function showData($id) {
-        $data = ModelsChildDevelopmentHistory::with('child:id,child_name')->findOrFail($id);
-        
+        $data = ChildDevelopmentHistory::with('child:id,child_name')->findOrFail($id);
+
         return [
             'success'=> true,
             'data' => $data
@@ -61,7 +61,24 @@ class ChildDevelopmentHistoryController extends Controller
     public function show($id)
     {
         // Find the data by id
-        $data = ModelsChildDevelopmentHistory::where('id', $id)->first();
+        $data = ChildDevelopmentHistory::with('child')->where('id', $id)->first();
+
+        // Calculate the age of the child in weeks and years
+        $createdAt = $data->created_at;
+        $dateOfBirth = $data->child->date_of_birth;
+
+        $ageInWeeks = $createdAt->diffInWeeks($dateOfBirth);
+        $ageInYears = $createdAt->diffInYears($dateOfBirth);
+
+        // Calculate the age in years and weeks
+        $years = floor($ageInWeeks / 52);
+        $weeks = $ageInWeeks % 52;
+
+        // Add the age information to the data
+        $data->age = [
+            'years' => $years,
+            'weeks' => $weeks
+        ];
 
         // Return the data as JSON response
         return response()->json($data);

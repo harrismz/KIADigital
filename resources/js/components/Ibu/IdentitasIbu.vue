@@ -13,14 +13,14 @@
                         <label for="name" class="block text-sm font-medium text-gray-700">Nama Ibu</label>
                         <input v-model="formIdentitasIbu.name" type="text" id="name"
                             class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required />
+                            required disabled />
                     </div>
                     <div class="mb-4">
                         <label for="nik" class="block text-sm font-medium text-gray-700">Nomor Induk
                             Kependudukan</label>
                         <input v-model="formIdentitasIbu.nik" type="text" id="nik"
                             class="mt-1 p-2  block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                            required />
+                            required disabled/>
                     </div>
 
                     <div class="mb-4">
@@ -181,9 +181,9 @@ const jobList = ref([]);
 const religionList = ref([]);
 
 const formIdentitasIbu = reactive({
-    nik: '',
+    nik: store.state.user.nik? `${store.state.user.nik}`:'',
     no_jkn: '',
-    name: '',
+    name: store.state.user.name ? store.state.user.name : '',
     date_of_birth: '',
     birth_place: '',
     phone_number: '',
@@ -216,6 +216,12 @@ const submitIdentitasIbu = async () => {
         }
 
         toastr.success('Identitas Ibu Berhasil disimpan.');
+
+        // set setActiveuser kali? 
+        store.dispatch('fetchUser').then(user => {
+            console.log('user', {user})
+            store.commit('setActiveProfile', user.mother );
+        })
 
         router.push({
             name: 'identitas-ayah',
