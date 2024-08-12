@@ -15,7 +15,9 @@ class Child extends Model
     public function latest_checkup(){
         return $this->hasOne(ChildDevelopmentHistory::class)->latestOfMany();
     }
-    public function father(){
-        return $this->belongsTo(Mother::class);
+
+    public function bloodType()
+    {
+        return $this->hasOne(BloodType::class, 'id','blood_type_id');
     }
 }

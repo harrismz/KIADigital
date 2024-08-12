@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IbuController;
+use App\Http\Controllers\MotherController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\IdentityController;
@@ -52,8 +52,7 @@ Route::post('/identitas-ayah', [IdentityController::class, 'storeAyah']);
 Route::get('/combo/{modelname}', [ComboController::class, 'get']);
 Route::get('/combo/{modelname}/{id}', [ComboController::class, 'getById']);
 
-Route::get('/get_mother/{user_id}', [IbuController::class, 'index']);
-Route::get('/get_week_user', [IbuController::class, 'getWeek']);
+Route::get('/mother/{id}', [MotherController::class, 'show']);
 
 Route::get('/post', [PostController::class, 'index']);
 Route::get('/post/{slug}', [PostController::class, 'show']);

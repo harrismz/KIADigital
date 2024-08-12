@@ -1,6 +1,6 @@
 <template>
     <div class="flex">
-        
+
         <div class="w-1/2 bg-gray-200 flex">
             <img :src="'/storage/images/kalender hpl.jpg'" alt="Logo" class="h-full">
         </div>
@@ -8,36 +8,39 @@
         <div class="mt-4 w-1/2 flex flex-col items-center justify-center">
             <h1 class="text-3xl font-bold mb-2">STATUS KEHAMILAN</h1>
             <p class="text-gray-500 mb-4 mx-2">Silahkan Input Data Kehamilan</p>
-            
+
             <div class=" bg-gray-300 w-3/4 p-4 rounded">
                 <form action=""></form>
                 <form action="" @submit.prevent="submit">
-                    
+
                     <div class="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">
                         <span class="text-l font-semibold block mb-6">Input Tanggal Hari Haid Terakhir :</span>
-                        
-                        <my-input :isRequired="true" :inputType="'date'" v-model="form.first_day_of_last_period" :inputKey="'first_day_of_last_period'" />
-                        
+
+                        <my-input :isRequired="true" :inputType="'date'" v-model="form.first_day_of_last_period"
+                            :inputKey="'first_day_of_last_period'" />
+
                     </div>
-                
+
 
                     <!-- input radio -->
                     <div class="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md">
                         <span class="text-l font-semibold block mb-6">Kekurangan Energi Kronis (KEK) :</span>
-                        
+
                         <div class="space-y-4">
-                        <label class="flex items-center space-x-4">
-                            <input type="radio" value="1" v-model="form.kek" class="form-radio h-5 w-5 text-indigo-600">
-                            <span class="text-gray-700">Ya</span>
-                        </label>
-                        
-                        <label class="flex items-center space-x-4">
-                            <input type="radio" value="0" v-model="form.kek" class="form-radio h-5 w-5 text-indigo-600">
-                            <span class="text-gray-700">Tidak</span>
-                        </label>
+                            <label class="flex items-center space-x-4">
+                                <input type="radio" value="1" v-model="form.kek"
+                                    class="form-radio h-5 w-5 text-indigo-600">
+                                <span class="text-gray-700">Ya</span>
+                            </label>
+
+                            <label class="flex items-center space-x-4">
+                                <input type="radio" value="0" v-model="form.kek"
+                                    class="form-radio h-5 w-5 text-indigo-600">
+                                <span class="text-gray-700">Tidak</span>
+                            </label>
                         </div>
                     </div>
-                    
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
@@ -46,8 +49,8 @@
 </template>
 
 <script>
-import Combo from '../Ayah/combo.vue';
-import MyInput from '../Ayah/MyInput.vue';
+import Combo from '../utils/combo.vue';
+import MyInput from '../utils/MyInput.vue';
 import {mapGetters} from 'vuex';
 import toastr from 'toastr';
 import helper from '../helper';
@@ -88,7 +91,7 @@ export default {
                 "first_day_of_last_period": {
                     inputType:'date'
                 },
-                
+
                 "estimate_date_of_delivery": {
                     inputType:'date'
                 },
@@ -118,7 +121,7 @@ export default {
             }
         };
     },
-    
+
     methods: {
 
         submit(){
@@ -130,7 +133,7 @@ export default {
 
 
             const url = this.baseUrl + "/api/pregnancy";
-                        
+
             axios.post(url, form ).then(res => res.data)
             .then(res => {
                 let msg = res.message;

@@ -51,23 +51,28 @@ class Mother extends Model
         return $history;
     }
 
-    public function kecamatan(): belongsTo
+    public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class, 'kecamatan_id');
+        return $this->hasOne(Kecamatan::class, 'id', 'kecamatan_id');
     }
 
-    public function religion(): belongsTo
+    public function religion()
     {
-        return $this->belongsTo(Religion::class, 'religion_id');
+        return $this->hasOne(Religion::class, 'id','religion_id');
     }
 
-    public function education(): belongsTo
+    public function education()
     {
-        return $this->belongsTo(Education::class, 'education_id');
+        return $this->hasOne(Education::class, 'id','education_id');
     }
 
-    public function bloodType(): belongsTo
+    public function bloodType()
     {
-        return $this->belongsTo(BloodType::class, 'blood_type_id');
+        return $this->hasOne(BloodType::class, 'id','blood_type_id');
+    }
+
+    public function job()
+    {
+        return $this->hasOne(Job::class, 'id','job_id');
     }
 }

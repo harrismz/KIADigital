@@ -68,14 +68,14 @@ methods: {
             toastr.error(`fetching user ERROR : ${error}`)
         });
     },
-    fetchMother() {
-        const user_id = this.user.id;
-        axios.get(`/api/get_mother/${user_id}`)
-            .then(response => response.data)
-            .then(response => {
-                console.log('fetching mother : ', response.data);
-            })
-    },
+    // fetchMother() {
+    //     const user_id = this.user.id;
+    //     axios.get(`/api/get_mother/${user_id}`)
+    //         .then(response => response.data)
+    //         .then(response => {
+    //             console.log('fetching mother : ', response.data);
+    //         })
+    // },
     fetchWeekUser() {
         const mother_id = this.mother.id
         axios.get(`/api/get_week_user/${mother_id}`)

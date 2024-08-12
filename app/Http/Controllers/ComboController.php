@@ -47,12 +47,33 @@ class ComboController extends Controller
             ], 404 );
         }
 
+        if($modelname == "bloodType")
+        {
+            $data = ($modelClass)::select(
+                [
+                    'id as value',
+                    $modelClass::getComboKey() .' as key',
+                    'reshus'
+                ]
+            )->find($id);
+
+            return [
+                'success' => true,
+                'data' => $data
+            ];
+        }
+
         $data = ($modelClass)::select(
             [
                 'id as value',
                 $modelClass::getComboKey() .' as key'
             ]
-        )->where('id',$id)->get();
+        )->find($id);
+
+        return [
+            'success' => true,
+            'data' => $data
+        ];
 
     }
 }
