@@ -1,7 +1,12 @@
 <template>
     <div class="p-4 bg-gray-100">
-        <div class="font-bold mb-4">
-            Imunisasi
+         <div class="mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <h1 class="text-2xl font-bold">Imunisasi</h1>
+                <div class="flex justify-end gap-x-3">
+                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'">
+                </div>
+            </div>
         </div>
 
         <div class="p-4 bg-white mb-8">
@@ -113,7 +118,7 @@ export default {
             }
         },
 
-        
+
     },
 
     methods: {
@@ -131,11 +136,11 @@ export default {
                 console.log(error);
             });
         },
-        
+
         fetchVaksin() {
             // console.log({patient: this.patient})
-            let id = this.patient.id; // 
-            
+            let id = this.patient.id; //
+
             const url = this.baseUrl + "/api/imunisasi/"+ id;
 
             axios.get(url, {
@@ -150,6 +155,7 @@ export default {
                 helper.renderError(error);
             });
         },
+
 
         submit(){
             let form = {
@@ -168,6 +174,10 @@ export default {
                 console.log(error);
                 toastr.error(error)
             })
+        },
+
+        gotoHome() {
+            this.$router.push({ name: 'home' });
         }
     },
 

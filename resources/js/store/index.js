@@ -59,6 +59,10 @@ const store = createStore({
 
         questions:[],
 
+        pregnancy_questions:[],
+
+        pregnancy_week: 0,
+
         config: {
             baseUrl: origin, // URL dasar yang mungkin diperlukan
             imgLogo: '',
@@ -137,6 +141,14 @@ const store = createStore({
 
         questions: (state) => {
             return state.questions;
+        },
+
+        pregnancy_questions: (state) => {
+            return state.pregnancy_questions;
+        },
+
+        pregnancy_week: (state) => {
+            return state.pregnancy_week;
         },
 
         user: (state) => state.user,
@@ -379,6 +391,14 @@ const store = createStore({
 
         setQuestions(state, questions) {
             state.questions = questions;
+        },
+
+        setPregnancyQuestions(state, questions) {
+            state.pregnancy_questions = questions;
+        },
+
+        setPregnancyWeek(state, week) {
+            state.pregnancy_week = week;
         },
 
         setActiveChild(state, child) {
@@ -632,6 +652,25 @@ const store = createStore({
                 helper.renderError(error);
             })
         },
+
+        fetchPregnancyQuestionAnswer(self, payload){
+            let mom = self.getters.mom;
+            const url = self.getters.baseUrl + "/api/pregnancy-questions/"+ payload.week_number;
+
+            axios.get(url, {
+                params:{
+                    mother_id: mom.id
+                }
+            }).then(res => res.data)
+            .then(res => {
+                console.log(res);
+                // this.questions = res.data;
+                self.commit('setPregnancyQuestions', res.data )
+            }).catch(error => {
+                console.log(error);
+                helper.renderError(error);
+            })
+        }
 
     }
 });
