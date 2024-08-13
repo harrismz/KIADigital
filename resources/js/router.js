@@ -37,6 +37,7 @@ import History from './components/medis/history.vue';
 import HistoryDetail from './components/medis/historyDetail.vue';
 import MyProfile from './components/Ibu/MyProfile.vue';
 import UpdateProfile from './components/Ibu/UpdateProfile.vue';
+import Unauthorized from './components/Unauthorized.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -68,7 +69,8 @@ const routes = [
         component: History,
         meta :{
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -77,7 +79,8 @@ const routes = [
         component: HistoryDetail,
         meta :{
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -366,7 +369,8 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -375,7 +379,8 @@ const routes = [
         component: CheckupShow,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -405,6 +410,14 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    {
+        path: '/unauthorized',
+        name: 'Unauthorized',
+        component: Unauthorized,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
 
 ];
 
@@ -421,11 +434,20 @@ router.beforeEach((to, from, next) => {
 
             console.log('res dari dispatch', {res})
             const isAuthenticated = store.getters.isAuthenticated;
-            console.log('im before each', {isAuthenticated})
+            // console.log('im before each', {isAuthenticated})
 
             if (!isAuthenticated) {
                 next({ name: 'login', query: { redirect: to.fullPath } });
             } else {
+                // 
+                if(to.meta.role){
+                    let requiredRole = to.meta.role;
+                    let userRole = res.role ? res.role.name : null;
+                    if(requiredRole != userRole) {
+                        return next({name: 'Unauthorized'})
+                    }
+                }
+
                 next();
             }
         })

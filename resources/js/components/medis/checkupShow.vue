@@ -9,13 +9,13 @@
 
                         <div class="p-4 bg-gray-200 rounded">
                             <div class="font-bold">
-                                {{ data[name] }}
+                                Pasien : {{ data[name] }}
                             </div>
                         </div>
 
                         <div v-if="getUser" class="p-4 bg-gray-200 rounded mt-2">
                             <div class="font-bold">
-                                {{ getUser.name }}
+                                Pemeriksa : {{ getUser.name }}
                             </div>
                         </div>
 
