@@ -91,19 +91,19 @@ export default {
                     "url": "/api/combo/kecamatan"
                 },
                 "religion_id": {
-                    "label": "Religion Id",
+                    "label": "Agama",
                     "url": "/api/combo/religion"
                 },
                 "education_id": {
-                    "label": "Education Id",
+                    "label": "Pendidikan",
                     "url": "/api/combo/education"
                 },
                 "blood_type_id": {
-                    "label": "Blood Type Id",
+                    "label": "Golongan Darah",
                     "url": "/api/combo/BloodType"
                 },
                 "job_id": {
-                    "label": "Job Id",
+                    "label": "Pekerjaan",
                     "url": "/api/combo/job"
                 }
             }

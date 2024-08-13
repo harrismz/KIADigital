@@ -1,5 +1,10 @@
 {
     "complaint": "Keluhan",
+    "religion_id": "Agama",
+    "education_id": "Pendidikan",
+    "birth_place": "Tempat Lahir",
+    "name": "Nama",
+    "phone_number": "Nomor Telepon",
     "weight": "Berat Badan",
     "height": "Tinggi Badan",
     "head_cirumference": "Lingkar Kepala",
