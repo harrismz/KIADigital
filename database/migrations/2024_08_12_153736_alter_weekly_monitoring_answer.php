@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('weekly_child_monitoring_answer', function (Blueprint $table) {
+        Schema::table('weekly_monitoring_answer', function (Blueprint $table) {
             //
             $table->text('question')->nullable();
+            $table->text('answer')->nullable();
         });
     }
 
@@ -22,9 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('weekly_child_monitoring_answer', function (Blueprint $table) {
+        Schema::table('weekly_monitoring_answer', function (Blueprint $table) {
             //
             $table->dropColumn('question');
+            $table->dropColumn('answer');
         });
     }
 };

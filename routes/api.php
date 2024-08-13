@@ -17,6 +17,7 @@ use App\Http\Controllers\VaksinController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PregnancyController;
+use App\Http\Controllers\PregnancyMonitoringController;
 use App\Http\Controllers\StuntingAnalysisController;
 // use App\Http\Controllers\Auth\AuthController;
 
@@ -95,3 +96,8 @@ Route::get('/questions/{period_id}', [ ChildMonitoringController::class, 'show' 
 Route::post('/questions', [ ChildMonitoringController::class, 'store' ]);
 
 Route::get('/periods/{id}', [ PeriodController::class, 'show' ]);
+
+// weekly pregnancy questions
+Route::get('/pregnancy-questions/{week_number}', [PregnancyMonitoringController::class, 'show']);
+Route::post('/pregnancy-questions', [PregnancyMonitoringController::class, 'store']);
+Route::get('/pregnancy-week-number/{mother_id}', [PregnancyMonitoringController::class, 'getWeekPregnancyNumber']);
