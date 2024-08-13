@@ -55,6 +55,8 @@ Route::get('/combo/{modelname}', [ComboController::class, 'get']);
 Route::get('/combo/{modelname}/{id}', [ComboController::class, 'getById']);
 
 Route::get('/mother/{id}', [MotherController::class, 'show']);
+Route::get('/father/{id}', [FatherController::class, 'show']);
+Route::get('/child/{id}', [ChildController::class, 'show']);
 
 Route::get('/post', [PostController::class, 'index']);
 Route::get('/post/{slug}', [PostController::class, 'show']);

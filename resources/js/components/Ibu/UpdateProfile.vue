@@ -5,7 +5,7 @@
         <div class="my-2">
             <div class="mb-6">
                 <div class="grid grid-cols-2 gap-4">
-                    <h1 class="text-xl font-bold">Edit Identitas {{ }}</h1>
+                    <h1 class="text-xl font-bold">Edit Identitas {{ identitas.name }}</h1>
                     <div class="flex justify-end gap-x-3">
                         <img class="w-5 h-5 cursor-pointer" @click="redBack"
                             :src="`${baseUrl}/storage/images/home.png`">
@@ -20,11 +20,11 @@
 
                 <div class="mb-4">
                     <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                    <input type="date" name="date_of_birth" id="date_of_birth" v-model="form.date_of_birth"
+                    <input type="date" name="date_of_birth" id="date_of_birth" v-model="identitas.date_of_birth"
                         class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
-                <combo v-model="form[key]" :inputKey="key" :key="val.label" :url="val.url" :label="val.label"
+                <combo v-model="identitas[key]" :inputKey="key" :key="val.label" :url="val.url" :label="val.label"
                     v-for="(val, key) in combos" />
 
                 <button type="submit" class="btn btn-primary">Submit</button>

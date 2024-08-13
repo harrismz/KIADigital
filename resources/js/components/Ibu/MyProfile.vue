@@ -7,7 +7,8 @@
                 <div class="grid grid-cols-2 gap-4">
                     <h1 class="text-xl font-mono font-bold">Identitas Ibu</h1>
                     <div class="flex justify-end gap-x-3">
-                        <img class="w-5 h-5 cursor-pointer" @click="redBack" :src="'storage/images/home.png'">
+                        <router-link to="/" class="text-blue-500"><img class="w-5 h-5 cursor-pointer"
+                                :src="'storage/images/home.png'"></router-link>
                         <img class="w-5 h-5 cursor-pointer" @click="editIbu" :src="'storage/images/edit.png'">
                     </div>
                 </div>
@@ -45,7 +46,7 @@
                 <p class="mb-2">Golongan Darah</p>
                 <p class="text-justify font-medium italic">{{ mom.blood_type.blood_type_name }} ( {{
                     mom.blood_type.reshus || 'N/A'
-                }}
+}}
                     )</p>
             </div>
             <div class="bg-gray-100 p-4 rounded-lg mb-4">
@@ -75,8 +76,8 @@
                     <div class="grid grid-cols-2 gap-4">
                         <h1 class="text-2xl font-bold">Identitas Ayah ke - {{ index + 1 }}</h1>
                         <div class="flex justify-end gap-x-3">
-                            <img class="w-6 h-6" @click="addFather" :src="'storage/images/add.png'">
-                            <img class="w-6 h-6" @click="editFather" :src="'storage/images/edit.png'">
+                            <img class="w-6 h-6" @click="addAyah" :src="'storage/images/add.png'">
+                            <img class="w-6 h-6" @click="editAyah(dad.id)" :src="'storage/images/edit.png'">
                         </div>
                     </div>
                 </div>
@@ -136,8 +137,8 @@
                 <div class="grid grid-cols-2 gap-4">
                     <h1 class="text-2xl font-bold">Identitas Anak ke - {{ child.child_of || 'N/A' }} </h1>
                     <div class="flex justify-end gap-x-3">
-                        <img class="w-6 h-6" @click="addChild" :src="'storage/images/add.png'">
-                        <img class="w-6 h-6" @click="editChild" :src="'storage/images/edit.png'">
+                        <img class="w-6 h-6" @click="addAnak" :src="'storage/images/add.png'">
+                        <img class="w-6 h-6" @click="editAnak(child.id)" :src="'storage/images/edit.png'">
                     </div>
                 </div>
             </div>
@@ -197,12 +198,17 @@ export default {
         },
         editIbu() {
             // console.log("ibu", this.ibu)
-            this.$router.push(`/update-profile/mother/${this.ibu.id}`);
+            this.$router.push(`/update-profile/mother/${this.mom.id}`);
+        },
+        editAyah(fatherId) {
+            // console.log("ibu", this.ibu)
+            this.$router.push(`/update-profile/father/${fatherId}`);
+        },
+        editAnak(childId) {
+            // console.log("ibu", this.ibu)
+            this.$router.push(`/update-profile/child/${childId}`);
         },
 
-        redBack() {
-            this.$router.go(-1);
-        }
     }
 }
 </script>
