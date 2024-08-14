@@ -170,6 +170,8 @@ export default {
             .then(res => {
                 console.log(res);
                 toastr.success(res.message || "data saved!")
+
+                this.fetchVaksin();
             }).catch(error => {
                 console.log(error);
                 toastr.error(error)
