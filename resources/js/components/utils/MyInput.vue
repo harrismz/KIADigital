@@ -8,7 +8,8 @@
             :id="inputKey"
             @input="$emit('update:modelValue', $event.target.value)"
             @change="onFileChange"
-            class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            :placeholder="label(inputKey)"
+            class="mt-1 p-2 block bg-white w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             :required="wajib" 
         />
 
