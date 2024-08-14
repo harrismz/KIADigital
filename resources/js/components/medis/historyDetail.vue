@@ -96,7 +96,8 @@ export default {
 
     methods: {
         ucfirst(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
+            return helper.label(string);
+            // return string.charAt(0).toUpperCase() + string.slice(1);
         },
 
         fetchCheckupHistory(){
