@@ -13,11 +13,12 @@
         <!-- Daftar Pertanyaan -->
         <div v-for="(pregnancy_question, index) in pregnancy_questions" :key="index" class="bg-gray-100 p-4 rounded-lg mb-4">
             <div v-if="pregnancy_question.type == 'text'">
-                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.text }}</p>
-                <p class="text-justify font-medium italic">{{ pregnancy_question.answer }}</p>
+                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.question }}</p>
+                <p class="text-justify font-medium italic block">{{ pregnancy_question.answer }}</p>
             </div>
             <div v-else>
-                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.text }} <strong>{{ pregnancy_question.answer }}</strong></p>
+                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.question }}</p>
+                <strong class="block">Jawab: {{ pregnancy_question.answer ? "Ya" : "Tidak" }}</strong>
             </div>
         </div>
     </div>
@@ -27,6 +28,7 @@
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import {mapActions, mapGetters} from 'vuex';
+import helper from '../helper';
 
 export default {
     // setup() {
@@ -76,12 +78,16 @@ export default {
     //     };
     // }
     mounted() {
-        this.fetchWeek();
-        this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, week_number: this.week});
+        this.fetchWeek().then(res => {
+            // this.week should refer to something dong mif, 
+            // make sure juga method dibawah ini terjadi setelah week numbernya ada, meskipun aku ga ngerti si,
+            // kenapa di backend si week number ini kayaknya ga kepake jg
+            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, week_number: this.week});
+        })
     },
     data() {
         return {
-
+            week: null
         }
     },
     computed: {
@@ -105,16 +111,21 @@ export default {
             const id = this.mom.id;
             const url = `${this.baseUrl}/api/pregnancy-week-number/${id}`;
 
-            axios.get(url).then(response => {
+            // console.log("fetch week ",{url})
+
+            return axios.get(url).then(response => {
+                console.log("fetch pregnancy week", response.data)
+                this.week = response.data;
                 this.$store.commit('setPregnancyWeek', response.data);
             }).catch(error => {
                 console.error(error);
+                helper.renderError(error)
             });
         },
         editAnswer() {
             let query = {
                 mother_id: this.mom.id,
-                week: getWeek()
+                week: this.week//getWeek()
             }
             this.$router.push({
                 name: 'weekly-monitoring-answer',
