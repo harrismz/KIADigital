@@ -118,8 +118,8 @@ export default {
         },
 
         gotoHome() {
-            router.push({
-                name: 'home',
+            this.$router.push({
+                name: 'weekly-monitoring-result',
                 params: {}
             });
         },
