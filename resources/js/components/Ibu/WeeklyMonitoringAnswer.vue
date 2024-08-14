@@ -73,7 +73,9 @@ export default {
     },
     computed: {
         ...mapGetters(['baseUrl', 'mom', 'pregnancy_questions', 'pregnancy_week']),
-
+        pregnancy_week() {
+            return this.$route.query.week;
+        }
     },
     mounted() {
         this.fetchWeek();
