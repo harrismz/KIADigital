@@ -61,7 +61,7 @@ const store = createStore({
 
         pregnancy_questions:[],
 
-        pregnancy_week: 0,
+        pregnancy_week: 1,
 
         config: {
             baseUrl: origin, // URL dasar yang mungkin diperlukan
