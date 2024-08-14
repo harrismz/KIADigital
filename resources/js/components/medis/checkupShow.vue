@@ -6,20 +6,20 @@
                     <div v-if="data" class="card-body">
                         <h2 class="text-lg font-bold">Check Up : {{ data.type }}</h2>
                         <div class="separator"></div>
-                        
+
                         <div class="p-4 bg-gray-200 rounded">
                             <div class="font-bold">
-                                {{data[ name ]}}
-                            </div>
-                        </div>
-                        
-                        <div v-if="getUser" class="p-4 bg-gray-200 rounded mt-2">
-                            <div class="font-bold">
-                                {{ getUser.name }}
+                                Pasien : {{ data[name] }}
                             </div>
                         </div>
 
-                        
+                        <div v-if="getUser" class="p-4 bg-gray-200 rounded mt-2">
+                            <div class="font-bold">
+                                Pemeriksa : {{ getUser.name }}
+                            </div>
+                        </div>
+
+
 
                         <!-- pemeriksaan terakhir -->
                         <div class="p-4 bg-gray-100 rounded mt-2">
@@ -29,26 +29,29 @@
 
                             <div>
                                 <table class="w-full text-left border-collapse">
-                                    
+
                                     <tbody>
                                         <tr v-for="(val, key) in latest_checkup" :key="key">
-                                            <td class="py-2 pr-2  font-medium text-xs leading-6 text-gray-500 whitespace-nowrap  border-t border-slate-100 dark:border-slate-400/10">
-                                                {{ label( key) }}
+                                            <td
+                                                class="py-2 pr-2  font-medium text-xs leading-6 text-gray-500 whitespace-nowrap  border-t border-slate-100 dark:border-slate-400/10">
+                                                {{ label(key) }}
                                             </td>
-                                            <td class="py-2 pr-2  font-medium text-xs leading-6 text-gray-500 whitespace-nowrap  border-t border-slate-100 dark:border-slate-400/10">
+                                            <td
+                                                class="py-2 pr-2  font-medium text-xs leading-6 text-gray-500 whitespace-nowrap  border-t border-slate-100 dark:border-slate-400/10">
                                                 <div v-if="key == 'usg_image'">
-                                                    <img :src="baseUrl + '/storage/'+val" :alt="key" class="block p-4 m-2 w-20 h-20">
+                                                    <img :src="baseUrl + '/storage/' + val" :alt="key"
+                                                        class="block p-4 m-2 w-20 h-20">
                                                 </div>
-                                                <div v-else >
+                                                <div v-else>
                                                     {{ val }}
                                                 </div>
                                             </td>
-                                            
+
                                         </tr>
                                     </tbody>
                                 </table>
-                                
-                                
+
+
                             </div>
                         </div>
 
@@ -67,26 +70,31 @@
 
                                 <div v-if="isMom" class="p-6 w-full mb-2 mx-auto bg-white rounded-lg shadow-md">
                                     <label class="block text-sm font-medium text-gray-700 mb-2" for="week">Weeks</label>
-                                    <select v-model="form.week" name="week" id="week" class="p-2 border border-1 mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <select v-model="form.week" name="week" id="week"
+                                        class="p-2 border border-1 mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                         <option v-for="week in weekOptions" :value="week" :key="week">
                                             Minggu {{ week }}
                                         </option>
                                     </select>
                                 </div>
 
-                                <my-input :isRequired="value.isRequired" :inputType="value.inputType ? value.inputType : 'text'" v-model="form[key]" :key="key" :inputKey="key" v-for="(value,key) in inputs"></my-input>
-                                
+                                <my-input :isRequired="value.isRequired"
+                                    :inputType="value.inputType ? value.inputType : 'text'" v-model="form[key]"
+                                    :key="key" :inputKey="key" v-for="(value, key) in inputs"></my-input>
+
                                 <div v-if="isMom" class="p-6 w-full  mx-auto bg-white rounded-lg shadow-md">
                                     <span class="text-l font-semibold block mb-6">Kaki Bengkak :</span>
-                                    
+
                                     <div class="space-y-4">
                                         <label class="flex items-center space-x-4">
-                                            <input type="radio" value="1" v-model="form.swollen_foot" class="form-radio h-5 w-5 text-indigo-600">
+                                            <input type="radio" value="1" v-model="form.swollen_foot"
+                                                class="form-radio h-5 w-5 text-indigo-600">
                                             <span class="text-gray-700">Ya</span>
                                         </label>
-                                        
+
                                         <label class="flex items-center space-x-4">
-                                            <input type="radio" value="0" v-model="form.swollen_foot" class="form-radio h-5 w-5 text-indigo-600">
+                                            <input type="radio" value="0" v-model="form.swollen_foot"
+                                                class="form-radio h-5 w-5 text-indigo-600">
                                             <span class="text-gray-700">Tidak</span>
                                         </label>
                                     </div>
@@ -99,7 +107,7 @@
 
                         <!-- imunisasi -->
                         <imunisasi v-if="type == 'child'" :child_id="data.id" />
-                        
+
                     </div>
 
                     <div v-else>
@@ -123,10 +131,10 @@
 
 <script>
 import axios from 'axios';
-import {mapGetters, mapActions} from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import toastr from 'toastr';
 import Imunisasi from './Imunisasi.vue';
-import MyInput from '../Ayah/MyInput.vue';
+import MyInput from '../utils/MyInput.vue';
 import helper from '../helper';
 
 export default {
@@ -143,16 +151,16 @@ export default {
 
             data: {},
 
-            except:{
-                'id':true,
-                'pregnancy_id':true, // dari apa ??
-                'staff_id':true, //dari apa ?
-                'hospital_id':true, // dari apa 
+            except: {
+                'id': true,
+                'pregnancy_id': true, // dari apa ??
+                'staff_id': true, //dari apa ?
+                'hospital_id': true, // dari apa
                 'created_at':true,
                 'updated_at':true,
                 'child_id': true //from data.id
             },
-            
+
             form:{
                 // complaint : null,
                 // blood_pressure : null,
@@ -287,7 +295,7 @@ export default {
                 if(this.isMom) {
 
                     let staff_id = this.getUser ? this.getUser.id : null;
-                    
+
                     return {
                         'pregnancy_id': this.data.pregnancy ? this.data.pregnancy.id : null , // dari apa ??
                         'staff_id': staff_id, //dari apa ?
@@ -308,7 +316,7 @@ export default {
 
             return {}
         },
-        
+
         queryParam() {
           return this.$route.query; // Access the query parameter
         },
@@ -354,7 +362,7 @@ export default {
 
         name(){
             if(this.data) {
-                return this.data.type == 'child' ? 'child_name' : 'name'; 
+                return this.data.type == 'child' ? 'child_name' : 'name';
             }
         }
     },

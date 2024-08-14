@@ -9,7 +9,7 @@ class TestController extends Controller
 {
     //
     public function test(Request $request) {
-        return Mother::find(2);
+        return Mother::find(1);
 
         // $mother = new Mother([
         //     'name' =>"D",
@@ -20,7 +20,7 @@ class TestController extends Controller
         //     'kecamatan_id' => 2,
         //     'user_id' => 2
         // ]);
-        
+
         // $mother->save();
         // return $mother;
     }

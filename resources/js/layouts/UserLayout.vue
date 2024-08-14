@@ -21,14 +21,14 @@
                             class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg">
 
 
-                            <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
-                                <router-link :to="{ name: 'my-profile' }" v-if="userRole == 'ibu'">
+                            <router-link :to="{ name: 'my-profile' }" v-if="userRole == 'ibu'">
+                                <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
                                     Edit Profile
-                                </router-link>
-                                <div v-else>
-                                    {{ user.name }} - {{ user.role.display_name }}
-                                </div>
-                            </li>
+                                </li>
+                            </router-link>
+                            <div v-else>
+                                {{ user.name }} - {{ user.role.display_name }}
+                            </div>
 
                             <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" @click="logout">
                                 Logout</li>
@@ -45,9 +45,9 @@
         </main>
     </div>
     <footer class="bg-gray-800 text-white p-2">
-            <div class="container mx-auto text-center">
-                &copy; 2024 KIA Digital
-            </div>
+        <div class="container mx-auto text-center">
+            &copy; 2024 KIA Digital
+        </div>
     </footer>
 </template>
 

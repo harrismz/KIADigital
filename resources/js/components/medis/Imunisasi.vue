@@ -1,7 +1,12 @@
 <template>
     <div class="p-4 bg-gray-100">
-        <div class="font-bold mb-4">
-            Imunisasi
+         <div class="mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <h1 class="text-2xl font-bold">Imunisasi</h1>
+                <div class="flex justify-end gap-x-3">
+                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'">
+                </div>
+            </div>
         </div>
 
         <div class="p-4 bg-white mb-8">
@@ -39,14 +44,14 @@
 
             <div class="col-span-full mb-2">
                 <label for="vaksin">Vaksin</label>
-                <select v-model="form.vaccine_id" id="vaksin" name="vaksin" autocomplete="vaksin-name" class="block w-full rounded-md border-3 p-2 ">
+                <select v-model="form.vaccine_id" id="vaksin" name="vaksin" autocomplete="vaksin-name" class="block w-full bg-white rounded-md border-3 p-2 ">
                     <option v-for="(value, key) in vaksinOptions" :key="value.key" :value="value.value">{{value.key}}</option>
                 </select>
             </div>
 
             <div class="col-span-full mb-4">
                 <label for="tanggal">Tanggal Dilakukan Vaksin</label>
-                <input v-model="form.date_vaccinated" type="date" name="date_vacinated" id="date_vacinated" class="block w-full rounded-md p-2 ">
+                <input v-model="form.date_vaccinated" type="date" name="date_vacinated" id="date_vacinated" class="block bg-white w-full rounded-md p-2 ">
             </div>
 
             <div>
@@ -113,7 +118,7 @@ export default {
             }
         },
 
-        
+
     },
 
     methods: {
@@ -131,11 +136,11 @@ export default {
                 console.log(error);
             });
         },
-        
+
         fetchVaksin() {
             // console.log({patient: this.patient})
-            let id = this.patient.id; // 
-            
+            let id = this.patient.id; //
+
             const url = this.baseUrl + "/api/imunisasi/"+ id;
 
             axios.get(url, {
@@ -151,6 +156,7 @@ export default {
             });
         },
 
+
         submit(){
             let form = {
                 ...this.form, ...this.additional
@@ -164,10 +170,16 @@ export default {
             .then(res => {
                 console.log(res);
                 toastr.success(res.message || "data saved!")
+
+                this.fetchVaksin();
             }).catch(error => {
                 console.log(error);
                 toastr.error(error)
             })
+        },
+
+        gotoHome() {
+            this.$router.push({ name: 'home' });
         }
     },
 

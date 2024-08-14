@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <Stepper :weeks="weeks" :currentWeek.sync="currentWeek" @update:currentWeek="handleWeekUpdate" />
+        <!-- <Stepper :weeks="weeks" :currentWeek.sync="currentWeek" @update:currentWeek="handleWeekUpdate" /> -->
 
         <!-- Daftar Pertanyaan -->
         <div v-for="(question, index) in questions" :key="index" class="bg-gray-100 p-4 rounded-lg mb-4">

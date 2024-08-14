@@ -9,4 +9,5 @@ class WeeklyMonitoringAnswer extends Model
 {
     use HasFactory;
     protected $table = "weekly_monitoring_answer";
+    protected $guarded = ['id'];
 }
