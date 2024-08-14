@@ -36,7 +36,11 @@ export default {
     },
     data() {
         return {
-            weeks: Array.from({length: 40}, (_, i) => i + 1)
+            currentWeek: null,
+            weeks: Array.from({ length: 40 }, (_, i) => ({
+                number: i + 1,
+                disabled: false,
+            })),
         }
     },
     computed: {
@@ -54,6 +58,11 @@ export default {
 
                 this.$store.commit('setPregnancyWeek', response.data);
                 this.currentWeek = response.data - 1;
+
+                this.weeks = this.weeks.map(week => ({
+                    ...week,
+                    disabled: week.number > response.data,
+                }));
             } catch (error) {
                 console.error(error);
             }
