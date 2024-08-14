@@ -11,6 +11,8 @@ class ChildController extends Controller
     public function store(Request $request) {
         $rules = [
             'child_name' => 'nullable|string|max:255',
+            'mother_id' => 'required',
+            'father_id' => 'required',
             'date_of_birth' => 'nullable|date',
             'birth_place' => 'nullable|string|max:255',
             'child_of' => 'nullable|integer|max:255',
