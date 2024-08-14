@@ -20,6 +20,7 @@ use App\Http\Controllers\PregnancyController;
 use App\Http\Controllers\PregnancyMonitoringController;
 use App\Http\Controllers\StuntingAnalysisController;
 use App\Http\Controllers\FatherController;
+use App\Http\Controllers\ChildController;
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -59,6 +60,7 @@ Route::get('/combo/{modelname}/{id}', [ComboController::class, 'getById']);
 Route::get('/mother/{id}', [MotherController::class, 'show']);
 Route::get('/father/{id}', [FatherController::class, 'show']);
 Route::get('/child/{id}', [ChildMonitoringController::class, 'show']);
+Route::post('/child', [ChildController::class, 'store']);
 
 Route::get('/post', [PostController::class, 'index']);
 Route::get('/post/{slug}', [PostController::class, 'show']);

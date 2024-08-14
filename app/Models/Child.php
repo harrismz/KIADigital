@@ -12,6 +12,8 @@ class Child extends Model
 
     protected $table = "child";
 
+    protected $guarded = ['id'];
+
     public function latest_checkup(){
         return $this->hasOne(ChildDevelopmentHistory::class)->latestOfMany();
     }

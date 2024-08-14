@@ -4,6 +4,7 @@ import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
 import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
+import AddAnak from './components/Anak/AddAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
@@ -141,7 +142,7 @@ const routes = [
     {
         path: '/child',
         name: 'child',
-        component: IdentitasAnak,
+        component: AddAnak,
         props: true,
         meta: {
             layout: 'LoginLayout'
