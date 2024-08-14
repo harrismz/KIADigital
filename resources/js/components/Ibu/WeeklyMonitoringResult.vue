@@ -9,15 +9,13 @@
                 </div>
             </div>
         </div>
+        <Stepper :weeks="weeks" :currentWeek.sync="currentWeek" @update:currentWeek="handleWeekUpdate" />
 
         <!-- Daftar Pertanyaan -->
-        <div v-for="(pregnancy_question, index) in pregnancy_questions" :key="index" class="bg-gray-100 p-4 rounded-lg mb-4">
-            <div v-if="pregnancy_question.type == 'text'">
-                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.text }}</p>
-                <p class="text-justify font-medium italic">{{ pregnancy_question.answer }}</p>
-            </div>
-            <div v-else>
-                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.text }} <strong>{{ pregnancy_question.answer }}</strong></p>
+        <div v-for="(question, index) in pregnancy_questions" :key="index" class="bg-gray-100 p-4 rounded-lg mb-4">
+            <div>
+                <p class="mb-2">{{ index + 1 }}. {{ question.question }}</p>
+                <p class="text-justify font-medium italic">{{ renderAnswer( question.answer) }}</p>
             </div>
         </div>
     </div>
@@ -27,8 +25,11 @@
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import {mapActions, mapGetters} from 'vuex';
+import Stepper from '../utils/Stepper.vue';
 
 export default {
+    name: 'WeeklyMonitoringResult',
+    components: { Stepper },
     // setup() {
     //     const router = useRouter();
 
@@ -75,46 +76,47 @@ export default {
     //         gotoHome
     //     };
     // }
-    mounted() {
-        this.fetchWeek();
-        this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, week_number: this.week});
+    async mounted() {
+        console.log('mounted');
+        console.log(this);
+        await this.fetchWeek();
+        await this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: this.pregnancy_week });
+
     },
     data() {
         return {
-
+            weeks: Array.from({length: 40}, (_, i) => i + 1)
         }
     },
     computed: {
         ...mapGetters(['baseUrl', 'mom', 'pregnancy_questions', 'pregnancy_week']),
 
-        options(){
-            return Array.from({length: 40}, (_, index) => {
-                const week = index + 1;
-                return {
-                    text: `Minggu ke-${week}`,
-                    value: week
-                };
-            });
-        }
     },
     methods: {
         ...mapActions(['fetchPregnancyQuestionAnswer']),
 
-        fetchWeek() {
+        async fetchWeek() {
+            console.log('fetchWeek');
+            console.log(this.pregnancy_week);
             // TODO : getWeek based on mom_id
             const id = this.mom.id;
             const url = `${this.baseUrl}/api/pregnancy-week-number/${id}`;
 
-            axios.get(url).then(response => {
+            try {
+                const response = await axios.get(url);
+                console.log('response', response.data);
                 this.$store.commit('setPregnancyWeek', response.data);
-            }).catch(error => {
+                this.currentWeek = response.data;
+            } catch (error) {
                 console.error(error);
-            });
+            }
+            console.log('end'+this.pregnancy_week);
         },
+
         editAnswer() {
             let query = {
                 mother_id: this.mom.id,
-                week: getWeek()
+                week: this.pregnancy_week
             }
             this.$router.push({
                 name: 'weekly-monitoring-answer',
@@ -134,6 +136,11 @@ export default {
 
             return answer;
         },
+        handleWeekUpdate(newWeek) {
+            this.currentWeek = newWeek;
+            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: newWeek });
+            // console.log('Minggu saat ini berubah menjadi:', newWeek);
+        }
     }
 }
 </script>

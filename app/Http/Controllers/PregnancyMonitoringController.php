@@ -21,8 +21,8 @@ class PregnancyMonitoringController extends Controller
         // get week by date first_day_of_last_period
         $pregnancy = Pregnancy::where('mother_id', $mother_id)->latest()->first();
 
-        $first_day_of_last_period = $pregnancy->first_day_of_last_period;
-        $week_number = $this->getWeekNumber($first_day_of_last_period);
+        // $first_day_of_last_period = $pregnancy->first_day_of_last_period;
+        // $week_number = $this->getWeekNumber($first_day_of_last_period)
 
         // copy to answer
         $answer = $this->generateOrGetAnswer($week_number, $pregnancy->id);
@@ -67,6 +67,7 @@ class PregnancyMonitoringController extends Controller
         $questions = WeeklyMonitoringQuestion::get();
         $answers = [];
         foreach ($questions as $question) {
+            // dd($question);
             # code...
             $answer = WeeklyMonitoringAnswer::firstOrNew([
                 'pregnancy_id' => $pregnancy_id,
@@ -74,7 +75,11 @@ class PregnancyMonitoringController extends Controller
                 'weekly_monitoring_question_id' => $question->id,
                 'question' => $question->question_text,
             ]);
-            $answer->save();
+            dd($answer);
+            if (!$answer->exists) {
+                $answer->save();
+            }
+            dd($answer);
             $answers[] = $answer;
         }
         return $answers;
