@@ -59,7 +59,8 @@ Route::get('/combo/{modelname}/{id}', [ComboController::class, 'getById']);
 
 Route::get('/mother/{id}', [MotherController::class, 'show']);
 Route::get('/father/{id}', [FatherController::class, 'show']);
-Route::get('/child/{id}', [ChildMonitoringController::class, 'show']);
+Route::get('/child/{id}', [ChildController::class, 'show']);
+Route::put('/child/{id}/update', [ChildController::class, 'update']);
 Route::post('/child', [ChildController::class, 'store']);
 
 Route::get('/post', [PostController::class, 'index']);

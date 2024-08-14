@@ -149,6 +149,15 @@ const routes = [
         }
     },
     {
+        path: '/child/:id/edit',
+        name: 'child-edit',
+        component: AddAnak,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
         path: '/dashboard-ibu',
         name: 'dashboard-ibu',
         component: DashboardIbu,
@@ -440,7 +449,7 @@ router.beforeEach((to, from, next) => {
             if (!isAuthenticated) {
                 next({ name: 'login', query: { redirect: to.fullPath } });
             } else {
-                // 
+                //
                 if(to.meta.role){
                     let requiredRole = to.meta.role;
                     let userRole = res.role ? res.role.name : null;

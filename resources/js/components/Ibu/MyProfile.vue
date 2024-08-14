@@ -182,7 +182,7 @@
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Golongan Darah</p>
-                    <!-- <p class="text-justify font-medium italic">{{ child.blood_type.blood_type_name || 'N/A' }}</p> -->
+                    <p class="text-justify font-medium italic">{{ child.blood_type.blood_type_name || 'N/A' }}</p>
                 </div>
             </div>
         </div>
