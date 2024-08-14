@@ -2,14 +2,14 @@
     <div class="max-w-3xl mx-auto p-4">
         <div class="mb-6">
             <div class="grid grid-cols-2 gap-4">
-                <h1 class="text-2xl font-bold">Dairy Ibu Hamil</h1>
+                <h1 class="text-2xl font-bold">Dairy Ibu Hamil Week ke-{{ pregnancy_week }}</h1>
                 <div class="flex justify-end">
                     <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'">
                 </div>
             </div>
         </div>
 
-        <Stepper :weeks="weeks" v-model:currentWeek="currentWeek" @update:currentWeek="handleWeekUpdate" />
+        <!-- <Stepper :weeks="weeks" v-model:currentWeek="currentWeek" @update:currentWeek="handleWeekUpdate" /> -->
 
         <!-- Daftar Pertanyaan -->
         <div v-for="(question, index) in pregnancy_questions" :key="index" class="bg-gray-100 p-4 rounded-lg mb-4">
@@ -18,11 +18,11 @@
             <!-- Opsi Pilihan -->
             <div class="mb-4">
                 <label class="inline-flex items-center">
-                    <input type="radio" :name="'question-' + index" value="Ya" class="form-radio text-indigo-600">
+                    <input v-model="question.answer" type="radio" :name="'question-' + index" value="Ya" class="form-radio text-indigo-600">
                     <span class="ml-2">Ya</span>
                 </label>
                 <label class="inline-flex items-center ml-6">
-                    <input type="radio" :name="'question-' + index" value="Tidak" class="form-radio text-indigo-600">
+                    <input v-model="question.answer" type="radio" :name="'question-' + index" value="Tidak" class="form-radio text-indigo-600">
                     <span class="ml-2">Tidak</span>
                 </label>
             </div>
@@ -97,12 +97,12 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-            console.log('end'+this.pregnancy_week);
+            console.log('end '+this.pregnancy_week);
         },
 
         submit() {
             const url = this.baseUrl + "/api/pregnancy-questions";
-
+            console.log(this.pregnancy_questions);
             axios.post(url, {
                 questions: this.pregnancy_questions
             }).then(res => res.data)
@@ -115,19 +115,16 @@ export default {
             })
         },
 
-        addQuestion() {
-            questions.push({ text: 'Pertanyaan Baru', type: 'choice', answer: '' });
-        },
-
         gotoHome() {
             router.push({
                 name: 'home',
                 params: {}
             });
         },
-        handleWeekUpdate(newWeek) {
-            this.currentWeek = newWeek;
-            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: newWeek });
+        handleWeekUpdate(newWeekIndex) {
+            this.currentWeek = newWeekIndex;
+                this.$store.commit('setPregnancyWeek', newWeekIndex+1);
+            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: this.pregnancy_week });
             // console.log('Minggu saat ini berubah menjadi:', newWeek);
         }
     }
