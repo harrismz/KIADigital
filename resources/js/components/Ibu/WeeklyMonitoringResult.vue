@@ -130,16 +130,16 @@ export default {
             });
         },
         renderAnswer(answer) {
-            if(answer == null) {
+            if(answer == null || answer == '' || answer == 0) {
                 return '-'
             }
 
             return answer;
         },
-        handleWeekUpdate(newWeek) {
-            this.currentWeek = newWeek;
-            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: newWeek });
-            // console.log('Minggu saat ini berubah menjadi:', newWeek);
+        handleWeekUpdate(indexnewWeek) {
+            this.currentWeek = indexnewWeek;
+            this.$store.commit('setPregnancyWeek', indexnewWeek+1);
+            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: indexnewWeek+1 });
         }
     }
 }
