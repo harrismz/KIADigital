@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col min-h-24 bg-gray-100 p-6">
         <user-card />
-        <progress-bar v-if="isMom"></progress-bar>
+        <progress-bar v-if="isMom && activeProfileType == 'ibu'"></progress-bar>
         <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"> -->
         <div :class="isMedic ? 'grid grid-cols-3 cols gap-4' : 'grid grid-cols-2 cols gap-4'">
             <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
@@ -69,14 +69,6 @@ methods: {
             toastr.error(`fetching user ERROR : ${error}`)
         });
     },
-    fetchMother() {
-        const user_id = this.user.id;
-        axios.get(`/api/get_mother/${user_id}`)
-            .then(response => response.data)
-            .then(response => {
-                console.log('fetching mother : ', response.data);
-            })
-    },
     fetchWeekUser() {
         const mother_id = this.mother.id
         axios.get(`/api/get_week_user/${mother_id}`)
@@ -92,7 +84,7 @@ methods: {
 },
 
 computed:{
-    ...mapGetters(['getMenu', 'isMom', 'isMedic']),
+    ...mapGetters(['getMenu', 'isMom', 'isMedic', 'activeProfileType']),
 
     cards(){
         return this.getMenu;

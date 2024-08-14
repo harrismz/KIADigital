@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IbuController;
+use App\Http\Controllers\MotherController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\IdentityController;
@@ -19,6 +19,8 @@ use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PregnancyController;
 use App\Http\Controllers\PregnancyMonitoringController;
 use App\Http\Controllers\StuntingAnalysisController;
+use App\Http\Controllers\FatherController;
+use App\Http\Controllers\ChildController;
 // use App\Http\Controllers\Auth\AuthController;
 
 // use App\Http\Controllers\ConfigController;
@@ -53,9 +55,12 @@ Route::get('/religion', [IdentityController::class, 'getReligion']);
 Route::post('/identitas-ibu', [IdentityController::class, 'store']);
 Route::post('/identitas-ayah', [IdentityController::class, 'storeAyah']);
 Route::get('/combo/{modelname}', [ComboController::class, 'get']);
+Route::get('/combo/{modelname}/{id}', [ComboController::class, 'getById']);
 
-Route::get('/get_mother/{user_id}', [IbuController::class, 'index']);
-Route::get('/get_week_user', [IbuController::class, 'getWeek']);
+Route::get('/mother/{id}', [MotherController::class, 'show']);
+Route::get('/father/{id}', [FatherController::class, 'show']);
+Route::get('/child/{id}', [ChildMonitoringController::class, 'show']);
+Route::post('/child', [ChildController::class, 'store']);
 
 Route::get('/post', [PostController::class, 'index']);
 Route::get('/post/{slug}', [PostController::class, 'show']);

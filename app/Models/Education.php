@@ -9,8 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Education extends Model
 {
     use HasFactory, ComboableTrait;
-    
+
     protected $table = "education";
 
     protected static $comboKey = 'education_name';
+
+    public function mother():hasMany
+    {
+        return $this->hasMany(Mother::class);
+    }
 }

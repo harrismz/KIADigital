@@ -87,7 +87,7 @@ const store = createStore({
             ],
 
             ibu: [
-                { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', link: '#', img: '/storage/images/janin.png' },
+                { title: 'Info Janin Secara Umum', description: 'Tinggi : xxx cm Berat : xxx cm Ukuran : xxx Ciri-ciri : xxx', img: '/storage/images/janin.png' },
 
 
                 { title: 'Diary Ibu', description: 'Pemantauan mingguan, perawatan sehari-hari, serta keluhan yang dirasakan ibu dapat diisi secara mandiri dalam menu ini.', link: 'weekly-monitoring-result', img: '/storage/images/diary.png' },

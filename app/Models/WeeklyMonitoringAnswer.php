@@ -18,4 +18,5 @@ class WeeklyMonitoringAnswer extends Model
         'updated_at',
         'weekly_monitoring_question_id'
     ];
+    protected $guarded = ['id'];
 }

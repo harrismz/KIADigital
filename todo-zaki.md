@@ -36,3 +36,10 @@
 - [ ] menu input riwayat persalinan
 - [ ] menu input catatan kesehatan anak
 - [ ] 
+
+
+# TODO
+ - [ ] Edit Profile Ibu
+ - [ ] Input Diary
+ - [ ] Tambah Identitas Anak
+ - [ ] Edit Data Anak

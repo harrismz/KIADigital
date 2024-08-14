@@ -8,7 +8,7 @@ use App\Http\Traits\ComboableTrait;
 class Kecamatan extends Model
 {
     use HasFactory, ComboableTrait;
-    
+
     protected $table = "kecamatan";
 
     protected static $comboKey = 'kecamatan_name';

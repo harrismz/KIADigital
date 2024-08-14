@@ -44,14 +44,14 @@
 
             <div class="col-span-full mb-2">
                 <label for="vaksin">Vaksin</label>
-                <select v-model="form.vaccine_id" id="vaksin" name="vaksin" autocomplete="vaksin-name" class="block w-full rounded-md border-3 p-2 ">
+                <select v-model="form.vaccine_id" id="vaksin" name="vaksin" autocomplete="vaksin-name" class="block w-full bg-white rounded-md border-3 p-2 ">
                     <option v-for="(value, key) in vaksinOptions" :key="value.key" :value="value.value">{{value.key}}</option>
                 </select>
             </div>
 
             <div class="col-span-full mb-4">
                 <label for="tanggal">Tanggal Dilakukan Vaksin</label>
-                <input v-model="form.date_vaccinated" type="date" name="date_vacinated" id="date_vacinated" class="block w-full rounded-md p-2 ">
+                <input v-model="form.date_vaccinated" type="date" name="date_vacinated" id="date_vacinated" class="block bg-white w-full rounded-md p-2 ">
             </div>
 
             <div>
@@ -170,6 +170,8 @@ export default {
             .then(res => {
                 console.log(res);
                 toastr.success(res.message || "data saved!")
+
+                this.fetchVaksin();
             }).catch(error => {
                 console.log(error);
                 toastr.error(error)

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mother extends Model
 {
     use HasFactory, IdableTrait;
-    
+
     protected $table = "mother";
 
     protected $guarded = ['id'];
@@ -24,6 +24,10 @@ class Mother extends Model
 
     public function children(){
         return $this->hasMany(Child::class);
+    }
+    public function father(){
+        // return $this->hasMany(Father::class);
+        return $this->hasOne(Father::class)->latestOfMany();
     }
 
     public function pregnancy() {
@@ -46,5 +50,30 @@ class Mother extends Model
         $history = $pregnancy->checkups();
 
         return $history;
+    }
+
+    public function kecamatan()
+    {
+        return $this->hasOne(Kecamatan::class, 'id', 'kecamatan_id');
+    }
+
+    public function religion()
+    {
+        return $this->hasOne(Religion::class, 'id','religion_id');
+    }
+
+    public function education()
+    {
+        return $this->hasOne(Education::class, 'id','education_id');
+    }
+
+    public function bloodType()
+    {
+        return $this->hasOne(BloodType::class, 'id','blood_type_id');
+    }
+
+    public function job()
+    {
+        return $this->hasOne(Job::class, 'id','job_id');
     }
 }

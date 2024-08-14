@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Mother;
 use App\Models\Pregnancy;
 use Illuminate\Http\Request;
-
+use DateTime;
 class PregnancyController extends Controller
 {
     //
@@ -13,7 +13,7 @@ class PregnancyController extends Controller
         $rule = [
             // 'id' => 'nullable|integer',
             'mother_id' => 'required|integer',
-            'first_day_of_last_period' => 'nullable|date',
+            'first_day_of_last_period' => 'required|date',
             'estimate_date_of_delivery' => 'nullable|date',
             'upper_arm_circumference' => 'nullable|numeric',
             'kek' => 'nullable|string',
@@ -35,6 +35,15 @@ class PregnancyController extends Controller
         $validated = $request->validate($rule);
 
         $data = new Pregnancy($validated);
+
+        if($data->estimate_date_of_delivery == null) {
+            // $lastPeriod = $request->first_day_of_last_period;
+            // $data->estimate_date_of_delivery = //please add 40 weeks after first day of last period here
+            $lastPeriod = $request->first_day_of_last_period;
+            $date = new DateTime($lastPeriod);
+            $date->modify('+40 weeks');
+            $data->estimate_date_of_delivery = $date->format('Y-m-d');
+        }
 
         $data->save();
 

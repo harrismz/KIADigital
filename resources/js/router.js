@@ -4,6 +4,7 @@ import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
 import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
+import AddAnak from './components/Anak/AddAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
@@ -36,6 +37,8 @@ import PertumbuhanAnak from './components/Anak/PertumbuhanAnak.vue';
 import History from './components/medis/history.vue';
 import HistoryDetail from './components/medis/historyDetail.vue';
 import MyProfile from './components/Ibu/MyProfile.vue';
+import UpdateProfile from './components/Ibu/UpdateProfile.vue';
+import Unauthorized from './components/Unauthorized.vue';
 
 const resolveComponentBasedOnRole = async () => {
     const userRole = store.state.user ? store.state.user.role : null; // Assuming the user's role is stored in the Vuex store
@@ -67,7 +70,8 @@ const routes = [
         component: History,
         meta :{
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -76,7 +80,8 @@ const routes = [
         component: HistoryDetail,
         meta :{
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -137,7 +142,7 @@ const routes = [
     {
         path: '/child',
         name: 'child',
-        component: IdentitasAnak,
+        component: AddAnak,
         props: true,
         meta: {
             layout: 'LoginLayout'
@@ -162,6 +167,16 @@ const routes = [
             requiresAuth: true
         }
     },
+    {
+        path: '/update-profile/:modelname/:id',
+        name: 'update-profile',
+        component: UpdateProfile,
+        meta: {
+            layout: 'UserLayout',
+            requiresAuth: true
+        }
+    },
+
     {
         path: '/weekly-monitoring-answer',
         name: 'weekly-monitoring-answer',
@@ -355,7 +370,8 @@ const routes = [
         component: Checkup,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -364,7 +380,8 @@ const routes = [
         component: CheckupShow,
         meta: {
             layout: 'UserLayout',
-            requiresAuth: true
+            requiresAuth: true,
+            role: 'medic'
         }
     },
     {
@@ -394,6 +411,14 @@ const routes = [
             layout: 'UserLayout'
         }
     },
+    {
+        path: '/unauthorized',
+        name: 'Unauthorized',
+        component: Unauthorized,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
 
 ];
 
@@ -410,11 +435,20 @@ router.beforeEach((to, from, next) => {
 
             console.log('res dari dispatch', {res})
             const isAuthenticated = store.getters.isAuthenticated;
-            console.log('im before each', {isAuthenticated})
+            // console.log('im before each', {isAuthenticated})
 
             if (!isAuthenticated) {
                 next({ name: 'login', query: { redirect: to.fullPath } });
             } else {
+                // 
+                if(to.meta.role){
+                    let requiredRole = to.meta.role;
+                    let userRole = res.role ? res.role.name : null;
+                    if(requiredRole != userRole) {
+                        return next({name: 'Unauthorized'})
+                    }
+                }
+
                 next();
             }
         })

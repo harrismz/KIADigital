@@ -10,7 +10,7 @@
                 <img :src="img" alt="" class="w-24 h-24">
             </div>
         </div>
-        <button @click="routerLinkTo" class="text-blue-500">Selengkapnya ></button>
+        <button v-if="link" @click="routerLinkTo" class="text-blue-500">Selengkapnya ></button>
     </div>
 </template>
 
