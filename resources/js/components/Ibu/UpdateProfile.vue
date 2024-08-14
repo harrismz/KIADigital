@@ -184,11 +184,9 @@
     </div>
 </template>
 
-<script setup>
-import { reactive, computed, onMounted, ref } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+<script>
 import toastr from 'toastr';
+import { mapGetters } from 'vuex';
 
 toastr.options = {
     "closeButton": true,
@@ -208,159 +206,336 @@ toastr.options = {
     "hideMethod": "fadeOut"
 };
 
-const store = useStore();
-const router = useRouter();
-
-const imgLogo = computed(() => store.getters.imgLogo);
-const baseUrl = computed(() => store.getters.baseUrl);
-
-const user_id = computed(() => router.params.id);
-const nik = computed(() => router.params.nik);
-const name = computed(() => router.params.name);
-const email = computed(() => router.params.email);
-
-const bloodTypeList = ref([]);
-const kelurahanList = ref([]);
-const kecamatanList = ref([]);
-const educationList = ref([]);
-const jobList = ref([]);
-const religionList = ref([]);
-const mother = store.state.user.nother;
-const formIdentitasIbu = reactive({
-    nik: mother.nik ? `${mother.nik}` : '',
-    no_jkn: mother.no_jkn ? `${mother.no_jkn}` : '',
-    name: mother.name ? mother.name : '',
-    date_of_birth: mother.date_of_birth ? mother.date_of_birth : '',
-    birth_place: mother.birth_place ? mother.birth_place : '',
-    phone_number: mother.phone_number ? mother.phone_number : '',
-    address: mother.address ? mother.address : '',
-    kecamatan_id: mother.kecamatan_id ? mother.kecamatan_id : '',
-    religion_id: mother.religion_id ? mother.religion_id : '',
-    education_id: mother.education_id ? mother.education_id : '',
-    blood_type_id: mother.blood_type_id ? mother.blood_type_id : '',
-    job_id: mother.job_id ? mother.job_id : '',
-    height: mother.height ? mother.height : '',
-    user_id: mother.user_id ? mother.user_id : '',
-
-});
-
-const submitIdentitasIbu = async () => {
-    try {
-        // bang lanjutin save
-        const user = store.getters.getUser;
-
-        let form = { ...formIdentitasIbu, ...{ user_id: user.id } };
-
-        console.log("submit identitas ", { form })
-
-        const response = await axios.post(`${baseUrl.value}/api/identitas-ibu`, form);
-
-        if (response && response.data) {
-            console.log("creating", response.data);
-            console.log("User data:", response.data.user);
-        }
-
-        toastr.success('Identitas Ibu Berhasil disimpan.');
-
-        // set setActiveuser kali?
-        store.dispatch('fetchUser').then(user => {
-            console.log('user', { user })
-            store.commit('setActiveProfile', user.mother);
-        })
-
-        router.push({
-            name: 'identitas-ayah',
-            params: {}
-        });
-        // Handle the next step or redirect
-    } catch (error) {
-        let message = error;
-
-        console.log(error)
-
-        if (error.response) {
-            if (error.response.data) {
-                message = error.response.data.message;
+export default {
+    name: 'UpdateProfile',
+    data(){
+        return {
+            bloodTypeList : [],
+            kelurahanList : [],
+            kecamatanList : [],
+            educationList : [],
+            jobList : [],
+            religionList : [],
+            formIdentitasIbu : {
+                nik: '',
+                no_jkn: '',
+                name: '',
+                date_of_birth: '',
+                birth_place: '',: '',
+                phone_number: '',
+                address: '',
+                kecamatan_id: '',
+                religion_id: '',: '',
+                education_id: '',
+                blood_type_id: '',
+                job_id: '',
+                height: '',
+                user_id: '',
             }
         }
+    },
+    computed: {
+        ...mapGetters(['baseUrl','mom'])
+    },
+    methods: {
+        async fetchIdentitas() {
+            const mother = this.$store.state.user.mother;
+            this.formIdentitasIbu = {
+                nik: mother.nik ? `${mother.nik}` : '',
+                no_jkn: mother.no_jkn ? `${mother.no_jkn}` : '',
+                name: mother.name ? mother.name : '',
+                date_of_birth: mother.date_of_birth ? mother.date_of_birth : '',
+                birth_place: mother.birth_place ? mother.birth_place : '',
+                phone_number: mother.phone_number ? mother.phone_number : '',
+                address: mother.address ? mother.address : '',
+                kecamatan_id: mother.kecamatan_id ? mother.kecamatan_id : '',
+                religion_id: mother.religion_id ? mother.religion_id : '',
+                education_id: mother.education_id ? mother.education_id : '',
+                blood_type_id: mother.blood_type_id ? mother.blood_type_id : '',
+                job_id: mother.job_id ? mother.job_id : '',
+                height: mother.height ? mother.height : '',
+                user_id: mother.user_id ? mother.user_id : '',
+            }
+        },
+        async fetchKelurahan() {
+            try {
+                const response = await axios.get(`${baseUrl.value}/api/kelurahan`);
+                kelurahanList.value = response.data;
+                console.log({ kelurahanList });
+            } catch (error) {
+                console.error('Error fetching kelurahan:', error);
+            }
+        },
+        async fetchBloodTypes() {
+            try {
+                const bloodTypeResponse = await axios.get(`${baseUrl.value}/api/blood-types`);
+                bloodTypeList.value = bloodTypeResponse.data;
+                console.log({ bloodTypeList });
+            } catch (error) {
+                console.error('Error fetching blood type:', error);
+            }
+        },
+        async fetchEducations() {
+            try {
+                const educationResponse = await axios.get(`${baseUrl.value}/api/pendidikan`);
+                educationList.value = educationResponse.data;
+                console.log({ educationList });
+            } catch (error) {
+                console.error('Error fetching education:', error);
+            }
+        },
+        async fetchJobs() {
+            try {
+                const jobResponse = await axios.get(`${baseUrl.value}/api/pekerjaan`);
+                jobList.value = jobResponse.data;
+                console.log({ jobList });
+            } catch (error) {
+                console.error('Error fetching job:', error);
+            }
+        },
+        async fetchReligion() {
+            try {
+                const religionResponse = await axios.get(`${baseUrl.value}/api/religion`);
+                religionList.value = religionResponse.data;
+                console.log({ religion });
+            } catch (error) {
+                console.error('Error fetching religion:', error);
+            }
+        },
+        async updateKecamatan() {
+            try {
+                const selectedKelurahan = await axios.get(`${baseUrl.value}/api/kecamatan`);
+                kecamatanList.value = selectedKelurahan.data;
+                console.log({ kecamatanList });
+            } catch (error) {
+                console.error('Error fetching kecamatan: ', error);
+            }
+        },
+        submitIdentitas(){
+            try {
+                // bang lanjutin save
+                const user = store.getters.getUser;
 
-        console.error(message);
-        toastr.error(message)
-        // Handle the error
+                let form = { ...formIdentitasIbu, ...{ user_id: user.id } };
+
+                console.log("submit identitas ", { form })
+
+                const response = await axios.post(`${baseUrl.value}/api/identitas-ibu`, form);
+
+                if (response && response.data) {
+                    console.log("creating", response.data);
+                    console.log("User data:", response.data.user);
+                }
+
+                toastr.success('Identitas Ibu Berhasil disimpan.');
+
+                // set setActiveuser kali?
+                store.dispatch('fetchUser').then(user => {
+                    console.log('user', { user })
+                    store.commit('setActiveProfile', user.mother);
+                })
+
+                router.push('/my-profile');
+                // Handle the next step or redirect
+            } catch (error) {
+                let message = error;
+
+                console.log(error)
+
+                if (error.response) {
+                    if (error.response.data) {
+                        message = error.response.data.message;
+                    }
+                }
+
+                console.error(message);
+                toastr.error(message)
+                // Handle the error
+            }
+        },
+        
     }
+
 }
+</script>
 
-const fetchKelurahan = async () => {
+<!-- <script setup>
+// import { reactive, computed, onMounted, ref } from 'vue';
+// import { mapGetters, useStore } from 'vuex';
+// import { useRouter } from 'vue-router';
+// import toastr from 'toastr';
 
-    console.log(router.params);
-    try {
-        const response = await axios.get(`${baseUrl.value}/api/kelurahan`);
-        kelurahanList.value = response.data;
-        console.log({ kelurahanList });
-    } catch (error) {
-        console.error('Error fetching kelurahan:', error);
-    }
-}
+// toastr.options = {
+//     "closeButton": true,
+//     "debug": false,
+//     "newestOnTop": false,
+//     "progressBar": true,
+//     "positionClass": "toast-top-right",
+//     "preventDuplicates": false,
+//     "onclick": null,
+//     "showDuration": "300",
+//     "hideDuration": "3000",
+//     "timeOut": "7000",
+//     "extendedTimeOut": "2000",
+//     "showEasing": "swing",
+//     "hideEasing": "linear",
+//     "showMethod": "fadeIn",
+//     "hideMethod": "fadeOut"
+// };
 
-const fetchBloodTypes = async () => {
-    try {
-        const bloodTypeResponse = await axios.get(`${baseUrl.value}/api/blood-types`);
-        bloodTypeList.value = bloodTypeResponse.data;
-        console.log({ bloodTypeList });
-    } catch (error) {
-        console.error('Error fetching blood type:', error);
-    }
-};
+// const store = useStore();
+// const router = useRouter();
 
-const fetchEducations = async () => {
-    try {
-        const educationResponse = await axios.get(`${baseUrl.value}/api/pendidikan`);
-        educationList.value = educationResponse.data;
-        console.log({ educationList });
-    } catch (error) {
-        console.error('Error fetching education:', error);
-    }
-};
+// const imgLogo = computed(() => store.getters.imgLogo);
+// const baseUrl = computed(() => store.getters.baseUrl);
 
-const fetchJobs = async () => {
-    try {
-        const jobResponse = await axios.get(`${baseUrl.value}/api/pekerjaan`);
-        jobList.value = jobResponse.data;
-        console.log({ jobList });
-    } catch (error) {
-        console.error('Error fetching job:', error);
-    }
-};
+// const user_id = computed(() => router.params.id);
+// const nik = computed(() => router.params.nik);
+// const name = computed(() => router.params.name);
+// const email = computed(() => router.params.email);
 
-const fetchReligion = async () => {
-    try {
-        const religionResponse = await axios.get(`${baseUrl.value}/api/religion`);
-        religionList.value = religionResponse.data;
-        console.log({ religion });
-    } catch (error) {
-        console.error('Error fetching religion:', error);
-    }
-};
+// const bloodTypeList = ref([]);
+// const kelurahanList = ref([]);
+// const kecamatanList = ref([]);
+// const educationList = ref([]);
+// const jobList = ref([]);
+// const religionList = ref([]);
+// const mother = store.state.user.mother;
+// const formIdentitasIbu = reactive({
+//     nik: mother.nik ? `${mother.nik}` : '',
+//     no_jkn: mother.no_jkn ? `${mother.no_jkn}` : '',
+//     name: mother.name ? mother.name : '',
+//     date_of_birth: mother.date_of_birth ? mother.date_of_birth : '',
+//     birth_place: mother.birth_place ? mother.birth_place : '',
+//     phone_number: mother.phone_number ? mother.phone_number : '',
+//     address: mother.address ? mother.address : '',
+//     kecamatan_id: mother.kecamatan_id ? mother.kecamatan_id : '',
+//     religion_id: mother.religion_id ? mother.religion_id : '',
+//     education_id: mother.education_id ? mother.education_id : '',
+//     blood_type_id: mother.blood_type_id ? mother.blood_type_id : '',
+//     job_id: mother.job_id ? mother.job_id : '',
+//     height: mother.height ? mother.height : '',
+//     user_id: mother.user_id ? mother.user_id : '',
 
-const updateKecamatan = async () => {
-    try {
-        // const selectedKelurahan = await axios.get(`${baseUrl.value}/api/kecamatan/${formIdentitasIbu.kelurahan}`);
-        const selectedKelurahan = await axios.get(`${baseUrl.value}/api/kecamatan`);
-        kecamatanList.value = selectedKelurahan.data;
-        console.log({ kecamatanList });
-    } catch (error) {
-        console.error('Error fetching kecamatan: ', error);
-    }
-};
+// });
 
-onMounted(() => {
-    fetchKelurahan();
-    fetchBloodTypes();
-    fetchEducations();
-    fetchJobs();
-    fetchReligion();
-    updateKecamatan();
-});
+// const submitIdentitasIbu = async () => {
+//     try {
+//         // bang lanjutin save
+//         const user = store.getters.getUser;
+
+//         let form = { ...formIdentitasIbu, ...{ user_id: user.id } };
+
+//         console.log("submit identitas ", { form })
+
+//         const response = await axios.post(`${baseUrl.value}/api/identitas-ibu`, form);
+
+//         if (response && response.data) {
+//             console.log("creating", response.data);
+//             console.log("User data:", response.data.user);
+//         }
+
+//         toastr.success('Identitas Ibu Berhasil disimpan.');
+
+//         // set setActiveuser kali?
+//         store.dispatch('fetchUser').then(user => {
+//             console.log('user', { user })
+//             store.commit('setActiveProfile', user.mother);
+//         })
+
+//         router.push({
+//             name: 'identitas-ayah',
+//             params: {}
+//         });
+//         // Handle the next step or redirect
+//     } catch (error) {
+//         let message = error;
+
+//         console.log(error)
+
+//         if (error.response) {
+//             if (error.response.data) {
+//                 message = error.response.data.message;
+//             }
+//         }
+
+//         console.error(message);
+//         toastr.error(message)
+//         // Handle the error
+//     }
+// }
+
+// const fetchKelurahan = async () => {
+
+//     console.log(router.params);
+//     try {
+//         const response = await axios.get(`${baseUrl.value}/api/kelurahan`);
+//         kelurahanList.value = response.data;
+//         console.log({ kelurahanList });
+//     } catch (error) {
+//         console.error('Error fetching kelurahan:', error);
+//     }
+// }
+
+// const fetchBloodTypes = async () => {
+//     try {
+//         const bloodTypeResponse = await axios.get(`${baseUrl.value}/api/blood-types`);
+//         bloodTypeList.value = bloodTypeResponse.data;
+//         console.log({ bloodTypeList });
+//     } catch (error) {
+//         console.error('Error fetching blood type:', error);
+//     }
+// };
+
+// const fetchEducations = async () => {
+//     try {
+//         const educationResponse = await axios.get(`${baseUrl.value}/api/pendidikan`);
+//         educationList.value = educationResponse.data;
+//         console.log({ educationList });
+//     } catch (error) {
+//         console.error('Error fetching education:', error);
+//     }
+// };
+
+// const fetchJobs = async () => {
+//     try {
+//         const jobResponse = await axios.get(`${baseUrl.value}/api/pekerjaan`);
+//         jobList.value = jobResponse.data;
+//         console.log({ jobList });
+//     } catch (error) {
+//         console.error('Error fetching job:', error);
+//     }
+// };
+
+// const fetchReligion = async () => {
+//     try {
+//         const religionResponse = await axios.get(`${baseUrl.value}/api/religion`);
+//         religionList.value = religionResponse.data;
+//         console.log({ religion });
+//     } catch (error) {
+//         console.error('Error fetching religion:', error);
+//     }
+// };
+
+// const updateKecamatan = async () => {
+//     try {
+//         // const selectedKelurahan = await axios.get(`${baseUrl.value}/api/kecamatan/${formIdentitasIbu.kelurahan}`);
+//         const selectedKelurahan = await axios.get(`${baseUrl.value}/api/kecamatan`);
+//         kecamatanList.value = selectedKelurahan.data;
+//         console.log({ kecamatanList });
+//     } catch (error) {
+//         console.error('Error fetching kecamatan: ', error);
+//     }
+// };
+
+// onMounted(() => {
+//     fetchKelurahan();
+//     fetchBloodTypes();
+//     fetchEducations();
+//     fetchJobs();
+//     fetchReligion();
+//     updateKecamatan();
+// });
 </script>
 <script>
 /*
@@ -424,4 +599,4 @@ export default {
     }
 }
     */
-</script>
+</script> -->
