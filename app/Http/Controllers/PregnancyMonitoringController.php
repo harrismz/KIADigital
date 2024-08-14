@@ -75,11 +75,9 @@ class PregnancyMonitoringController extends Controller
                 'weekly_monitoring_question_id' => $question->id,
                 'question' => $question->question_text,
             ]);
-            dd($answer);
             if (!$answer->exists) {
                 $answer->save();
             }
-            dd($answer);
             $answers[] = $answer;
         }
         return $answers;
