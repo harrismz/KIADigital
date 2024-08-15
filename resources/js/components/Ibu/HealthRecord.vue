@@ -39,7 +39,7 @@ export default {
         const router = useRouter();
         const gotoHome = () => {
             router.push({
-                name: 'home',
+                name: 'dashboard',
                 params: {}
             });
         };

@@ -28,7 +28,7 @@ export default {
         const router = useRouter();
 
         const gotoHome = () => {
-            router.push('/');
+            router.push('/dashboard');
         };
 
         return {
