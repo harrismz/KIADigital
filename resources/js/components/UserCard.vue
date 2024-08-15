@@ -1,6 +1,7 @@
 <template>
     <div class="mb-2 grid grid-cols-3">
-        <div class="collapse collapse-arrow col-span-1 bg-white border border-4 mb-2 shadow-md" :class="{ 'collapse-open': isOpen }">
+        <div class="collapse collapse-arrow col-span-1 bg-white border border-4 mb-2 shadow-md"
+            :class="{ 'collapse-open': isOpen }">
             <input type="radio" name="my-accordion-2" v-model="isOpen" class="hidden" />
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
                 <h1 class="font-mono text-lg font-lg font-bold">{{ userName }} </h1>
@@ -14,14 +15,14 @@
             </div>
 
             <div v-if="isMom" class="collapse-content">
-                
-                <div v-for="child in relations" :key="child.id" @click="goToAnak(child)">
+
+                <div v-for="child in relations" :key="child.id">
                     <div class="">
-                        <span class="font-bold"> {{getType(child)}}</span>
+                        <span class="font-bold"> {{ getType(child) }}</span>
                     </div>
-                    
+
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
+                        <div @click="goToAnak(child)">
                             <h1 class="font-bold cursor-pointer">{{ getName(child) }}</h1>
                             <p class="text-sm text-gray-500 cursor-pointer">
                                 TTL : {{ child.date_of_birth }}
@@ -29,48 +30,23 @@
                         </div>
 
                         <div class="flex justify-end gap-x-3 row-span-2">
-                            <img class="w-6 h-6" @click="editAnswer" :src=" baseUrl + '/storage/images/edit.png'"></img>
+                            <img class="w-6 h-6 cursor-pointer" @click="editAnak(child)"
+                                :src="baseUrl + '/storage/images/edit.png'"></img>
                         </div>
-    
+
                     </div>
                 </div>
 
                 <a href="/child" class="flex items-center space-x-2 cursor-pointer col-span-2">
-                    <img :src="baseUrl +  '/storage/images/anak-icon.png'" alt="" class="h-5 w-5">
+                    <img :src="baseUrl + '/storage/images/anak-icon.png'" alt="" class="h-5 w-5">
                     <span>
                         tambah identitas anak
                     </span>
                 </a>
-                
+
             </div>
         </div>
     </div>
-    <!-- <div class="mb-2 grid grid-cols-3">
-    <div class="mb-2 grid grid-cols-3 me-4">
-        <div class="col-span-1 bg-white p-4 ">
-            <span class="font-bold">{{userRoleDisplayName}}</span>
-            <div class="mt-2">
-                <span v-if="user">Nama: {{ user.name }}</span>
-            </div>
-            <div v-if="isMom">
-                HPL: 07-09-2025
-            </div>
-
-            <div class="mt-4" v-if="isMom">
-                <span class="font-bold">Anak</span>
-                <div class="flex justify-between mt-2">
-                    <a href="admin/child/create" class=" flex items-center space-x-2">
-                        <img src="storage/images/anak-icon.png" alt="" class="h-5 w-5">
-                        <span>
-                            tambah identitas anak
-                        </span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-    </div> --->
 </template>
 
 <script>
@@ -82,13 +58,13 @@ import { useRouter } from 'vue-router';
 
 export default {
     name: 'UserCard',
-    
-    // jangan pake setup 
+
+    // jangan pake setup
 
     computed: {
         // ...mapState(['user']),
         ...mapGetters([
-            'getUser', 
+            'getUser',
             'activeProfileType',
             'isMom', 'userRole', 'userRoleDisplayName', 'isMedic', 'userName', 'mom', 'children', 'baseUrl', 'relations', 'activeProfile'
         ])
@@ -99,7 +75,7 @@ export default {
         goToAnak(child) {
             this.$store.commit('setActiveChild', child );
             this.$store.commit('setActiveProfile', child );
-            
+
             let id = child.id;
 
             // if ( child.child_name ) {
@@ -116,6 +92,10 @@ export default {
             //     this.$router.push('/');
             // }
         },
+        editAnak(child) {
+            // this.$router.push('/dashboard-anak/' + child.id + '/edit');
+            this.$router.push('/child/' + child.id + '/edit');
+        },
 
         getType(child){
             return child.name ? 'Ibu' : 'Anak';
@@ -129,11 +109,11 @@ export default {
             this.isOpen = !this.isOpen;
         },
     },
-    
+
     data() {
         return {
             userState: null,
-            
+
             isOpen: false,
 
             userDetail: {
@@ -144,7 +124,7 @@ export default {
 
         };
     }
-    
+
 }
 </script>
 

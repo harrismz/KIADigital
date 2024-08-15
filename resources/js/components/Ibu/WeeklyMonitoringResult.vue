@@ -10,15 +10,12 @@
             </div>
         </div>
 
+        <Stepper :weeks="weeks" v-model:currentWeek="currentWeek" @update:currentWeek="handleWeekUpdate" />
         <!-- Daftar Pertanyaan -->
-        <div v-for="(pregnancy_question, index) in pregnancy_questions" :key="index" class="bg-gray-100 p-4 rounded-lg mb-4">
-            <div v-if="pregnancy_question.type == 'text'">
-                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.question }}</p>
-                <p class="text-justify font-medium italic block">{{ pregnancy_question.answer }}</p>
-            </div>
-            <div v-else>
-                <p class="mb-2">{{ index + 1 }}. {{ pregnancy_question.question }}</p>
-                <strong class="block">Jawab: {{ pregnancy_question.answer ? "Ya" : "Tidak" }}</strong>
+        <div v-for="(question, index) in pregnancy_questions" :key="index" class="bg-gray-100 p-4 rounded-lg mb-4">
+            <div>
+                <p class="mb-2">{{ index + 1 }}. {{ question.question }}</p>
+                <p class="text-justify font-medium italic">{{ renderAnswer( question.answer) }}</p>
             </div>
         </div>
     </div>
@@ -28,104 +25,53 @@
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 import {mapActions, mapGetters} from 'vuex';
-import helper from '../helper';
+import Stepper from '../utils/Stepper.vue';
 
 export default {
-    // setup() {
-    //     const router = useRouter();
-
-    //     const questions = ref([
-    //         {
-    //             text: 'Demam Lebih dari Dua Hari?',
-    //             type: 'choice',
-    //             answer: 'YA'
-    //         },
-    //         {
-    //             text: 'Pusing/Sakit Kepala Berat?',
-    //             type: 'choice',
-    //             answer: 'YA'
-    //         },
-    //         {
-    //             text: 'Sulit Tidur / Cemas Berlebih?',
-    //             type: 'choice',
-    //             answer: 'TIDAK'
-    //         },
-    //         {
-    //             text: 'Keluhan/Gejala Lainnya',
-    //             type: 'text',
-    //             answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus malesuada ultrices. Quisque in lobortis justo. Morbi placerat eget erat eu maximus. Nullam in dapibus est. Fusce vel maximus tortor. Fusce a eros erat. Curabitur posuere tellus id nisl vulputate, ut tristique orci fringilla. Suspendisse a orci eget tellus tincidunt pulvinar. Morbi dignissim, arcu at elementum porttitor, nunc risus pulvinar erat, aliquet dictum risus nunc ut lorem. Cras id scelerisque dui, et pharetra quam. Integer placerat tincidunt leo non viverra. Donec consequat nibh venenatis, pellentesque arcu id, eleifend turpis. In hac habitasse platea dictumst. Nunc vel urna nec tellus fermentum congue. Curabitur laoreet vitae leo eget rutrum. Proin a posuere turpis.'
-    //         }
-    //     ]);
-
-    //     const editAnswer = () => {
-    //         router.push({
-    //             name: 'weekly-monitoring-answer',
-    //             params: {}
-    //         });
-    //     };
-
-    //     const gotoHome = () => {
-    //         router.push({
-    //             name: 'home',
-    //             params: {}
-    //         });
-    //     };
-
-    //     return {
-    //         questions,
-    //         editAnswer,
-    //         gotoHome
-    //     };
-    // }
-    mounted() {
-        this.fetchWeek().then(res => {
-            // this.week should refer to something dong mif, 
-            // make sure juga method dibawah ini terjadi setelah week numbernya ada, meskipun aku ga ngerti si,
-            // kenapa di backend si week number ini kayaknya ga kepake jg
-            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, week_number: this.week});
-        })
+    name: 'WeeklyMonitoringResult',
+    components: { Stepper },
+    async mounted() {
+        await this.fetchWeek();
+        await this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: this.pregnancy_week });
     },
     data() {
         return {
-            week: null
+            currentWeek: null,
+            weeks: Array.from({ length: 40 }, (_, i) => ({
+                number: i + 1,
+                disabled: false,
+            })),
         }
     },
     computed: {
         ...mapGetters(['baseUrl', 'mom', 'pregnancy_questions', 'pregnancy_week']),
-
-        options(){
-            return Array.from({length: 40}, (_, index) => {
-                const week = index + 1;
-                return {
-                    text: `Minggu ke-${week}`,
-                    value: week
-                };
-            });
-        }
     },
     methods: {
         ...mapActions(['fetchPregnancyQuestionAnswer']),
 
-        fetchWeek() {
-            // TODO : getWeek based on mom_id
+        async fetchWeek() {
             const id = this.mom.id;
             const url = `${this.baseUrl}/api/pregnancy-week-number/${id}`;
 
-            // console.log("fetch week ",{url})
+            try {
+                const response = await axios.get(url);
 
-            return axios.get(url).then(response => {
-                console.log("fetch pregnancy week", response.data)
-                this.week = response.data;
                 this.$store.commit('setPregnancyWeek', response.data);
-            }).catch(error => {
+                this.currentWeek = response.data - 1;
+
+                this.weeks = this.weeks.map(week => ({
+                    ...week,
+                    disabled: week.number > response.data,
+                }));
+            } catch (error) {
                 console.error(error);
-                helper.renderError(error)
-            });
+            }
+            console.log('end'+this.pregnancy_week);
         },
+
         editAnswer() {
             let query = {
-                mother_id: this.mom.id,
-                week: this.week//getWeek()
+                week: this.pregnancy_week
             }
             this.$router.push({
                 name: 'weekly-monitoring-answer',
@@ -139,12 +85,17 @@ export default {
             });
         },
         renderAnswer(answer) {
-            if(answer == null) {
+            if(answer == null || answer == '' || answer == 0) {
                 return '-'
             }
 
             return answer;
         },
+        handleWeekUpdate(indexnewWeek) {
+            this.currentWeek = indexnewWeek;
+            this.$store.commit('setPregnancyWeek', indexnewWeek+1);
+            this.fetchPregnancyQuestionAnswer({mother_id: this.mom.id, pregnancy_week: indexnewWeek+1 });
+        }
     }
 }
 </script>

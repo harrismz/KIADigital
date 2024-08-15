@@ -22,4 +22,14 @@ class Child extends Model
     {
         return $this->hasOne(BloodType::class, 'id','blood_type_id');
     }
+
+    public function mother()
+    {
+        return $this->belongsTo(Mother::class, 'mother_id','id');
+    }
+
+    public function father()
+    {
+        return $this->belongsTo(Father::class, 'father_id','id');
+    }
 }
