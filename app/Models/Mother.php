@@ -26,7 +26,8 @@ class Mother extends Model
         return $this->hasMany(Child::class);
     }
     public function father(){
-        return $this->hasMany(Father::class);
+        // return $this->hasMany(Father::class);
+        return $this->hasOne(Father::class)->latestOfMany();
     }
 
     public function pregnancy() {

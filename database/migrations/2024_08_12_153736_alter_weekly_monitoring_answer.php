@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('weekly_monitoring_answer', function (Blueprint $table) {
             //
             $table->text('question')->nullable();
+            $table->text('answer')->nullable()->change();
         });
     }
 
@@ -25,6 +26,7 @@ return new class extends Migration
         Schema::table('weekly_monitoring_answer', function (Blueprint $table) {
             //
             $table->dropColumn('question');
+            $table->int('answer')->nullable()->change();
         });
     }
 };

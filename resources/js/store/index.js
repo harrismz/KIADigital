@@ -61,7 +61,7 @@ const store = createStore({
 
         pregnancy_questions:[],
 
-        pregnancy_week: 0,
+        pregnancy_week: 1,
 
         config: {
             baseUrl: origin, // URL dasar yang mungkin diperlukan
@@ -654,8 +654,11 @@ const store = createStore({
         },
 
         fetchPregnancyQuestionAnswer(self, payload){
+            console.log('fetchPregnancyQuestionAnswer')
+            console.log(payload)
+
             let mom = self.getters.mom;
-            const url = self.getters.baseUrl + "/api/pregnancy-questions/"+ payload.week_number;
+            const url = self.getters.baseUrl + "/api/pregnancy-questions/"+ payload.pregnancy_week;
 
             axios.get(url, {
                 params:{

@@ -21,9 +21,6 @@ class PregnancyMonitoringController extends Controller
         // get week by date first_day_of_last_period
         $pregnancy = Pregnancy::where('mother_id', $mother_id)->latest()->first();
 
-        $first_day_of_last_period = $pregnancy->first_day_of_last_period;
-        $week_number = $this->getWeekNumber($first_day_of_last_period);
-
         // copy to answer
         $answer = $this->generateOrGetAnswer($week_number, $pregnancy->id);
         // return the answer with that data
@@ -67,14 +64,15 @@ class PregnancyMonitoringController extends Controller
         $questions = WeeklyMonitoringQuestion::get();
         $answers = [];
         foreach ($questions as $question) {
-            # code...
             $answer = WeeklyMonitoringAnswer::firstOrNew([
                 'pregnancy_id' => $pregnancy_id,
                 'week_number' => $week_number,
                 'weekly_monitoring_question_id' => $question->id,
                 'question' => $question->question_text,
             ]);
-            $answer->save();
+            if (!$answer->exists) {
+                $answer->save();
+            }
             $answers[] = $answer;
         }
         return $answers;
@@ -99,10 +97,24 @@ class PregnancyMonitoringController extends Controller
             $answer->save();
             $answers[] = $answer;
         }
+        $countNo = WeeklyMonitoringAnswer::where('pregnancy_id', $question['pregnancy_id'])
+        ->where('week_number', $question['week_number'])
+        ->whereIn('weekly_monitoring_question_id', [4, 5, 6, 7, 8, 9, 10])
+        ->where('answer', 'Ya')
+        ->count();
 
-        return [
-            'success' => true,
-            'data' => $answers
-        ];
+        if ($countNo >= 3) {
+            return [
+                'success' => true,
+                'data' => $answers,
+                'message' => 'Anda memiliki resiko tinggi, segera periksakan ke dokter'
+            ];
+        } else {
+            return [
+                'success' => true,
+                'data' => $answers,
+                'message' => 'Data saved!'
+            ];
+        }
     }
 }
