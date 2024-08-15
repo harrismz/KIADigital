@@ -43,7 +43,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['baseUrl', 'getUser'])
+        ...mapGetters(['baseUrl', 'getUser', 'mom'])
     },
 
     data() {
@@ -116,7 +116,7 @@ export default {
                 ...this.form,
                 ...{
                     user_id: this.getUser.id || null,
-                    mother_id: this.getUser.id || null, //yg nambah data ayah si ibu
+                    mother_id: this.mom.id //this.getUser.id || null, //yg nambah data ayah si ibu
                 }
             }
 
