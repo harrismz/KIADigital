@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Listeners\HandleBreadDataAdded;
+use App\Listeners\HandleBreadDataUpdated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use TCG\Voyager\Events\BreadDataAdded;
+use TCG\Voyager\Events\BreadDataUpdated;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,10 @@ class EventServiceProvider extends ServiceProvider
 
         BreadDataAdded::class => [
             HandleBreadDataAdded::class
+        ],
+
+        BreadDataUpdated::class => [
+            HandleBreadDataUpdated::class
         ],
 
     ];

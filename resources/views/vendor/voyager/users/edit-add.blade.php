@@ -101,20 +101,21 @@
 
                             @php
                                 $optionsRs = App\Models\Hospital::select('id','hospital_name')->get();
+                                $staff = App\Models\MedicalStaff::where('user_id',$dataTypeContent->id)->first();
                             @endphp
                             <div class="form-group">
                                 <label for="hospital_id">Hospital</label>
                                 {{-- fetch RS disini --}}
                                 <select class="form-control" name="hospital_id" id="hospital_id">
                                     @foreach ($optionsRs as $hospital)
-                                    <option value="{{$hospital->id}}">{{$hospital->hospital_name}}</option>
+                                    <option value="{{$hospital->id}}" {{ $staff && $hospital->id == $staff->hospital_id ? "selected" : "" }} >{{$hospital->hospital_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             
                             <div class="form-group">
                                 <label for="role_tenaga_medis">Jabatan Tenaga Medis</label>
-                                <input type="text" id="role_tenaga_medis" name="role_tenaga_medis" class="form-control" placeholder="Contoh: Dokter">
+                                <input value="{{old('role_tenaga_medis', $staff->role ?? '')}}" type="text" id="role_tenaga_medis" name="role_tenaga_medis" class="form-control" placeholder="Contoh: Dokter">
                             </div>
                         </div>
                     </div>
