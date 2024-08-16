@@ -1,12 +1,19 @@
 <template>
-    <div class="flex flex-col min-h-24 bg-gray-100 p-6">
-        <user-card />
-        <progress-bar v-if="isMom && activeProfileType == 'ibu'"></progress-bar>
-        <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"> -->
-        <div :class="isMedic ? 'grid grid-cols-3 cols gap-4' : 'grid grid-cols-2 cols gap-4'">
-            <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
-                :link="card.link" :img="card.img" />
+    <div>
+        <div v-if="getUser" class="flex flex-col min-h-24 bg-gray-100 p-6">
+            <user-card />
+            <progress-bar v-if="isMom && activeProfileType == 'ibu'"></progress-bar>
+            <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"> -->
+            <div :class="isMedic ? 'grid grid-cols-3 cols gap-4' : 'grid grid-cols-2 cols gap-4'">
+                <ProfileCard v-for="card in cards" :key="card.title" :title="card.title" :description="card.description"
+                    :link="card.link" :img="card.img" />
+            </div>
         </div>
+
+        <div v-else class="flex flex-col min-h-24 bg-gray-100 p-6">
+            <stunting-chart />
+        </div>
+
     </div>
 </template>
 
@@ -19,13 +26,15 @@ import toastr from 'toastr';
 import UserCard from './UserCard.vue';
 ChartJS.register(LineElement, CategoryScale, LinearScale);
 import {mapActions, mapGetters} from 'vuex';
+import StuntingChart from './StuntingChart.vue'
 
 export default {
 components: {
     ProfileCard,
     LineChart: Line,
         UserCard,
-        ProgressBar
+        ProgressBar,
+        StuntingChart
 },
 data() {
     return {
@@ -84,7 +93,7 @@ methods: {
 },
 
 computed:{
-    ...mapGetters(['getMenu', 'isMom', 'isMedic', 'activeProfileType']),
+    ...mapGetters(['getMenu', 'isMom', 'isMedic', 'activeProfileType', 'getUser']),
 
     cards(){
         return this.getMenu;
