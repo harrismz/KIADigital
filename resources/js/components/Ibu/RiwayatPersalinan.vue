@@ -4,9 +4,14 @@
             <div class="mb-6">
                 <div class="grid grid-cols-2 gap-4">
                     <h1 class="text-2xl font-bold">Riwayat Persalinan</h1>
-                    <div class="flex justify-end gap-x-3">
+                    <div class="flex justify-end item-end items-center gap-x-3">
                         <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'"></img>
                         <!-- <img class="w-6 h-6" @click="editAnswer" :src="'storage/images/edit.png'"></img> -->
+                        
+                        <button @click="editAnswer()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <i class="fa fa-add"></i>
+                            <span class="sr-only">Icon description</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -59,10 +64,10 @@ export default {
             loading.value = false;
         };
 
-        const editAnswer = (id) => {
+        const editAnswer = (id = null ) => {
             router.push({
                 name: 'riwayat-persalinan-edit',
-                query: {id}
+                query: id ? {id} : {}
             });
         };
         const gotoHome = () => {

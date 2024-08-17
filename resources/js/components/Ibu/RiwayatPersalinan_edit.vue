@@ -167,7 +167,7 @@ export default {
 
         additional(){
             return {
-                mother_id: this.pregnancy.mother_id,
+                mother_id: this.mom.id,
             }
         },
 
@@ -176,7 +176,6 @@ export default {
     methods: {
         fetchPregnancyId(){
             const url = this.baseUrl + "/api/pregnancy/show/"+ this.PregnancyId ;
-            console.log({url})
                         
             axios.get(url, {
                 // apa aja nih disini;
@@ -193,11 +192,20 @@ export default {
         },
 
         submit(){
-            const url = this.baseUrl + "/api/pregnancy/"+ this.pregnancy.id;
-                        
-            axios.put(url, {
-                ...this.form, ...this.additional
-            }).then(res => res.data)
+            let url = this.baseUrl + "/api/pregnancy";
+            
+            let ajax = axios.post(url, {
+                    ...this.form, ...this.additional
+                });
+
+            if(this.PregnancyId != null ) {
+                url = this.baseUrl + "/api/pregnancy/"+ this.pregnancy.id;
+                ajax = axios.put(url, {
+                    ...this.form, ...this.additional
+                });
+            }            
+
+            ajax.then(res => res.data)
             .then(res => {
                 console.log(res);
                 toastr.success(res.message);
