@@ -51,7 +51,7 @@
 <script>
 import Combo from '../utils/combo.vue';
 import MyInput from '../utils/MyInput.vue';
-import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex';
 import toastr from 'toastr';
 import helper from '../helper';
 
@@ -65,7 +65,7 @@ export default {
         ...mapGetters(['baseUrl', 'getUser', 'mom'])
     },
 
-    data(){
+    data() {
         return {
             form: {
                 // "id": null,
@@ -89,28 +89,28 @@ export default {
 
             inputs: {
                 "first_day_of_last_period": {
-                    inputType:'date'
+                    inputType: 'date'
                 },
 
                 "estimate_date_of_delivery": {
-                    inputType:'date'
+                    inputType: 'date'
                 },
 
                 "upper_arm_circumference": {
-                    inputType:'number'
+                    inputType: 'number'
                 },
 
-                "pregnancy_number": {inputType: 'number'},
-                "number_of_deliveries": {inputType: 'number'},
-                "number_of_miscarriages": {inputType: 'number'},
-                "number_of_living_children": {inputType: 'number'},
-                "number_of_deceased_children": {inputType: 'number'},
-                "number_of_premature_children": {inputType: 'number'},
-                "interval_of_last_delivery": {inputType: 'number'},
+                "pregnancy_number": { inputType: 'number' },
+                "number_of_deliveries": { inputType: 'number' },
+                "number_of_miscarriages": { inputType: 'number' },
+                "number_of_living_children": { inputType: 'number' },
+                "number_of_deceased_children": { inputType: 'number' },
+                "number_of_premature_children": { inputType: 'number' },
+                "interval_of_last_delivery": { inputType: 'number' },
 
-                "tetanus_immunization": {inputType: 'text'},
-                "last_delivery_helper": {inputType: 'text'},
-                "last_delivery_method": {inputType: 'text'},
+                "tetanus_immunization": { inputType: 'text' },
+                "last_delivery_helper": { inputType: 'text' },
+                "last_delivery_method": { inputType: 'text' },
             },
 
             combos: {
@@ -124,30 +124,32 @@ export default {
 
     methods: {
 
-        submit(){
+        submit() {
             let user = this.getUser;
             let mother = this.mom;
 
-            let form = {...this.form, ... {
-                mother_id: mother.id
-            }}
+            let form = {
+                ...this.form, ... {
+                    mother_id: mother.id
+                }
+            }
 
 
             const url = this.baseUrl + "/api/pregnancy";
 
-            axios.post(url, form ).then(res => res.data)
-            .then(res => {
-                let msg = res.message;
-                toastr.success(msg);
+            axios.post(url, form).then(res => res.data)
+                .then(res => {
+                    let msg = res.message;
+                    toastr.success(msg);
 
-                this.$router.push('/'); //ini ke profile kah ?
-            }).catch(error => {
-                // console.log(error);
-                // toastr.error(error)
-                helper.renderError(error);
-            })
+                    this.$router.push('/dashboard'); //ini ke profile kah ?
+                }).catch(error => {
+                    // console.log(error);
+                    // toastr.error(error)
+                    helper.renderError(error);
+                })
 
-            console.log({form})
+            console.log({ form })
         },
 
         goToCalendar() {
