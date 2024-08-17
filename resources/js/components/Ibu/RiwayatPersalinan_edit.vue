@@ -18,8 +18,19 @@
                         <my-input v-for="(value, key) in pregnancyInputs" :key="key"  :isRequired="value.isRequired" :inputType="value.inputType"
                         v-model="form[key]"  :inputKey="key" ></my-input>
 
+                        <div class="mb-2">
+                            <label class="text-sm font-medium text-gray-700" for="last_delivery_method">{{ label('last_delivery_method') }}</label>
+                            <select 
+                                class="mt-1 p-2 block bg-white w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                name="last_delivery_method" id="last_delivery_method" v-model="form.last_delivery_method">
+                                <option value="" disabled>Pilih metode persalinan</option>
+                                <option value="normal">Normal</option>
+                                <option value="caesar">Caesar</option>
+                            </select>
+                        </div>
+
                         <div>
-                            <label for="kek">Kekurangan Energi Kronis</label>
+                            <label class="text-sm font-medium text-gray-700" for="kek">Kekurangan Energi Kronis</label>
                             <div class="flex gap-10">
                                 <span>
                                     <input type="radio" value="1" name="kek" id="kek" v-model="form.kek">
@@ -158,10 +169,10 @@ export default {
                     inputType: 'text' 
                 },
                 
-                "last_delivery_method": {
-                    isRequired: true,
-                    inputType: 'text' 
-                },
+                // "last_delivery_method": {
+                //     isRequired: true,
+                //     inputType: 'text' 
+                // },
             }
         },
 
@@ -218,6 +229,10 @@ export default {
                 console.log(error);
                 helper.renderError(error);
             })
+        },
+
+        label(word){
+            return helper.label(word);
         }
     },
 
