@@ -64,6 +64,17 @@ class PregnancyController extends Controller
         ];
 
     }
+    
+    public function showList(Request $request, $mother_id) {
+        // find mother
+        $mother = Mother::findOrFail($mother_id);
+
+        return [
+            'success' => true,
+            'data' => $mother->pregnancies
+        ];
+
+    }
 
     public function getWeek() {
         // TODO get week of pregnancy
