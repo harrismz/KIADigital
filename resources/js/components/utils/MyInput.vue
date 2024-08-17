@@ -6,6 +6,7 @@
             :value="modelValue"
             :type="inputType" 
             :id="inputKey"
+            min="0"
             @input="$emit('update:modelValue', $event.target.value)"
             @change="onFileChange"
             :placeholder="label(inputKey)"

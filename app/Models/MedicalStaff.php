@@ -10,4 +10,6 @@ class MedicalStaff extends Model
     use HasFactory;
     
     protected $table = "medical_staff";
+
+    protected $guarded = ['id'];
 }

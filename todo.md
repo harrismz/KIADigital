@@ -13,3 +13,13 @@ setup dashboard untuk ibu dan dokter pake vue
     - staff id and hospital id belum terisi ketika input pregnancy checkup history
     - input nya juga masih text semua, harusnya ada yang upload, ada yang calendar
     - Checkup history harus handle juga anak dan hanya memunculkan yang staff_id == current user
+
+# 2024-08-16:
+    input ke users sekalian input ke staff
+    - yang di input di staff, name nya samain.
+    - tapi kita juga butuh input hospital_id, jabatan_role, (nip)
+    what to do :
+        - bisa di model
+        - bisa di event
+        - tapi dua2 nya, butuh akses ke request, caranya gmna?
+        
