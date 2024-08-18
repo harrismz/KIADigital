@@ -153,17 +153,21 @@
                     </div>
                 </div>
             </div>
-            <div v-for="(child, index) in mom.children" :key="index" class="my-2">
+            <div v-for="child in relations" :key="child.id" class="my-2">
                 <div class="mb-6">
                     <div class="grid grid-cols-2 gap-4">
                         <h1 class="text-2xl font-bold">Identitas Anak ke - {{ child.child_of || 'N/A' }} </h1>
                         <div class="flex justify-end gap-x-3">
                             <img class="w-6 h-6" @click="addAnak" :src="'storage/images/add.png'">
-                            <img class="w-6 h-6" @click="editAnak(child.id)" :src="'storage/images/edit.png'">
+                            <img class="w-6 h-6" @click="editAnak(child)" :src="'storage/images/edit.png'">
                         </div>
                     </div>
                 </div>
                 <!-- Daftar Pertanyaan -->
+                <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <p class="mb-2">Nama Anak </p>
+                    <p class="text-justify font-medium italic">{{ child.child_name || 'N/A' }}</p>
+                </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Nomor Akte Kelahiran</p>
                     <p class="text-justify font-medium italic">{{ child.akte_no || 'N/A' }}</p>
@@ -182,7 +186,7 @@
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Golongan Darah</p>
-                    <p class="text-justify font-medium italic">{{ child.blood_type.blood_type_name || 'N/A' }}</p>
+                    <!-- <p class="text-justify font-medium italic">{{ child.blood_type.blood_type_name || 'N/A' }}</p> -->
                 </div>
             </div>
         </div>
@@ -203,7 +207,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['mom', 'baseUrl']),
+        ...mapGetters(['mom', 'baseUrl', 'relations']),
     },
     methods: {
         editIbu() {
@@ -214,9 +218,9 @@ export default {
             // console.log("ibu", this.ibu)
             this.$router.push(`/update-profile/father/${fatherId}`);
         },
-        editAnak(childId) {
-            // console.log("ibu", this.ibu)
-            this.$router.push(`/update-profile/child/${childId}`);
+        editAnak(child) {
+            // this.$router.push('/dashboard-anak/' + child.id + '/edit');
+            this.$router.push('/child/' + child.id + '/edit');
         },
 
     }
