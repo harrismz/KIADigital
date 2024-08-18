@@ -12,7 +12,7 @@
                 <form @submit.prevent="submit">
 
                     <my-input :isRequired="value.isRequired" :inputType="value.inputType ? value.inputType : 'text'"
-                        v-model="form[key]" :key="key" :inputKey="key" v-for="(value,key) in inputs"></my-input>
+                        v-model="form[key]" :key="key" :inputKey="key" v-for="(value, key) in inputs"></my-input>
 
                     <div class="mb-4">
                         <label for="date_of_birth" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
@@ -109,8 +109,26 @@ export default {
             }
         }
     },
-
+    // mounted() {
+    //     this.id();
+    // },
     methods: {
+        async id() {
+            let id = this.$route.params.id;
+            this.fetchDad();
+        },
+        fetchDad() {
+            const url = this.baseUrl + "/api/father/" + this.id;
+            axios.get(url).then(res => res.data)
+                .then(res => {
+                    console.log(res);
+                    this.form = res.data;
+                }).catch(error => {
+                    console.log(error);
+                    const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+                    toastr.error(errorMessage);
+                })
+        },
         submit() {
             let form = {
                 ...this.form,
