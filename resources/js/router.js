@@ -3,11 +3,14 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
+import IdentitasIbuNew from './components/Ibu/IdentitasIbuNew.vue';
 import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
 import AddAnak from './components/Anak/AddAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
+import AddAyah from './components/Ayah/AddAyah.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
+import HealthRecordList from './components/Ibu/HealthRecordList.vue';
 import QRCode from './components/utils/QRCode.vue';
 import UserLayout from './layouts/UserLayout.vue';
 import LoginLayout from './layouts/LoginLayout.vue';
@@ -121,6 +124,24 @@ const routes = [
         }
     },
     {
+        path: '/father-new',
+        name: 'father-new',
+        component: AddAyah,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
+        path: '/father/:id/edit',
+        name: 'identitas-ayah',
+        component: IdentitasAyah,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
         path: '/status-kehamilan',
         name: 'status-kehamilan',
         component: StatusKehamilan,
@@ -152,6 +173,15 @@ const routes = [
         path: '/child/:id/edit',
         name: 'child-edit',
         component: AddAnak,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
+        path: '/mother/:id/edit',
+        name: 'mother-edit',
+        component: IdentitasIbuNew,
         props: true,
         meta: {
             layout: 'LoginLayout'
@@ -233,9 +263,18 @@ const routes = [
     },
 
     {
-        path: '/health-records',
+        path: '/health-records/:id',
         name: 'health-records',
         component: HealthRecordIbu,
+        props: true,
+        meta: {
+            layout: 'UserLayout'
+        }
+    },
+    {
+        path: '/health-records-list',
+        name: 'health-records-list',
+        component: HealthRecordList,
         props: true,
         meta: {
             layout: 'UserLayout'
@@ -348,7 +387,7 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: StuntingChart,
+        component: Dashboard,
         meta: {
             layout: 'UserLayout',
             requiresAuth: false
@@ -391,15 +430,6 @@ const routes = [
             layout: 'UserLayout',
             requiresAuth: true,
             role: 'medic'
-        }
-    },
-    {
-        path: '/health-record-ibu',
-        name: 'health-record-ibu',
-        component: HealthRecordIbu,
-        meta: {
-            layout: 'UserLayout',
-            requiresAuth: true
         }
     },
     {

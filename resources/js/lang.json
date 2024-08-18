@@ -32,8 +32,9 @@
     "lab_result": "Hasil Lab",
     "action": "Tindakan",
     "usg_image": "Foto USG",
-    "weight_baby": "Berat Janin",   
+    "weight_baby": "Berat Janin",
     "next_control": "Kontrol Selanjutnya",
     "advice_given": "Saran dan Tanggapan",
-    "created_at": "Tanggal Pemeriksaan"
+    "created_at": "Tanggal Pemeriksaan",
+    "week": "Minggu ke"
 }

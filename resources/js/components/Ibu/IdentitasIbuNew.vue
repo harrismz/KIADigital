@@ -3,11 +3,11 @@
         <div class="flex w-full max-w-4xl shadow-md rounded-lg overflow-hidden">
             <div class="w-1/2 bg-gray-200 flex">
                 <div>
-                    <img :src="'/storage/images/ayah.png'" class="h-full" alt="Identitas Ayah">
+                    <img :src="'/storage/images/ibu.jpg'" alt="Image" class="h-full">
                 </div>
             </div>
             <div class="w-1/2 p-8 bg-white">
-                <h2 class="text-2xl font-bold mb-6 text-center">IDENTITAS AYAH</h2>
+                <h2 class="text-2xl font-bold mb-6 text-center">IDENTITAS IBU</h2>
                 <form>
 
                     <my-input :isRequired="value.isRequired" :inputType="value.inputType ? value.inputType : 'text'"
@@ -68,8 +68,7 @@ export default {
                 "education_id": null,
                 "blood_type_id": null,
                 "job_id": null,
-                // "created_at": null,
-                // "updated_at": null,
+                "height": null,
                 "user_id": null
             },
 
@@ -89,6 +88,10 @@ export default {
                 },
                 "phone_number": {
                     isRequired: true
+                },
+                "height": {
+                    inputType: 'number',
+                    isRequired: true,
                 },
             },
 
@@ -121,23 +124,22 @@ export default {
     },
     methods: {
         async processCheck() {
-            const fatherId = this.$route.params.id;
-            if (!fatherId) return null;
-            await axios.get(this.baseUrl + `/api/father/${fatherId}`)
+            const motherId = this.$route.params.id;
+            if (!motherId) return null;
+            await axios.get(this.baseUrl + `/api/mother/${motherId}`)
                 .then(res => res.data)
                 .then(res => {
-                    // console.log("getDataAyah", res);
+                    console.log("getDataIbu", res);
                     this.form = res;
                     this.additional.id = res.id;
-                    // console.log("additional->id", this.additional.id);
-                    // this.submit()
+                    console.log("additional->id", this.additional.id);
                 })
                 .catch(error => {
                     console.log(error);
                 })
         },
         fetchDad() {
-            const url = this.baseUrl + "/api/father/" + this.id;
+            const url = this.baseUrl + "/api/mother/" + this.id;
             axios.get(url).then(res => res.data)
                 .then(res => {
                     console.log(res);
@@ -157,8 +159,8 @@ export default {
                 }
             }
 
-            const url = this.baseUrl + "/api/identitas-ayah";
-            console.log('store to ayah', form)
+            const url = this.baseUrl + "/api/mother";
+            console.log('store to ibu', form)
             axios.post(url, form).then(res => res.data)
                 .then(res => {
                     console.log(res);
@@ -178,11 +180,11 @@ export default {
                 })
         },
         updateData() {
-            const url = `${this.baseUrl}/api/father/${this.additional.id}/update`;
+            const url = `${this.baseUrl}/api/mother/${this.additional.id}/update`;
             const form = {
                 ...this.form, ...this.additional
             }
-            console.log('update to ayah', form)
+            console.log('update to mother', form)
             axios.put(url, {
                 ...form
             }).then(res => res.data)
