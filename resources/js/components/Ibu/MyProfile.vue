@@ -30,7 +30,8 @@
                     <div class="grid grid-cols-2 gap-4">
                         <h1 class="text-xl font-mono font-bold">Identitas Ibu</h1>
                         <div class="flex justify-end gap-x-3">
-                            <img class="w-5 h-5 cursor-pointer" @click="editIbu" :src="'storage/images/edit.png'">
+                            <img class="w-5 h-5 cursor-pointer" @click="editIbu(mom.id)"
+                                :src="'storage/images/edit.png'">
                         </div>
                     </div>
                 </div>
@@ -65,7 +66,7 @@
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Golongan Darah</p>
-                    <p class="text-justify font-medium italic">{{ mom.blood_type.blood_type_name || 'N/A' }} ( {{
+                    <p class="text-justify font-medium italic">{{ mom.blood_type?.blood_type_name || 'N/A' }} ( {{
                         mom.blood_type.reshus || 'N/A'
                         }}
                         )</p>
@@ -76,26 +77,26 @@
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Kecamatan</p>
-                    <p class="text-justify font-medium italic">{{ mom.kecamatan.kecamatan_name || 'N/A' }}</p>
+                    <p class="text-justify font-medium italic">{{ mom.kecamatan?.kecamatan_name || 'N/A' }}</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Agama</p>
-                    <p class="text-justify font-medium italic">{{ mom.religion.religion_name || 'N/A' }}</p>
+                    <p class="text-justify font-medium italic">{{ mom.religion?.religion_name || 'N/A' }}</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Pendidikan</p>
-                    <p class="text-justify font-medium italic">{{ mom.education.education_name || 'N/A' }}</p>
+                    <p class="text-justify font-medium italic">{{ mom.education?.education_name || 'N/A' }}</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Pekerjaan</p>
-                    <p class="text-justify font-medium italic">{{ mom.job.job_name || 'N/A' }}</p>
+                    <p class="text-justify font-medium italic">{{ mom.job?.job_name || 'N/A' }}</p>
                 </div>
             </div>
-            <div v-for="(dad, index) in mom.father" :key="index" class="my-2">
+            <div v-for="dad in ayah" :key="dad.id" class="my-2">
                 <div class="my-2">
                     <div class="mb-6">
                         <div class="grid grid-cols-2 gap-4">
-                            <h1 class="text-2xl font-bold">Identitas Ayah ke - {{ index + 1 }}</h1>
+                            <h1 class="text-2xl font-bold">Identitas Ayah </h1>
                             <div class="flex justify-end gap-x-3">
                                 <img class="w-6 h-6" @click="addAyah" :src="'storage/images/add.png'">
                                 <img class="w-6 h-6" @click="editAyah(dad.id)" :src="'storage/images/edit.png'">
@@ -125,45 +126,49 @@
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Nomor Jaminan Kesehatan Nasional</p>
-                        <p class="text-justify font-medium italic">{{ dad.no_jkn || 'N/A'}}</p>
+                        <p class="text-justify font-medium italic">{{ dad.no_jkn || 'N/A' }}</p>
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Golongan Darah</p>
-                        <p class="text-justify font-medium italic">{{ dad.blood_type.blood_type_name || 'N/A' }}</p>
+                        <p class="text-justify font-medium italic">{{ dad.blood_type?.blood_type_name || 'N/A' }}</p>
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Alamat</p>
-                        <p class="text-justify font-medium italic">{{ dad.address || 'N/A'}}</p>
+                        <p class="text-justify font-medium italic">{{ dad.address || 'N/A' }}</p>
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Kecamatan</p>
-                        <p class="text-justify font-medium italic">{{ dad.kecamatan.kecamatan_name || 'N/A' }}</p>
+                        <p class="text-justify font-medium italic">{{ dad.kecamatan?.kecamatan_name || 'N/A' }}</p>
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Agama</p>
-                        <p class="text-justify font-medium italic">{{ dad.religion.religion_name || 'N/A' }}</p>
+                        <p class="text-justify font-medium italic">{{ dad.religion?.religion_name || 'N/A' }}</p>
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Pendidikan</p>
-                        <p class="text-justify font-medium italic">{{ dad.education.education_name || 'N/A' }}</p>
+                        <p class="text-justify font-medium italic">{{ dad.education?.education_name || 'N/A' }}</p>
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Pekerjaan</p>
-                        <p class="text-justify font-medium italic">{{ dad.job.job_name || 'N/A' }}</p>
+                        <p class="text-justify font-medium italic">{{ dad.job?.job_name || 'N/A' }}</p>
                     </div>
                 </div>
             </div>
-            <div v-for="(child, index) in mom.children" :key="index" class="my-2">
+            <div v-for="child in relations" :key="child.id" class="my-2">
                 <div class="mb-6">
                     <div class="grid grid-cols-2 gap-4">
                         <h1 class="text-2xl font-bold">Identitas Anak ke - {{ child.child_of || 'N/A' }} </h1>
                         <div class="flex justify-end gap-x-3">
                             <img class="w-6 h-6" @click="addAnak" :src="'storage/images/add.png'">
-                            <img class="w-6 h-6" @click="editAnak(child.id)" :src="'storage/images/edit.png'">
+                            <img class="w-6 h-6" @click="editAnak(child)" :src="'storage/images/edit.png'">
                         </div>
                     </div>
                 </div>
                 <!-- Daftar Pertanyaan -->
+                <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                    <p class="mb-2">Nama Anak </p>
+                    <p class="text-justify font-medium italic">{{ child.child_name || 'N/A' }}</p>
+                </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Nomor Akte Kelahiran</p>
                     <p class="text-justify font-medium italic">{{ child.akte_no || 'N/A' }}</p>
@@ -182,7 +187,7 @@
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg mb-4">
                     <p class="mb-2">Golongan Darah</p>
-                    <p class="text-justify font-medium italic">{{ child.blood_type.blood_type_name || 'N/A' }}</p>
+                    <p class="text-justify font-medium italic">{{ child.blood_type?.blood_type_name || 'N/A' }}</p>
                 </div>
             </div>
         </div>
@@ -198,25 +203,48 @@ export default {
     data() {
         return {
             ibu: [],
-            ayah: [],
+            ayah: {},
             anak: []
         }
     },
     computed: {
-        ...mapGetters(['mom', 'baseUrl']),
+        ...mapGetters(['mom', 'baseUrl', 'relations']),
+    },
+    mounted() {
+        this.fetchDad()
     },
     methods: {
+        fetchDad() {
+            const url = `${this.baseUrl}/api/get-father/${this.mom.id}`;
+            axios.get(url).then(res => res.data)
+                .then(res => {
+                    console.log(res);
+                    this.ayah = res;
+                    // this.form = res.data;
+                }).catch(error => {
+                    console.log(error);
+                    const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+                    toastr.error(errorMessage);
+                })
+        },
         editIbu() {
-            // console.log("ibu", this.ibu)
-            this.$router.push(`/update-profile/mother/${this.mom.id}`);
+            // console.log("ibu", this.mom)
+            // this.$router.push(`/update-profile/mother/${this.mom.id}`);
+            this.$router.push('/mother/' + this.mom.id + '/edit');
         },
         editAyah(fatherId) {
             // console.log("ibu", this.ibu)
-            this.$router.push(`/update-profile/father/${fatherId}`);
+            this.$router.push(`/father/${fatherId}/edit`);
         },
-        editAnak(childId) {
-            // console.log("ibu", this.ibu)
-            this.$router.push(`/update-profile/child/${childId}`);
+        editAnak(child) {
+            // this.$router.push('/dashboard-anak/' + child.id + '/edit');
+            this.$router.push('/child/' + child.id + '/edit');
+        },
+        addAnak() {
+            this.$router.push('/child');
+        },
+        addAyah() {
+            this.$router.push('/father-new');
         },
 
     }

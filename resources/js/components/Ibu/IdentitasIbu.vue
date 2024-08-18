@@ -217,7 +217,7 @@ const submitIdentitasIbu = async () => {
 
         toastr.success('Identitas Ibu Berhasil disimpan.');
 
-        // set setActiveuser kali? 
+        // set setActiveuser kali?
         store.dispatch('fetchUser').then(user => {
             console.log('user', {user})
             store.commit('setActiveProfile', user.mother );
@@ -308,6 +308,24 @@ const updateKecamatan = async () => {
     }
 };
 
+const id = (() => {
+    return this.$router.params.id;
+})
+
+const fetchMother = async () => {
+    if (this.id) {
+        try {
+            const response = await axios.get(`${baseUrl.value}/api/mother/${this.id}`);
+            console.log(response.data);
+            formIdentitasIbu.user_id = response.data.id;
+            formIdentitasIbu.name = response.data.name;
+            formIdentitasIbu.email = response.data.email;
+        } catch (error) {
+            console.error('Error fetching mother:', error);
+        }
+    }
+}
+
 onMounted(() => {
     fetchKelurahan();
     fetchBloodTypes();
@@ -315,6 +333,7 @@ onMounted(() => {
     fetchJobs();
     fetchReligion();
     updateKecamatan();
+    fetchMother();
 });
 </script>
 <style scoped>

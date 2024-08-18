@@ -39,7 +39,7 @@ import Combo from '../utils/combo.vue';
 import { mapGetters } from 'vuex';
 
 export default {
-
+    name: 'AddAyah',
     components: {
         MyInput, Combo
     },
@@ -166,10 +166,7 @@ export default {
                     let message = res.message;
                     toastr.success(message)
 
-                    this.$router.push({
-                        name: 'status-kehamilan',
-                        params: {}
-                    });
+                    this.$router.push('/dashboard');
 
                 }).catch(error => {
                     console.log(error);
