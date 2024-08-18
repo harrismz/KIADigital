@@ -122,7 +122,7 @@ export default {
 
         gotoHome(){
             this.$router.push({
-                name: 'home',
+                name: 'dashboard',
                 params: {}
             });
         }

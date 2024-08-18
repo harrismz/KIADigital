@@ -66,7 +66,7 @@ export default {
         async doLogin() {
             return this.login(this.form).then(res => {
                 console.log("redirect!!! : ", this.$route.query.redirect);
-                const redirect = this.$route.query.redirect || { name: 'home' };
+                const redirect = this.$route.query.redirect || { name: 'dashboard' };
                 this.$router.push(redirect);
             });
         }

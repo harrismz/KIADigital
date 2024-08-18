@@ -12,52 +12,43 @@
             <h1 class="text-2xl font-semibold">Identitas Anak</h1>
             <div v-if="loading" class="text-center">Loading...</div>
             <div v-else>
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">1. Tanggal Bersalin</p>
-                    <input type="date" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder="Tanggal Bersalin.."></input>
-                </div>
+                
+                <form  @submit.prevent="submit">
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <my-input v-for="(value, key) in pregnancyInputs" :key="key"  :isRequired="value.isRequired" :inputType="value.inputType"
+                        v-model="form[key]"  :inputKey="key" ></my-input>
 
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">2. Umur Kehamilan</p>
-                    <input type="text" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder="Umur Kehamilan"></input>
-                </div>
+                        <div class="mb-2">
+                            <label class="text-sm font-medium text-gray-700" for="last_delivery_method">{{ label('last_delivery_method') }}</label>
+                            <select 
+                                class="mt-1 p-2 block bg-white w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                name="last_delivery_method" id="last_delivery_method" v-model="form.last_delivery_method">
+                                <option value="" disabled>Pilih metode persalinan</option>
+                                <option value="normal">Normal</option>
+                                <option value="caesar">Caesar</option>
+                            </select>
+                        </div>
 
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">3. Penolong Persalinan</p>
-                    <input type="text" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder="Penolong Persalinan"></input>
-                </div>
+                        <div>
+                            <label class="text-sm font-medium text-gray-700" for="kek">Kekurangan Energi Kronis</label>
+                            <div class="flex gap-10">
+                                <span>
+                                    <input type="radio" value="1" name="kek" id="kek" v-model="form.kek">
+                                    Ya
+                                </span>
+                                <span>
+                                    <input type="radio" value="0" name="kek" id="kek" v-model="form.kek">
+                                    Tidak
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">4. Cara Persalinan</p>
-                    <input type="text" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder="Cara Persalinan"></input>
-                </div>
+                    
 
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">5. Keadaan Ibu</p>
-                    <input type="text" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder="Keadaan Ibu"></input>
-                </div>
+                    <button type="submit" class="btn btn-primary text-white">Submit</button>
+                </form>
 
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">6. KB Pasca Persalinan</p>
-                    <input type="text" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder=""></input>
-                </div>
-
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">7. Anak Ke</p>
-                    <input type="number" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder=""></input>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                    <p class="mb-2">8. Keterangan Tambahan</p>
-                    <textarea type="text" class="w-full p-2 border-gray-300 rounded-lg shadow-sm" rows="3"
-                        placeholder="Keterangan Tambahan"></textarea>
-                </div>
             </div>
         </div>
     </div>
@@ -66,9 +57,19 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { mapGetters } from 'vuex';
+import helper from '../helper';
+import MyInput from '../utils/MyInput.vue';
+import toastr from 'toastr';
 
 export default {
+    
     name: 'RiwayatPersalinanEdit',
+
+    components: {
+        MyInput
+    },
+    
     setup() {
         const childBirthData = ref({});
         const loading = ref(false);
@@ -83,7 +84,7 @@ export default {
 
         const gotoHome = () => {
             router.push({
-                name: 'home',
+                name: 'dashboard',
                 params: {}
             });
         };
@@ -96,6 +97,149 @@ export default {
             gotoHome
         };
     },
+
+    data(){
+        return {
+            pregnancy:null,
+            form:{}
+        }
+    },
+
+    computed:{
+        ...mapGetters(['baseUrl', 'mom']),
+
+        PregnancyId(){
+            return this.$route.query.id;
+        },
+
+        pregnancyInputs(){
+            return {
+                "first_day_of_last_period": {
+                    isRequired: true,
+                    inputType: 'date',
+                },
+
+                "upper_arm_circumference": {
+                    inputType: 'number',
+                    isRequired: true,
+                },
+
+                "pregnancy_number": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+
+                "number_of_deliveries": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+
+                "number_of_miscarriages": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+
+                "number_of_living_children": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+
+                "number_of_deceased_children": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+
+                "number_of_premature_children": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+
+                "interval_of_last_delivery": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+                
+                "tetanus_immunization": {
+                    isRequired: true,
+                    inputType: 'number' 
+                },
+                
+                "last_delivery_helper": {
+                    isRequired: true,
+                    inputType: 'text' 
+                },
+                
+                // "last_delivery_method": {
+                //     isRequired: true,
+                //     inputType: 'text' 
+                // },
+            }
+        },
+
+        additional(){
+            return {
+                mother_id: this.mom.id,
+            }
+        },
+
+    },
+
+    methods: {
+        fetchPregnancyId(){
+            const url = this.baseUrl + "/api/pregnancy/show/"+ this.PregnancyId ;
+                        
+            axios.get(url, {
+                // apa aja nih disini;
+                params:{}
+            }).then(res => res.data)
+            .then(res => {
+                console.log(res);
+                this.form = {...res.data};
+                this.pregnancy = res.data;
+            }).catch(error => {
+                console.log(error);
+                helper.renderError(error);
+            })
+        },
+
+        submit(){
+            let url = this.baseUrl + "/api/pregnancy";
+            
+            let ajax = axios.post(url, {
+                    ...this.form, ...this.additional
+                });
+
+            if(this.PregnancyId != null ) {
+                url = this.baseUrl + "/api/pregnancy/"+ this.pregnancy.id;
+                ajax = axios.put(url, {
+                    ...this.form, ...this.additional
+                });
+            }            
+
+            ajax.then(res => res.data)
+            .then(res => {
+                console.log(res);
+                toastr.success(res.message);
+
+                setTimeout(() => {
+
+                    this.$router.push('/')
+                }, 1000);
+            }).catch(error => {
+                console.log(error);
+                helper.renderError(error);
+            })
+        },
+
+        label(word){
+            return helper.label(word);
+        }
+    },
+
+    mounted(){
+        this.fetchPregnancyId();
+    }
+
 };
 </script>
 

@@ -73,7 +73,7 @@ Route::get('test', [TestController::class, 'test']);
 
 Route::get('/checkup/{guid}', [CheckupController::class, 'get'])->name('checkup.get'); //untuk menampilan semua data checkup based on guid mother or children
 Route::post('/checkup', [CheckupController::class, 'store'])->name('checkup.store'); // save data checkup
-Route::get('/checkup', [CheckupController::class, 'index'])->name('checkup.index'); // save data checkup
+Route::get('/checkup', [CheckupController::class, 'index'])->name('checkup.index'); // get all data checkup
 
 Route::get('/vaksin/combo', [VaksinController::class, 'combo'] )->name('vaksin.combo');
 Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisasi.store');
@@ -81,6 +81,9 @@ Route::get('/imunisasi/{child_id}', [ImunisasiController::class, 'showVaccinePer
 
 Route::post('/pregnancy', [PregnancyController::class, 'store']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy/{mother_id}', [PregnancyController::class, 'show']); // Untuk menampilkan semua data pregnancy history
+Route::get('/pregnancy/show/{id}', [PregnancyController::class, 'showPregnancy']); // Untuk menampilkan semua data pregnancy history
+Route::get('/pregnancy/{mother_id}/list', [PregnancyController::class, 'showList']); // Untuk menampilkan semua data pregnancy history
+Route::put('/pregnancy/{id}', [PregnancyController::class, 'update']); // Untuk menampilkan semua data pregnancy history
 
 
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history

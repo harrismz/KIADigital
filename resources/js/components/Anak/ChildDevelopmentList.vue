@@ -239,7 +239,7 @@ export default {
       return new Date(date).toLocaleDateString(undefined, options);
     },
     gotoHome() {
-      this.$router.push({ name: 'home' });
+      this.$router.push({ name: 'dashboard' });
     },
     async fetchLenghtData() {
       const id = this.$store.state.active_child.id;
