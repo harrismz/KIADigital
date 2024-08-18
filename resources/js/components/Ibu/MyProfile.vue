@@ -92,7 +92,7 @@
                     <p class="text-justify font-medium italic">{{ mom.job?.job_name || 'N/A' }}</p>
                 </div>
             </div>
-            <div v-for="(dad) in mom.father" :key="mom.father.id" class="my-2">
+            <div v-for="dad in ayah" :key="dad.id" class="my-2">
                 <div class="my-2">
                     <div class="mb-6">
                         <div class="grid grid-cols-2 gap-4">
@@ -203,14 +203,30 @@ export default {
     data() {
         return {
             ibu: [],
-            ayah: [],
+            ayah: {},
             anak: []
         }
     },
     computed: {
         ...mapGetters(['mom', 'baseUrl', 'relations']),
     },
+    mounted() {
+        this.fetchDad()
+    },
     methods: {
+        fetchDad() {
+            const url = `${this.baseUrl}/api/get-father/${this.mom.id}`;
+            axios.get(url).then(res => res.data)
+                .then(res => {
+                    console.log(res);
+                    this.ayah = res;
+                    // this.form = res.data;
+                }).catch(error => {
+                    console.log(error);
+                    const errorMessage = error.response?.data?.message || error.message || 'An unknown error occurred';
+                    toastr.error(errorMessage);
+                })
+        },
         editIbu() {
             // console.log("ibu", this.mom)
             // this.$router.push(`/update-profile/mother/${this.mom.id}`);
@@ -218,11 +234,14 @@ export default {
         },
         editAyah(fatherId) {
             // console.log("ibu", this.ibu)
-            this.$router.push(`/update-profile/father/${fatherId}`);
+            this.$router.push(`/father/${fatherId}/edit`);
         },
         editAnak(child) {
             // this.$router.push('/dashboard-anak/' + child.id + '/edit');
             this.$router.push('/child/' + child.id + '/edit');
+        },
+        addAnak() {
+            this.$router.push('/child');
         },
 
     }

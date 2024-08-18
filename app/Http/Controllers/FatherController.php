@@ -14,6 +14,17 @@ class FatherController extends Controller
         return response()->json($data);
     }
 
+    public function getFather(Request $request, $mom_id){
+        $data = Father::with('kecamatan')
+                ->with('religion')
+                ->with('education')
+                ->with('bloodType')
+                ->with('job')
+                ->where('mother_id', $mom_id)
+                ->get();
+        return response()->json($data);
+    }
+
     public function update(Request $request, $id) {
         //
         $rule = [

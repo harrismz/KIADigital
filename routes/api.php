@@ -61,6 +61,7 @@ Route::get('/mother/{id}', [MotherController::class, 'show']);
 Route::put('/mother/{id}/update', [MotherController::class, 'update']);
 Route::get('/father/{id}', [FatherController::class, 'show']);
 Route::put('/father/{id}/update', [FatherController::class, 'update']);
+Route::get('/get-father/{mom_id}', [FatherController::class, 'getFather']);
 Route::get('/child/{id}', [ChildController::class, 'show']);
 Route::put('/child/{id}/update', [ChildController::class, 'update']);
 Route::post('/child', [ChildController::class, 'store']);
