@@ -292,9 +292,9 @@ export default {
 
         additional(){
             if(this.data) {
+                let staff_id = this.getUser ? this.getUser.id : null;
                 if(this.isMom) {
 
-                    let staff_id = this.getUser ? this.getUser.id : null;
 
                     return {
                         'pregnancy_id': this.data.pregnancy ? this.data.pregnancy.id : null , // dari apa ??
@@ -308,6 +308,7 @@ export default {
 
                     return {
                         'child_id': this.data.id, //from data.id
+                        'staff_id': staff_id, //dari apa ?
                         'type': this.data.type
                     }
 
