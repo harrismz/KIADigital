@@ -3,6 +3,7 @@ import store from './store';
 import Login from './components/Login.vue';
 import Registration from './components/Register.vue';
 import IdentitasIbu from './components/Ibu/IdentitasIbu.vue';
+import IdentitasIbuNew from './components/Ibu/IdentitasIbuNew.vue';
 import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
 import AddAnak from './components/Anak/AddAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
@@ -122,6 +123,15 @@ const routes = [
         }
     },
     {
+        path: '/father/:id/edit',
+        name: 'identitas-ayah',
+        component: IdentitasAyah,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
         path: '/status-kehamilan',
         name: 'status-kehamilan',
         component: StatusKehamilan,
@@ -153,6 +163,15 @@ const routes = [
         path: '/child/:id/edit',
         name: 'child-edit',
         component: AddAnak,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
+        path: '/mother/:id/edit',
+        name: 'mother-edit',
+        component: IdentitasIbuNew,
         props: true,
         meta: {
             layout: 'LoginLayout'
