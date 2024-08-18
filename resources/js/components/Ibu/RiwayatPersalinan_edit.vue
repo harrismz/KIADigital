@@ -84,7 +84,7 @@ export default {
 
         const gotoHome = () => {
             router.push({
-                name: 'home',
+                name: 'dashboard',
                 params: {}
             });
         };

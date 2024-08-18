@@ -100,7 +100,7 @@ export default {
       return `${this.baseUrl}/storage/${path}`;
     },
     gotoHome() {
-      this.$router.push({ name: 'home' });
+      this.$router.push({ name: 'dashboard' });
     }
   }
 };
