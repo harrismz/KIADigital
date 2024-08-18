@@ -24,7 +24,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import MyShow from '../utils/MyShow.vue';
 import helper from '../helper';
 
 export default {
@@ -106,9 +105,6 @@ export default {
                 params: {},
             });
         },
-    },
-    components: {
-        MyShow,
     },
 };
 </script>
