@@ -43,3 +43,10 @@
  - [ ] Input Diary
  - [ ] Tambah Identitas Anak
  - [ ] Edit Data Anak
+
+
+error notify
+- input identitas ayah - The selected  other id is invalid
+- - input checkup - staff id harusnya masukin staff id bukan user id
+- selesai edit ibu user card tidak berubah
+- 

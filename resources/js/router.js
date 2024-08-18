@@ -7,6 +7,7 @@ import IdentitasIbuNew from './components/Ibu/IdentitasIbuNew.vue';
 import IdentitasAnak from './components/Anak/IdentitasAnak.vue';
 import AddAnak from './components/Anak/AddAnak.vue';
 import IdentitasAyah from './components/Ayah/IdentitasAyahNew.vue';
+import AddAyah from './components/Ayah/AddAyah.vue';
 import DashboardIbu from './components/Ibu/Profile.vue';
 import HealthRecordIbu from './components/Ibu/HealthRecord.vue';
 import HealthRecordList from './components/Ibu/HealthRecordList.vue';
@@ -117,6 +118,15 @@ const routes = [
         path: '/identitas-ayah',
         name: 'identitas-ayah',
         component: IdentitasAyah,
+        props: true,
+        meta: {
+            layout: 'LoginLayout'
+        }
+    },
+    {
+        path: '/father-new',
+        name: 'father-new',
+        component: AddAyah,
         props: true,
         meta: {
             layout: 'LoginLayout'

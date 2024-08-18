@@ -243,6 +243,9 @@ export default {
         addAnak() {
             this.$router.push('/child');
         },
+        addAyah() {
+            this.$router.push('/father-new');
+        },
 
     }
 }
