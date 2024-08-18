@@ -8,12 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class PregnancyHistory extends Model
 {
     use HasFactory;
-    
+
     protected $table = "pregnancy_history";
 
     protected $guarded = ['id'];
 
     public function pregnancy(){
         return $this->belongsTo(Pregnancy::class);
+    }
+
+    public function medicalStaff(){
+        return $this->hasOne(MedicalStaff::class,'id','staff_id');
     }
 }

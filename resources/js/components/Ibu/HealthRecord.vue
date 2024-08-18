@@ -4,49 +4,107 @@
             <div class="grid grid-cols-2 gap-4">
                 <h1 class="text-2xl font-bold">Catatan Kesehatan Ibu</h1>
                 <div class="flex justify-end">
-                    <img class="w-6 h-6" @click="gotoHome" :src="'storage/images/home.png'"></img>
+                    <img class="w-6 h-6" @click="gotoHome" :src="`${baseUrl}/storage/images/home.png`"></img>
                 </div>
             </div>
         </div>
+
         <div class="bg-white p-8 rounded-lg shadow-md">
-            <ul class="list-disc list-inside mb-4 space-y-2">
-                <li>Tidak beresiko preeklampsia.</li>
-                <li>Konjungtiva normal, sklera normal, leher normal, gigi dan mulut normal, THT normal, jantung normal,
-                    paru-paru normal, perut normal, tungkai normal.</li>
-                <li>USG Trimester I : GS x cm, CRL x cm, DJJ x dpm, sesuai usia kehamilan x minggu, letak kantong
-                    kehamilan intrauterin, taksiran persalinan and dd mm yyyy</li>
-                <li>Hasil USG :</li>
-            </ul>
-            <div class="flex justify-center mb-4">
-                <img :src="'storage/images/usg.png'" alt="Hasil USG" class="rounded shadow-md" />
-            </div>
-            <ul class="list-disc list-inside space-y-2">
-                <li>Pemeriksaan Laboratorium : Hemoglobin x gr/dL, golongan darah & Rhesus O, gula darah sewaktu mg/dL,
-                    H R, S R, Hepatitis B R.</li>
-                <li>Keluhan dan gejala lainnya : -</li>
-                <li>Solusi Keluhan : -</li>
+            <ul class="list-disc list-inside space-y-2" v-for="(val, key) in data" :key="key">
+                <li v-if="label(key) != 'Foto USG'" class="mb-2">{{ label(key) }} : {{ val }}</li>
+                <div v-if="key == 'usg_image'" class="flex justify-center mb-4">
+                    <img :src="baseUrl + '/storage/' + val" :alt="key" alt="Hasil USG" class="rounded shadow-md" />
+                </div>
             </ul>
         </div>
+
+
     </div>
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import { mapGetters } from 'vuex';
+import helper from '../helper';
 
 export default {
     name: "HealthRecord",
-    setup() {
-        const router = useRouter();
-        const gotoHome = () => {
-            router.push({
-                name: 'dashboard',
-                params: {}
-            });
-        };
-
+    data() {
         return {
-            gotoHome,
+            inputValue: '',
+            data: {},
+            except: {
+                'id': true,
+                'pregnancy_id': true, // dari apa ??
+                'staff_id': true, //dari apa ?
+                'hospital_id': true, // dari apa
+                'created_at': true,
+                'updated_at': true,
+                'child_id': true,
+                'pregnancy': true //from data.id
+            },
         };
+    },
+    computed: {
+        ...mapGetters(['baseUrl', 'mom']),
+
+    },
+    mounted() {
+        this.getHealthRecord()
+    },
+    methods: {
+        async getHealthRecord() {
+            const id = this.id();
+
+            try {
+
+                await axios.get(`${this.baseUrl}/api/pregnancy-history/${id}`, {
+                    headers: {
+                        'Accept': 'application/json', // Expect a JSON response
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                })
+                    .then(response => response.data)
+                    .then(response => {
+
+                        if (response.success) {
+
+                            let result = {}
+                            let res = response.data;
+                            for (const key in res) {
+                                if (Object.prototype.hasOwnProperty.call(res, key)) {
+                                    // const element = res[key];
+                                    if (!(key in this.except)) {
+                                        result[key] = res[key]
+                                    }
+                                }
+                            }
+                            console.log({ result });
+                            this.data = result;
+
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error('Error fetching pregnancy history:', error);
+                    });
+
+            } catch (error) {
+                console.error('Error fetching pregnancy histories:', error);
+            }
+            // console.log({ Preg: this.pregnancies })
+        },
+        id() {
+            return this.$route.params.id;
+        },
+        label(str) {
+            return helper.label(str);
+        },
+        gotoHome() {
+            this.$router.push({
+                name: 'health-records-list',
+                params: {},
+            });
+        },
     },
 };
 </script>

@@ -20,6 +20,7 @@ class PregnancyHistoryController extends Controller
             }
         )
         ->with('pregnancy.mother')
+        ->with('medicalStaff')
         // how to get with mother ??? pregnancy_history belongsTo Pregnancy, PRegnancy belongsTo Mother;
         ->paginate(); // Mengambil semua catatan kehamilan dari user tersebut
 
