@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\DB;
 class CheckupController extends Controller
 {
     //
-    public function index(Request $request) {
+    public function index(Request $request)
+    {
         // disini, harus menggabungkan data checkup ibu di table pregnancy_history
         // dengan data anak, child_developent history
         // baru di kirim
@@ -25,13 +26,14 @@ class CheckupController extends Controller
         // complain & action
 
         // created at
-        
+
         // link ke detail
+        $staffId = $request->query('id');
         $pregnancy = PregnancyHistory::select([
             'id','complaint', 'action', 'created_at', 'pregnancy_id', DB::raw( "'mom' as type")
         ])->where(
-            function($q) use ($request){
-
+            function ($q) use ($staffId) {
+                $q->where('staff_id', $staffId);
             }
         )
         ->with(['pregnancy:id,mother_id','pregnancy.mother:id,name'])
@@ -41,7 +43,12 @@ class CheckupController extends Controller
 
         $child = ChildDevelopmentHistory::select([
             'id', 'complaint', 'action', 'created_at', 'id', 'child_id', DB::raw('"child" as type')
-        ])->with('child:id,child_name')->get();
+        ])->where(
+            function ($q) use ($staffId) {
+                $q->where('staff_id', $staffId);
+            }
+        )
+        ->with('child:id,child_name')->get();
 
         // $merge = $pregnancy->merge($child); //how to merge the laravel Collection ???
          // Merge the collections
@@ -55,7 +62,7 @@ class CheckupController extends Controller
 
         return [
             'success' => true,
-            
+
             'data' => $sortedArray
         ];
 
@@ -98,7 +105,7 @@ class CheckupController extends Controller
     }
 
     public function store(Request $request) {
-        // 
+        //
         $request->validate([
             'type' => "required"
         ]);
@@ -119,7 +126,7 @@ class CheckupController extends Controller
         }
 
         return $res;
-        
+
     }
 
     public function storeMother(Request $request) {
@@ -148,7 +155,7 @@ class CheckupController extends Controller
             $filename = time() . '_' . $file->getClientOriginalName();
             $filePath = $file->storeAs('uploads', $filename, 'public');
             $validated['usg_image'] = $filePath;
-            
+
         }
 
         $data = new PregnancyHistory($validated);
@@ -164,7 +171,7 @@ class CheckupController extends Controller
 
         return $data;
     }
-    
+
     public function storeChild( Request $request) {
         $validated = $request->validate([
             'child_id' => 'required|integer',
@@ -174,6 +181,7 @@ class CheckupController extends Controller
             'head_circumference' => 'nullable|numeric',
             'action' => 'nullable|string',
             'advice_given' => 'nullable|string',
+            'staff_id' => 'nullable|integer',
         ]);
 
         $data = new ChildDevelopmentHistory($validated);
