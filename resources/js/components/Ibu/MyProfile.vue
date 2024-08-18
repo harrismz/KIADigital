@@ -95,7 +95,7 @@
                 <div class="my-2">
                     <div class="mb-6">
                         <div class="grid grid-cols-2 gap-4">
-                            <h1 class="text-2xl font-bold">Identitas Ayah ke - {{ index + 1 }}</h1>
+                            <h1 class="text-2xl font-bold">Identitas Ayah </h1>
                             <div class="flex justify-end gap-x-3">
                                 <img class="w-6 h-6" @click="addAyah" :src="'storage/images/add.png'">
                                 <img class="w-6 h-6" @click="editAyah(dad.id)" :src="'storage/images/edit.png'">
@@ -129,7 +129,7 @@
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Golongan Darah</p>
-                        <p class="text-justify font-medium italic">{{ dad.blood_type.blood_type_name || 'N/A' }}</p>
+                        <!-- <p class="text-justify font-medium italic">{{ dad.blood_type.blood_type_name || 'N/A' }}</p> -->
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Alamat</p>
@@ -137,19 +137,19 @@
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Kecamatan</p>
-                        <p class="text-justify font-medium italic">{{ dad.kecamatan.kecamatan_name || 'N/A' }}</p>
+                        <!-- <p class="text-justify font-medium italic">{{ dad.kecamatan.kecamatan_name || 'N/A' }}</p> -->
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Agama</p>
-                        <p class="text-justify font-medium italic">{{ dad.religion.religion_name || 'N/A' }}</p>
+                        <!-- <p class="text-justify font-medium italic">{{ dad.religion.religion_name || 'N/A' }}</p> -->
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Pendidikan</p>
-                        <p class="text-justify font-medium italic">{{ dad.education.education_name || 'N/A' }}</p>
+                        <!-- <p class="text-justify font-medium italic">{{ dad.education.education_name || 'N/A' }}</p> -->
                     </div>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <p class="mb-2">Pekerjaan</p>
-                        <p class="text-justify font-medium italic">{{ dad.job.job_name || 'N/A' }}</p>
+                        <!-- <p class="text-justify font-medium italic">{{ dad.job.job_name || 'N/A' }}</p> -->
                     </div>
                 </div>
             </div>
