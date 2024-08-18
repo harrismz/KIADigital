@@ -35,6 +35,7 @@ class HandleBreadDataUpdated
             $staff->staff_name = $data->name;
             $staff->hospital_id = $request->hospital_id;
             $staff->role = $request->role_tenaga_medis;
+            $staff->sip = $request->sip;
             $staff->save();
 
         }

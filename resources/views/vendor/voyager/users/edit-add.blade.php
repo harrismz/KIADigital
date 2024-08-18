@@ -112,10 +112,14 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="role_tenaga_medis">Jabatan Tenaga Medis</label>
                                 <input value="{{old('role_tenaga_medis', $staff->role ?? '')}}" type="text" id="role_tenaga_medis" name="role_tenaga_medis" class="form-control" placeholder="Contoh: Dokter">
+                            </div>
+                            <div class="form-group">
+                                <label for="sip">Nomor SIP</label>
+                                <input value="{{old('sip', $staff->sip ?? '')}}" type="text" id="sip" name="sip" class="form-control" placeholder="Contoh: 129209">
                             </div>
                         </div>
                     </div>
