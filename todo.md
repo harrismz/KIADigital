@@ -23,3 +23,23 @@ setup dashboard untuk ibu dan dokter pake vue
         - bisa di event
         - tapi dua2 nya, butuh akses ke request, caranya gmna?
         
+
+Notes:
+•⁠  ⁠catatan kesehatan ibu cm muncul satu data aja, harsnya multiple (harris)✅ (pregnancy_history) (search bar belum)
+-⁠  ⁠evaluasi kehamilan grafik belum by database (DELETE) miftah (belum)
+•⁠  ⁠
+riwayat persalinan blm bisa disave, dan harusnya bisa nambahin dan bisa liat riwayat persalinan dia (teguh) ✅
+        -   (kehamilan ke) ga ada di input field
+        -   hari pertama haid terakhir tanggal doang di db, 
+        - lingkar lengan atas ada dua inputan
+
+•⁠  ⁠profile masi bug (harris)✅
+
+•⁠  ⁠qr belum by profile, dan dibuat langsung url checkup (teguh) ✅
+•⁠  ⁠stunting_chart to public url sblm login (teguh) ✅
+
+•⁠  ubah semua url yang ke 'dashboard' balik ke 'home' ( Miftah )
+•⁠  ⁠add NIP to Tenaga medis (miftah    )  ( tinggal masukan ke resource user ) ( Miftah )
+
+•⁠  ⁠input user sekalian masuk ke tenaga medis (teguh)  ✅
+•⁠  ⁠Check up history filter by tenaga medis (miftah)  ✅
