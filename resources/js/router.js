@@ -389,7 +389,7 @@ const routes = [
         name: 'home',
         component: StuntingChart,
         meta: {
-            layout: 'LoginLayout',
+            layout: 'UserLayout',
             requiresAuth: false
         }
     },
