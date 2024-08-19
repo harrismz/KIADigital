@@ -312,19 +312,22 @@ const id = (() => {
     return this.$router.params.id;
 })
 
-const fetchMother = async () => {
-    if (this.id) {
+const fetchMother = (() => {
+    id ? (() => {
         try {
-            const response = await axios.get(`${baseUrl.value}/api/mother/${this.id}`);
+            const response = axios.get(`${baseUrl.value}/api/mother/${this.id}`);
             console.log(response.data);
             formIdentitasIbu.user_id = response.data.id;
             formIdentitasIbu.name = response.data.name;
             formIdentitasIbu.email = response.data.email;
+            return;
         } catch (error) {
             console.error('Error fetching mother:', error);
         }
-    }
-}
+    })
+
+        : null;
+});
 
 onMounted(() => {
     fetchKelurahan();
