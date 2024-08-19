@@ -91,6 +91,7 @@ Route::put('/pregnancy/{id}', [PregnancyController::class, 'update']); // Untuk 
 
 Route::get('/pregnancy-history', [PregnancyHistoryController::class, 'index']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy-history/{id}', [PregnancyHistoryController::class, 'show']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
+Route::get('/pregnancy-history-search', [PregnancyHistoryController::class, 'searching']); // Untuk menampilkan detail data pregnancy history berdasarkan ID
 Route::get('/pregnancy-history/week/{week}', [PregnancyHistoryController::class, 'showByWeek']);
 Route::get('/pregnancy-history-last', [PregnancyHistoryController::class, 'showLast']);
 
