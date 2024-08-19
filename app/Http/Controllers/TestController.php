@@ -9,6 +9,15 @@ class TestController extends Controller
 {
     //
     public function test(Request $request) {
+
+        $c = new PregnancyController;
+        
+        $req = new Request([
+            'mother_id' => 1
+        ]);
+
+        return $c->getPrevPregNumber($req);
+
         return Mother::find(1);
 
         // $mother = new Mother([

@@ -18,7 +18,7 @@ class PregnancyController extends Controller
             'upper_arm_circumference' => 'nullable|numeric',
             'kek' => 'nullable',
             'contraception_id' => 'nullable|integer',
-            'pregnancy_number' => 'nullable|integer',
+            // 'pregnancy_number' => 'nullable|integer',
             'number_of_deliveries' => 'nullable|integer',
             'number_of_miscarriages' => 'nullable|integer',
             'number_of_living_children' => 'nullable|integer',
@@ -45,6 +45,10 @@ class PregnancyController extends Controller
             $data->estimate_date_of_delivery = $date->format('Y-m-d');
         }
 
+        // pregnancy number based on how many prev pregnancy data on mother;
+        $prevPregNumber = $this->getPrevPregNumber($request);
+        $data->pregnancy_number = $prevPregNumber;
+
         $data->save();
 
         return [
@@ -52,6 +56,16 @@ class PregnancyController extends Controller
             'message' => "Data saved!",
             'data' => $data
         ];
+    }
+
+    public function getPrevPregNumber(Request $request) {
+        $validated = $request->validate([
+            'mother_id' => 'required|integer'
+        ]);
+
+        $prevPregNumber = Pregnancy::where('mother_id', $request->mother_id)->count();
+
+        return $prevPregNumber + 1; // +1 karena asumsinya 
     }
     
     public function update(Request $request, $id ) {
@@ -63,7 +77,7 @@ class PregnancyController extends Controller
             'upper_arm_circumference' => 'nullable|numeric',
             'kek' => 'nullable',
             'contraception_id' => 'nullable|integer',
-            'pregnancy_number' => 'nullable|integer',
+            // 'pregnancy_number' => 'nullable|integer',
             'number_of_deliveries' => 'nullable|integer',
             'number_of_miscarriages' => 'nullable|integer',
             'number_of_living_children' => 'nullable|integer',
