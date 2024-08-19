@@ -124,10 +124,10 @@ export default {
                     isRequired: true,
                 },
 
-                "pregnancy_number": {
-                    isRequired: true,
-                    inputType: 'number' 
-                },
+                // "pregnancy_number": {
+                //     isRequired: true,
+                //     inputType: 'number' 
+                // },
 
                 "number_of_deliveries": {
                     isRequired: true,
