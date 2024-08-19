@@ -42,9 +42,26 @@ class PregnancyHistoryController extends Controller
     }
 
     // Method untuk menampilkan data pregnancy_history berdasarkan ID
-    public function show($id)
+    public function show($id,Request $request)
     {
+
         $data = PregnancyHistory::with(['pregnancy:id,mother_id', 'pregnancy.mother:id,name'])->findOrFail($id); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
+
+        return [
+            'success'=> true,
+            'data' => $data
+        ];
+    }
+    public function searching(Request $request)
+    {
+        $data = PregnancyHistory::with(['pregnancy:id,mother_id', 'pregnancy.mother:id,name']);
+        if($request){
+            $data->where('complaint','like','%'.$request->search.'%');
+            $data->orWhereHas('medicalStaff', function($query) use ($request){
+                $query->where('staff_name','like','%'.$request->search.'%');
+            });
+        }
+        $data = $data->get(); // Mengambil catatan kehamilan berdasarkan ID untuk user yang sedang login
 
         return [
             'success'=> true,

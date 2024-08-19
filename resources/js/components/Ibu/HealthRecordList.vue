@@ -64,19 +64,10 @@ export default {
     },
     methods: {
         async fetchPregnancyHistories() {
-            const id = this.$store.state.user.mother.id;
-            const queryParams = new URLSearchParams({
-                page: this.currentPage,
-                search: this.searchQuery
-            }).toString();
-
             try {
-                console.log(this.baseUrl);
-                console.log({ id });
-                console.log({ queryParams });
-                console.log(`${this.baseUrl}/api/pregnancy-history/${id}?${queryParams}`);
+                // console.log(`${this.baseUrl}/api/pregnancy-history`);
 
-                axios.get(`${this.baseUrl}/api/pregnancy-history/`, {
+                axios.get(`${this.baseUrl}/api/pregnancy-history`, {
                     headers: {
                         'Accept': 'application/json', // Expect a JSON response
                         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -97,8 +88,32 @@ export default {
             }
         },
         searchPregnancyHistories() {
-            this.currentPage = 1; // Reset to first page on new search
-            this.fetchPregnancyHistories();
+        // this.currentPage = 1; // Reset to first page on new search
+            const queryParams = new URLSearchParams({
+                page: this.currentPage,
+                search: this.searchQuery
+            }).toString();
+
+            try {
+                axios.get(`${this.baseUrl}/api/pregnancy-history-search?${queryParams}`, {
+                    headers: {
+                        'Accept': 'application/json', // Expect a JSON response
+                        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+                    }
+                })
+                    .then(response => response.data)
+                    .then(response => {
+                        console.log({ response });
+                        this.pregnancyHistories = response.data;
+                        this.totalItems = response.total;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching pregnancy history:', error);
+                    });
+
+            } catch (error) {
+                console.error('Error fetching pregnancy histories:', error);
+            }
         },
         nextPage() {
             if (this.currentPage < this.totalPages) {

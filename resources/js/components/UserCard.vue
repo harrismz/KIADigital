@@ -6,12 +6,12 @@
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
                 <h1 class="font-mono text-lg font-lg font-bold">{{ userName }} </h1>
 
-                <p v-if="isMedic" class="font-sans font-light text-sm">
+                <!-- <p v-if="isMedic" class="font-sans font-light text-sm">
                     SIP : {{ userDetail.sip }}
                 </p>
                 <p v-else class="font-sans font-light text-sm text-gray-600">
                     HPL : {{ userDetail.hpl }}
-                </p>
+                </p> -->
             </div>
 
             <div v-if="isMom" class="collapse-content">
@@ -119,7 +119,7 @@ export default {
             userDetail: {
                 // ini perlu diganit
                 hpl: '16 JUNE 2025',
-                sip: this.$store.state.user.staff.sip,
+                // sip: this.$store.state.user.staff.sip,
             },
 
         };
