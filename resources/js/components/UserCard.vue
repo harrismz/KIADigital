@@ -6,12 +6,12 @@
             <div class="collapse-title text-xl font-medium" @click="toggleCollapse">
                 <h1 class="font-mono text-lg font-lg font-bold">{{ userName }} </h1>
 
-                <p v-if="isMedic" class="font-sans font-light text-sm">
-                    NIP : {{ userDetail.nip }}
+                <!-- <p v-if="isMedic" class="font-sans font-light text-sm">
+                    SIP : {{ userDetail.sip }}
                 </p>
                 <p v-else class="font-sans font-light text-sm text-gray-600">
                     HPL : {{ userDetail.hpl }}
-                </p>
+                </p> -->
             </div>
 
             <div v-if="isMom" class="collapse-content">
@@ -70,6 +70,9 @@ export default {
         ])
 
     },
+    created() {
+        this.userDetail.sip = this.$store.state.user.staff?.sip || '';
+    },
     methods: {
         // ...mapActions(["updateUser"]),
         goToAnak(child) {
@@ -119,7 +122,7 @@ export default {
             userDetail: {
                 // ini perlu diganit
                 hpl: '16 JUNE 2025',
-                nip: '3450895734895734892',
+                sip: '',
             },
 
         };
