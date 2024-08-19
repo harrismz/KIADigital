@@ -70,6 +70,9 @@ export default {
         ])
 
     },
+    created() {
+        this.userDetail.sip = this.$store.state.user.staff?.sip || '';
+    },
     methods: {
         // ...mapActions(["updateUser"]),
         goToAnak(child) {
@@ -119,7 +122,7 @@ export default {
             userDetail: {
                 // ini perlu diganit
                 hpl: '16 JUNE 2025',
-                // sip: this.$store.state.user.staff.sip,
+                sip: '',
             },
 
         };

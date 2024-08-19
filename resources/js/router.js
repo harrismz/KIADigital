@@ -387,7 +387,7 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: Dashboard,
+        component: StuntingChart,
         meta: {
             layout: 'UserLayout',
             requiresAuth: false
