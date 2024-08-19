@@ -27,7 +27,9 @@
                                 </li>
                             </router-link>
                             <div v-else>
-                                {{ user.name }} - {{ user.role.display_name }}
+                                <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer">
+                                    {{ user.name }} - {{ user.role.display_name }}
+                                </li>
                             </div>
 
                             <li class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" @click="logout">
