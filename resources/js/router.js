@@ -166,7 +166,7 @@ const routes = [
         component: AddAnak,
         props: true,
         meta: {
-            layout: 'LoginLayout'
+            layout: 'UserLayout'
         }
     },
     {
@@ -175,7 +175,7 @@ const routes = [
         component: AddAnak,
         props: true,
         meta: {
-            layout: 'LoginLayout'
+            layout: 'UserLayout'
         }
     },
     {
@@ -184,7 +184,7 @@ const routes = [
         component: IdentitasIbuNew,
         props: true,
         meta: {
-            layout: 'LoginLayout'
+            layout: 'UserLayout'
         }
     },
     {
