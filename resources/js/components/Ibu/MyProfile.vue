@@ -3,7 +3,7 @@
         <div class="grid grid-cols-2 gap-4">
             <h1 class="text-2xl font-bold font-sans mb-6">PROFILE</h1>
             <div class="flex justify-end gap-x-3">
-                <router-link to="/" class="text-blue-500"><img class="w-5 h-5 cursor-pointer"
+                <router-link to="/dashboard" class="text-blue-500"><img class="w-5 h-5 cursor-pointer"
                         :src="'storage/images/home.png'"></router-link>
             </div>
         </div>
