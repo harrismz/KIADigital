@@ -156,14 +156,15 @@ class PregnancyController extends Controller
         $pregnancy = Pregnancy::where('mother_id', 1)->first();
         return $pregnancy;
     }
-    public function getHplDate(Request $request, $mother_id){
-        // find hpl
-        $data = Pregnancy::where('mother_id',$mother_id)
-                ->pluck('estimate_date_of_delivery');
+    // public function getHplDate(Request $request, $id){
+    //     // find hpl
+    //     $data = Pregnancy::where('mother_id',$id)
+    //             ->select('estimate_date_of_delivery')
+    //             ->get();
 
-        return [
-            'success' => true,
-            'data' => $data
-        ];
-    }
+    //     return [
+    //         'success' => true,
+    //         'data' => $data
+    //     ];
+    // }
 }

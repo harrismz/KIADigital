@@ -73,9 +73,17 @@ export default {
     created() {
         this.userDetail.sip = this.$store.state.user.staff?.sip || '';
 
+        // this.getHplDate()
+    },
+    mounted() {
+        this.fetchHplDate()
     },
     methods: {
+
         // ...mapActions(["updateUser"]),
+        fetchHplDate() {
+            this.userDetail.hpl = this.$store.state.lastHpl;
+        },
         goToAnak(child) {
             this.$store.commit('setActiveChild', child );
             this.$store.commit('setActiveProfile', child );
@@ -112,13 +120,15 @@ export default {
         toggleCollapse() {
             this.isOpen = !this.isOpen;
         },
-        getHplDate() {
-            axios.get(`${baseUrl}/pregnancy-hpl/${this.mom.id}`)
-                .then(res => res.data)
-                .then(res => {
-                    this.userDetail.hpl = res.data.hpl;
-                })
-        }
+        // getHplDate() {
+        //     console.log({ hpl: `${this.baseUrl}/pregnancy-hpl/${this.mom.id}` })
+        //     axios.get(`${this.baseUrl}/pregnancy-hpl/${this.mom.id}`)
+        //     // .then(res => res.data)
+        //         .then(res => {
+        //             console.log({ hpl: res })
+        //             this.userDetail.hpl = res.data.estimate_date_of_delivery;
+        //         })
+        // }
     },
 
     data() {
