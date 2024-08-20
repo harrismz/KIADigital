@@ -137,7 +137,7 @@ export default {
                     toastr.success(res.message);
 
                     setTimeout(() => {
-                        this.$router.push('/')
+                        this.$router.push('/dashboard')
                     }, 1000);
                 }).catch(error => {
                     console.log(error);
