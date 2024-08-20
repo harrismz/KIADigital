@@ -96,6 +96,11 @@ export default {
             .then(res => {
                 console.log(res);
                 toastr.success(res.message);
+
+                this.$router.push({
+                    name: 'child-weekly-monitoring-result'
+                });
+                
             }).catch(error => {
                 console.log(error);
                 helper.renderError(error)
