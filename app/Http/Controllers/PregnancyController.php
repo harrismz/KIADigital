@@ -65,9 +65,9 @@ class PregnancyController extends Controller
 
         $prevPregNumber = Pregnancy::where('mother_id', $request->mother_id)->count();
 
-        return $prevPregNumber + 1; // +1 karena asumsinya 
+        return $prevPregNumber + 1; // +1 karena asumsinya
     }
-    
+
     public function update(Request $request, $id ) {
         $rule = [
             // 'id' => 'nullable|integer',
@@ -128,7 +128,7 @@ class PregnancyController extends Controller
         ];
 
     }
-    
+
     public function showList(Request $request, $mother_id) {
         // find mother
         $mother = Mother::findOrFail($mother_id);
@@ -139,7 +139,7 @@ class PregnancyController extends Controller
         ];
 
     }
-    
+
     public function showPregnancy(Request $request, $id) {
         // find mother
         $data = Pregnancy::find($id);
@@ -155,5 +155,15 @@ class PregnancyController extends Controller
         // TODO get week of pregnancy
         $pregnancy = Pregnancy::where('mother_id', 1)->first();
         return $pregnancy;
+    }
+    public function getHplDate(Request $request, $mother_id){
+        // find hpl
+        $data = Pregnancy::where('mother_id',$mother_id)
+                ->pluck('estimate_date_of_delivery');
+
+        return [
+            'success' => true,
+            'data' => $data
+        ];
     }
 }
