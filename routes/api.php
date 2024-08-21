@@ -83,6 +83,7 @@ Route::post('/imunisasi', [ImunisasiController::class, 'store'] )->name('imunisa
 Route::get('/imunisasi/{child_id}', [ImunisasiController::class, 'showVaccinePerChild'] )->name('imunisasi.get');
 
 Route::post('/pregnancy', [PregnancyController::class, 'store']); // Untuk menampilkan semua data pregnancy history
+Route::post('/pregnancy-hpl/{mother_id}', [PregnancyController::class, 'getHplDate']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy/{mother_id}', [PregnancyController::class, 'show']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy/show/{id}', [PregnancyController::class, 'showPregnancy']); // Untuk menampilkan semua data pregnancy history
 Route::get('/pregnancy/{mother_id}/list', [PregnancyController::class, 'showList']); // Untuk menampilkan semua data pregnancy history

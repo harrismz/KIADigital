@@ -36,7 +36,7 @@
 import toastr from 'toastr';
 import MyInput from '../utils/MyInput.vue';
 import Combo from '../utils/combo.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters,mapActions } from 'vuex';
 
 export default {
 
@@ -123,6 +123,8 @@ export default {
         this.processCheck()
     },
     methods: {
+        ...mapActions(['fetchUser']),
+        
         async processCheck() {
             const motherId = this.$route.params.id;
             if (!motherId) return null;
@@ -191,6 +193,9 @@ export default {
                 .then(res => {
                     console.log(res);
                     toastr.success(res.message);
+
+                    // refetch user after this
+                    this.$store.commit('setActiveProfile', res.data );
 
                     setTimeout(() => {
                         this.$router.push('/dashboard')

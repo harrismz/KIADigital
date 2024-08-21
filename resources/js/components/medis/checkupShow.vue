@@ -101,6 +101,7 @@
                                 </div>
 
                                 <button class="btn btn-primary mt-4">Submit</button>
+                                <a href="/dashboard" class="btn btn-danger bg-red text-white">Back</a>
                             </form>
 
                         </div>

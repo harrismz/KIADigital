@@ -6,7 +6,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <p class="mb-4 md:col-span-3 text-gray-500"> Your Checkup Data History</p>
-
+            <div class="flex justify-end gap-x-3 items-center">
+                <a href="/dashboard">
+                    <img class="w-6 h-6" :src="'storage/images/home.png'">
+                </a>
+            </div>
         </div>
 
 
@@ -101,7 +105,9 @@ export default {
 
         viewDetail(type, id){
             this.$router.push(`/history/${type}/${id}`)
-        }
+        },
+
+
     },
 
     mounted(){

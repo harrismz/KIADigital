@@ -108,7 +108,7 @@ export default {
 
                 // Redirect to login page
                 this.$router.push({
-                    name: 'login'
+                    name: 'home'
                 });
             }).catch(error => {
                 console.log(error);

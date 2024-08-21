@@ -72,6 +72,7 @@ export default {
     },
     created() {
         this.userDetail.sip = this.$store.state.user.staff?.sip || '';
+
     },
     methods: {
         // ...mapActions(["updateUser"]),
@@ -111,6 +112,13 @@ export default {
         toggleCollapse() {
             this.isOpen = !this.isOpen;
         },
+        getHplDate() {
+            axios.get(`${baseUrl}/pregnancy-hpl/${this.mom.id}`)
+                .then(res => res.data)
+                .then(res => {
+                    this.userDetail.hpl = res.data.hpl;
+                })
+        }
     },
 
     data() {
@@ -121,7 +129,7 @@ export default {
 
             userDetail: {
                 // ini perlu diganit
-                hpl: '16 JUNE 2025',
+                hpl: '',
                 sip: '',
             },
 
