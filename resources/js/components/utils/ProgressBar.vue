@@ -13,10 +13,11 @@
         <!-- Progress Bar -->
         <div v-if="pregnancy">
             <div class="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden mb-4">
-                <div class="absolute left-0 h-full bg-green-500 rounded-full" :style="{ width: `${progressPercentage}%` }">
+                <div class="absolute left-0 h-full bg-green-500 rounded-full"
+                    :style="{ width: `${progressPercentage}%` }">
                 </div>
             </div>
-    
+
             <div class="flex justify-between text-xs mb-5">
                 <div>Trimester 1</div>
                 <div>Trimester 2</div>
@@ -69,7 +70,7 @@ export default {
     mounted(){
 
         this.fetchLatestPregnancy();
-        
+
     },
 
     data(){
@@ -87,9 +88,9 @@ export default {
             }
 
             return new Date(this.pregnancy.first_day_of_last_period);
-        
+
         },
-        
+
         dueDate(){
             if(!this.pregnancy){
                 return null;
@@ -113,7 +114,7 @@ export default {
         },
 
         currentWeek(){
-            return 3;  //i dont know what current week for 
+            return 3;  //i dont know what current week for
         },
 
         totalPregnancyDays(){
@@ -144,15 +145,17 @@ export default {
     methods: {
         fetchLatestPregnancy(){
             let mom = this.mom;
-            const url = this.baseUrl + `/api/pregnancy/`+ mom.id;
-                        
+            const url = this.baseUrl + `/api/pregnancy/` + mom.id;
             axios.get(url, {
                 // apa aja nih disini;
                 params:{}
             }).then(res => res.data)
             .then(res => {
-                console.log(res);
+                console.log({ progresbar: res });
                 this.pregnancy = res.data;
+                console.log({ progresbar: this.$store.state.lastHpl })
+                this.$store.state.lastHpl = res.data.estimate_date_of_delivery;
+                console.log({ progresbar: this.$store.state.lastHpl })
             }).catch(error => {
                 console.log(error);
                 helper.renderError(error)

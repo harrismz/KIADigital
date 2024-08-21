@@ -17,7 +17,7 @@
                             class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             required />
                     </div>
-                    
+
                     <div class="mb-4">
                         <label for="nik" class="block text-sm font-medium text-gray-700">Nomor Induk
                             Kependudukan</label>
@@ -270,6 +270,10 @@ const updateKecamatan = async () => {
         const selectedKelurahan = await axios.get(`${baseUrl.value}/api/kecamatan/${formIdentitasAyah.kelurahan}`);
         kecamatanList.value = selectedKelurahan.data;
         console.log({ kecamatanList });
+        router.push({
+            name: 'my-profile',
+            params: {}
+        });
     } catch (error) {
         console.error('Error fetching kecamatan: ', error);
     }
