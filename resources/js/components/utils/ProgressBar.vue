@@ -151,11 +151,11 @@ export default {
                 params:{}
             }).then(res => res.data)
             .then(res => {
-                console.log({ progresbar: res });
                 this.pregnancy = res.data;
-                console.log({ progresbar: this.$store.state.lastHpl })
-                this.$store.state.lastHpl = res.data.estimate_date_of_delivery;
-                console.log({ progresbar: this.$store.state.lastHpl })
+                if(res.data){
+                    this.$store.state.lastHpl = res.data.estimate_date_of_delivery;
+                    console.log({ progresbar: this.$store.state.lastHpl })
+                }
             }).catch(error => {
                 console.log(error);
                 helper.renderError(error)
