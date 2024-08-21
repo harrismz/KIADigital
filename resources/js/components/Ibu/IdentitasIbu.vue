@@ -147,7 +147,7 @@ export default {
                     let message = res.message;
                     toastr.success(message)
 
-                    this.$router.push('identitas-ayah');
+                    this.$router.push('/identitas-ayah');
 
 
 

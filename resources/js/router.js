@@ -134,7 +134,7 @@ const routes = [
     },
     {
         path: '/father/:id/edit',
-        name: 'identitas-ayah',
+        name: 'identitas-ayah-edit',
         component: IdentitasAyah,
         props: true,
         meta: {
